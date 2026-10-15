@@ -1,0 +1,23 @@
+/* Floating groups are contained in the main application window. */
+.dock-tabs{gap:2px;padding:0 6px;scrollbar-width:thin}
+.dock-tabs [data-panel-tab]{padding:0 9px;cursor:grab;touch-action:none;min-width:48px;position:relative}
+.dock-tabs [data-panel-tab]:hover{background:var(--surface-subtle)}
+.dock-tabs [data-panel-tab]:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.panel-header{touch-action:none}
+.panel-header .panel-grip{opacity:.5}
+.panel-header:hover .panel-grip{opacity:1}
+.dock-floating-group{position:absolute;display:flex;flex-direction:column;pointer-events:auto;min-width:230px;min-height:150px;overflow:hidden;border:1px solid var(--border-strong);border-radius:8px;background:var(--surface);box-shadow:0 10px 36px #0002,0 2px 8px #0001}
+.dock-floating-group>.dock-panel.is-floating{position:relative;left:auto;top:auto;width:auto;height:auto;min-width:0;min-height:0;border:0;border-radius:0;max-width:none;max-height:none;flex:1}
+.dock-floating-group>.dock-tabs,.dock-floating-group .panel-header{background:var(--surface-subtle)}
+.dock-floating-group .panel-resize-handle{display:block}
+.dock-floating-group[hidden],.dock-targets[hidden],.dock-drag-preview[hidden],.dock-drag-status[hidden],.dock-tab-insertion[hidden]{display:none!important}
+.is-docking,.is-docking *{cursor:grabbing!important;user-select:none!important}
+.dock-targets{position:absolute;inset:0;z-index:1804;pointer-events:none}
+.dock-target{position:absolute;display:grid;place-items:center;border:1px solid #098cbb;border-radius:5px;background:#e5f9ffed;color:#056582;box-shadow:0 2px 5px #0002;font-size:11px;font-weight:600;pointer-events:none}
+.dock-target.is-active{background:#079bc9;color:white;border-color:#057caa;box-shadow:0 0 0 3px #08aed32e}
+.dock-drop-marker{z-index:1802;pointer-events:none;border:2px solid #08a2c7;background:#16b9d326;border-radius:4px;color:#06677d;font-weight:600;align-items:end;padding-bottom:14px;text-shadow:0 1px #fff9}
+.dock-drag-preview{position:absolute;z-index:1801;pointer-events:none;border:1px solid #079bc9;border-radius:7px;background:linear-gradient(#e6f6ffe6 0 35px,#e6f6ff38 35px);box-shadow:0 8px 25px #0002;color:#125c75;padding:8px 12px;font-size:12px;font-weight:600}
+.dock-tab-insertion{position:absolute;z-index:1805;background:#079bc9;border-radius:2px;pointer-events:none;box-shadow:0 0 0 1px #fff}
+.dock-drag-status{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:1806;background:#12394af0;color:#fff;border:1px solid #ffffff50;border-radius:6px;padding:8px 14px;box-shadow:0 3px 12px #0002;font-size:12px;white-space:nowrap;pointer-events:none}
+.dock-splitter:hover,.rail-resizer:hover{background:#16b9d36b}
+@media(prefers-reduced-motion:no-preference){.dock-target{transition:background .08s,color .08s}}

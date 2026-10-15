@@ -1,0 +1,11 @@
+.yuanda-drag-preview{position:fixed;inset:0;z-index:2147483000;pointer-events:none!important;overflow:hidden;color:#12314d;font:12px/1.45 "Segoe UI","Microsoft YaHei",sans-serif}
+.yuanda-drag-preview *{pointer-events:none!important}
+.yuanda-drag-scene{position:absolute;left:0;top:0;width:0;height:0;transform-origin:0 0;opacity:.72;filter:drop-shadow(0 3px 7px #1c3b6420)}
+.yuanda-drag-node{transition:none!important}
+.yuanda-drag-bounds{position:absolute;box-sizing:border-box;border:1px solid #2388eb;background:#1686e908;box-shadow:0 0 0 1px #ffffffb3;min-width:1px;min-height:1px}
+.yuanda-drag-bounds::before,.yuanda-drag-bounds::after{content:"";position:absolute;width:5px;height:5px;background:#fff;border:1px solid #2388eb;box-sizing:border-box}
+.yuanda-drag-bounds::before{left:-3px;top:-3px}.yuanda-drag-bounds::after{right:-3px;bottom:-3px}
+.yuanda-drag-label{position:absolute;display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;max-width:300px;padding:5px 8px;border:1px solid #a4cff5;border-radius:5px;background:#f9fcffed;box-shadow:0 2px 8px #172f4826;white-space:nowrap}
+.yuanda-drag-name{max-width:180px;overflow:hidden;text-overflow:ellipsis;font-size:12px;font-weight:600}.yuanda-drag-dimensions{font-variant-numeric:tabular-nums}.yuanda-drag-status{flex-basis:100%;color:#52718b;font-size:10px}
+.yuanda-drag-preview[data-drop-valid="false"] .yuanda-drag-scene{opacity:.4}.yuanda-drag-preview[data-drop-valid="false"] .yuanda-drag-bounds{border-style:dashed;border-color:#8b98a7;background:transparent}.yuanda-drag-preview[data-drop-valid="false"] .yuanda-drag-label{border-color:#c8d0d8;color:#566270}
+body.yuanda-library-dragging,body.yuanda-library-dragging *{cursor:copy!important;user-select:none!important}

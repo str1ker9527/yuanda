@@ -1,0 +1,56 @@
+:root { --muted:var(--text-muted); --hover:var(--surface-hover); --canvas-surround:#f0f0f0; }
+:root[data-editor-theme="dark"] { color-scheme:dark; --surface:#202020; --surface-subtle:#252525; --surface-hover:#303030; --surface-active:#3c3c3c; --text:#f0f0f0; --text-secondary:#c3c3c3; --text-muted:#a4a4a4; --border:#383838; --border-strong:#636363; --accent:#f0f0f0; --canvas-surround:#151515; }
+:root[data-editor-theme="dark"] #ruler-x canvas,:root[data-editor-theme="dark"] #ruler-y canvas { filter:brightness(1.6); }
+.board .selection-rect { border-color:#191919; outline:1px solid #fff; outline-offset:0; }
+.board .resize-handle { border-color:#191919; background:#fff; }
+.canvas-viewport { background-color:var(--canvas-surround); }
+.canvas-column { position:relative; }
+.editor-tabs { display:flex; flex-shrink:0; height:35px; min-height:35px; border-bottom:1px solid var(--border); background:var(--surface-subtle); }
+.editor-tab-list { display:flex; flex:1; min-width:0; overflow:auto hidden; }
+.editor-tab { display:flex; align-items:center; gap:5px; min-width:100px; max-width:190px; flex-shrink:0; border-right:1px solid var(--border); border-bottom:2px solid transparent; padding:0 8px; cursor:pointer; user-select:none; color:var(--text-secondary); }
+.editor-tab[aria-selected=true] { background:var(--surface); color:var(--text); border-bottom-color:var(--accent); }
+.editor-tab-name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; }
+.editor-tab-kind { font-size:9px; color:var(--text-muted); }
+.editor-tab button { font-size:16px; width:21px; height:24px; padding:0; }
+.editor-tabs>button { flex-shrink:0; border-radius:0; font-size:11px; padding:0 10px; border-right:1px solid var(--border); }
+.editor-tab.drag-before { border-left:2px solid var(--accent); }.editor-tab.drag-after { border-right:2px solid var(--accent); }
+.navigation-menu { position:fixed; z-index:6000; padding:5px; min-width:150px; border:1px solid var(--border-strong); background:var(--surface); border-radius:5px; }
+.navigation-menu button { display:block; width:100%; text-align:left; padding:8px 12px; }
+.page-row { position:relative; touch-action:none; }
+.page-row.page-drop-before::before,.page-row.page-drop-after::after { content:''; position:absolute; height:2px; left:0; right:0; background:var(--accent); }
+.page-row.page-drop-before::before { top:0; }.page-row.page-drop-after::after { bottom:0; }
+.page-row.page-drop-inside { outline:1px solid var(--accent); outline-offset:-1px; background:var(--surface-active); }
+.navigation-drag-label { position:fixed; pointer-events:none; z-index:7500; padding:7px 10px; border:1px solid var(--border-strong); background:var(--surface); color:var(--text); border-radius:4px; }
+.navigation-gallery { position:absolute; inset:35px 0 27px; z-index:100; background:var(--surface-subtle); display:flex; flex-direction:column; overflow:hidden; }
+.gallery-controls { display:flex; align-items:center; flex-wrap:wrap; padding:14px 18px; gap:10px; border-bottom:1px solid var(--border); background:var(--surface); }
+.gallery-controls h2 { font-size:14px; font-weight:500; margin:0 6px 0 0; }
+.gallery-controls input[type=search],.gallery-controls select { border:1px solid var(--border-strong); border-radius:4px; padding:6px; background:var(--surface); min-width:0; }
+.gallery-controls input[type=search] { flex:1; min-width:140px; }
+.gallery-controls label { display:flex; align-items:center; gap:5px; font-size:11px; color:var(--text-secondary); }
+.gallery-controls input[type=range] { width:80px; accent-color:var(--accent); }
+.gallery-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(var(--gallery-size,220px),1fr)); gap:18px; padding:20px; overflow:auto; align-content:start; }
+.gallery-item { border:1px solid var(--border); padding:0; overflow:hidden; background:var(--surface); text-align:left; border-radius:5px; min-width:0; }
+.gallery-item:hover { border-color:var(--border-strong); }.gallery-item > svg { width:100%; height:145px; display:block; background:#fff; color:#191919; }
+.gallery-item-title { display:flex; gap:8px; align-items:center; padding:10px; border-top:1px solid var(--border); }
+.gallery-item-title strong { font-weight:500; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+.gallery-item-title span { font-size:10px; color:var(--text-muted); flex-shrink:0; }
+.gallery-empty { color:var(--text-muted); grid-column:1/-1; padding:20px; }
+.navigation-settings { width:min(580px,90vw); max-height:85vh; overflow:auto; }
+.navigation-settings h2 { margin:0 0 14px; font-size:16px; font-weight:500; }
+.navigation-settings p { color:var(--text-secondary); line-height:1.65; }
+.navigation-setting-row { display:flex; gap:9px; align-items:center; padding:7px 0; border-bottom:1px solid var(--border); }
+.navigation-setting-row label { flex:1; display:flex; align-items:center; gap:8px; }
+.navigation-setting-row input { accent-color:var(--accent); }
+.navigation-setting-row button { border:1px solid var(--border); padding:4px 10px; }
+.navigation-setting-footer { display:flex; justify-content:space-between; margin-top:15px; gap:8px; }
+.navigation-setting-footer button { padding:7px 12px; border:1px solid var(--border-strong); }
+.toolbar.hide-tool-labels .insert-tools>button>span { display:none; }
+.toolbar.hide-tool-labels .toolbar-item-label,.toolbar.hide-tool-labels #snap-state { display:none; }
+#workspace-settings { margin-left:4px; flex-shrink:0; font-size:11px; padding:5px 8px; border:1px solid var(--border); }
+.canvas-viewport.space-pan,.canvas-viewport.space-pan * { cursor:grab!important; }
+.canvas-viewport.space-panning,.canvas-viewport.space-panning * { cursor:grabbing!important; }
+#measure-overlay { position:absolute; inset:0; overflow:visible; pointer-events:none; z-index:2100; }
+#measure-overlay line { stroke:#191919; stroke-width:1; vector-effect:non-scaling-stroke; }
+#measure-overlay rect { fill:#fff; stroke:#191919; stroke-width:.5; vector-effect:non-scaling-stroke; }
+#measure-overlay text { fill:#191919; font-family:"Segoe UI","Microsoft YaHei",sans-serif; text-anchor:middle; dominant-baseline:middle; }
+@media(max-width:1200px) { #workspace-settings { font-size:10px; padding:5px; }.toolbar{gap:7px;padding-left:10px;padding-right:10px}.toolbar-right{gap:4px}.insert-tools{gap:0}.tool-button{padding:0 6px}.gallery-controls{padding:10px}.gallery-grid{padding:12px;gap:12px} }

@@ -1,0 +1,11 @@
+import { spawn } from 'node:child_process';
+import { mkdir } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { electronExecutable, projectEnvironment } from './platform-runtime.mjs';
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const env = projectEnvironment(root); delete env.ELECTRON_RUN_AS_NODE;
+await mkdir(env.TMPDIR, { recursive: true });
+const child = spawn(electronExecutable(root), [root, ...process.argv.slice(2)], { cwd: root, env, stdio: 'inherit', windowsHide: true });
+child.once('error', error => { console.error(`启动失败：${error.message}。首次运行请先执行 node scripts/setup.mjs。`); process.exitCode = 1; });
+child.once('exit', code => { process.exitCode = code ?? 1; });

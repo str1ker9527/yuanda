@@ -1,0 +1,20 @@
+import { electronExecutable, releaseLayout } from './platform-runtime.mjs';
+import { spawn } from 'node:child_process';
+import path from 'node:path';
+import { mkdir, readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const packageInfo=JSON.parse(await readFile(path.join(root,'package.json'),'utf8'));
+const portableDir=path.join(root,'dist',`原搭-${packageInfo.version}`);
+const target = process.argv.includes('--portable') ? releaseLayout(portableDir).executable : electronExecutable(root);
+const args = process.argv.includes('--portable') ? ['--yuanda-smoke'] : [root, '--yuanda-smoke'];
+await mkdir(path.join(root, '.local/tmp'), { recursive: true });
+const child = spawn(target, args, { cwd: root, windowsHide: true, stdio: 'inherit', env: { ...process.env, TEMP: path.join(root, '.local/tmp'), TMP: path.join(root, '.local/tmp'), TMPDIR: path.join(root, '.local/tmp') } });
+const timer = setTimeout(() => { child.kill(); console.error('桌面自测超过 60 秒，请检查窗口或日志。'); }, 60000);
+child.on('error', error => { clearTimeout(timer); console.error(error.message); process.exitCode = 1; });
+child.on('exit', async code => {
+  clearTimeout(timer);
+  const result = process.argv.includes('--portable') ? path.join(portableDir,'data/smoke/smoke-result.json') : path.join(root,'.local/yuanda-runtime/smoke/smoke-result.json');
+  console.log(await readFile(result, 'utf8').catch(() => '未生成测试结果'));
+  process.exitCode = typeof code === 'number' ? code : 1;
+});

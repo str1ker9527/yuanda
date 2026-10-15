@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>样式与排版体验 · 原搭交互演示</title>
+<style>
+.pinned-layer{position:fixed;inset:0;pointer-events:none;z-index:9000}.pinned-layer>.node{pointer-events:auto}.node-dynamicPanel{display:block}.node-dynamicPanel>.panel-state{touch-action:auto}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,"Segoe UI","Microsoft YaHei",sans-serif;background:#f6f6f6;color:#191919}button,input,select,textarea{font:inherit}.viewer-bar{height:54px;display:flex;align-items:center;gap:16px;padding:0 22px;background:#fff;border-bottom:1px solid #e6e6e6;position:sticky;top:0;z-index:10000}.brand{font-weight:600;color:#191919}.project-name{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:30vw}.viewer-bar select,.viewer-bar button{border:1px solid #ddd;border-radius:4px;background:white;padding:6px 10px;color:#333;cursor:pointer;font-size:12px}.viewer-bar #pages{margin-left:auto;max-width:220px}.viewer-shell{padding:26px;overflow:auto;min-height:calc(100vh - 54px)}#stage{position:relative;margin:0 auto;border:1px solid #e6e6e6;overflow:hidden}.node{position:absolute;box-sizing:border-box;margin:0;padding:0;display:flex;align-items:center;white-space:pre-wrap;overflow:hidden;line-height:1.45;border-style:solid;outline-offset:3px;flex-shrink:0}.node[hidden],.panel-state[hidden],[hidden]{display:none!important}.node-input,.node-textarea,.node-select{display:block;padding:0 10px}.node-textarea{padding:9px 10px;resize:none}.node-select{appearance:auto}.node-button{padding:0 10px}.node-image{object-fit:cover}.node-table table{width:100%;height:100%;border-collapse:collapse}.node-table th,.node-table td{border:1px solid currentColor;padding:5px 8px;text-align:inherit;font-weight:inherit}.node-table th{font-weight:600;background:#00000005}.check-label{display:flex;align-items:center;gap:7px;width:100%;height:100%;cursor:inherit}.check-label input{margin:0 0 0 5px;accent-color:currentColor;flex-shrink:0}.check-label span{white-space:pre-wrap}.interactive{cursor:pointer}.interactive:focus-visible,.node:focus-visible{outline:2px solid #777}.node[aria-disabled=true]{cursor:default}.panel-state,.repeater-content{position:absolute;left:0;top:0;width:100%;height:100%}.repeater-item{position:absolute}.rich-content{width:100%;white-space:pre-wrap}.rich-paragraph{min-height:1em}.runtime-status{position:fixed;left:20px;right:20px;bottom:16px;z-index:20000;padding:12px 16px;background:#fff;border:1px solid #bbb;color:#333;font-size:13px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}@media(max-width:700px){.viewer-bar{padding:0 10px;gap:8px}.project-name{display:none}.viewer-shell{padding:12px}.viewer-bar select{max-width:135px}}
+</style></head>
+<body><header class="viewer-bar"><span class="brand">原搭</span><span class="project-name">样式与排版体验</span><label class="sr-only" for="pages">选择页面</label><select id="pages"></select><label class="sr-only" for="views">选择自适应视图</label><select id="views" hidden></select><button id="restart" type="button">重新体验</button><span id="current-page" class="sr-only" aria-live="polite"></span></header>
+<main class="viewer-shell"><div id="stage" aria-label="原型画布"></div></main><div id="runtime-status" class="runtime-status" role="status" hidden></div>
+<script id="yuanda-model" type="application/json">{"format":"yuanda","version":1,"id":"style-demo-project","name":"样式与排版体验","pages":[{"id":"style-demo-page","name":"样式与排版体验","width":1200,"height":1320,"background":"#FFFFFF","nodes":[{"id":"heading","type":"text","name":"让界面有清楚的层次。","x":48,"y":30,"width":1104,"height":64,"rotation":0,"visible":true,"locked":false,"text":"让界面有清楚的层次。","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":54,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#191919","fontSize":36,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"intro","type":"text","name":"字体、渐变、四边边框与阴影使用同一套显示规则，编辑器和导出网页一起变化。","x":48,"y":106,"width":1104,"height":40,"rotation":0,"visible":true,"locked":false,"text":"字体、渐变、四边边框与阴影使用同一套显示规则，编辑器和导出网页一起变化。","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":25.5,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#666666","fontSize":17,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"instructions","type":"text","name":"把鼠标移到第一张卡片上，点击状态按钮，再试着在输入框里打字。","x":48,"y":154,"width":1104,"height":32,"rotation":0,"visible":true,"locked":false,"text":"把鼠标移到第一张卡片上，点击状态按钮，再试着在输入框里打字。","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":22.5,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#666666","fontSize":15,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"a-title","type":"text","name":"01  颜色可以柔和过渡","x":48,"y":222,"width":336,"height":32,"rotation":0,"visible":true,"locked":false,"text":"01  颜色可以柔和过渡","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":28.5,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#191919","fontSize":19,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"b-title","type":"text","name":"02  边框也有自己的样式","x":432,"y":222,"width":336,"height":32,"rotation":0,"visible":true,"locked":false,"text":"02  边框也有自己的样式","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":28.5,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#191919","fontSize":19,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"c-title","type":"text","name":"03  层次来自光影","x":816,"y":222,"width":336,"height":32,"rotation":0,"visible":true,"locked":false,"text":"03  层次来自光影","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":28.5,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#191919","fontSize":19,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"hover-card","type":"rectangle","name":"移入鼠标","x":48,"y":272,"width":336,"height":180,"rotation":0,"visible":true,"locked":false,"text":"移入鼠标","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":null,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":{"type":"linear","angle":120,"stops":[{"offset":0,"color":"#F8F8F8","opacity":1},{"offset":1,"color":"#D6D6D6","opacity":1}]},"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":350,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"#EEEEEE","stroke":"#DDDDDD","strokeWidth":1,"radius":16,"color":"#191919","fontSize":22,"fontWeight":400,"align":"center","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{"hover":{"fillPaint":{"type":"linear","angle":120,"stops":[{"offset":0,"color":"#CFCFCF","opacity":1},{"offset":1,"color":"#FAFAFA","opacity":1}]},"color":"#000000","shadows":[{"inset":false,"x":0,"y":7,"blur":18,"spread":0,"color":"#000000","opacity":0.14}]}},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","fillPaint","stroke","align","transition"],"defaultStyleSetId":null},{"id":"border-card","type":"rectangle","name":"四个角，四条边","x":432,"y":272,"width":336,"height":180,"rotation":0,"visible":true,"locked":false,"text":"四个角，四条边","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":null,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":{"type":"linear","angle":40,"stops":[{"offset":0,"color":"#333333","opacity":1},{"offset":1,"color":"#BBBBBB","opacity":1}]},"fillOpacity":1,"strokeOpacity":1,"borderSides":{"top":2,"right":10,"bottom":5,"left":2},"strokeStyle":"solid","radiusCorners":{"topLeft":32,"topRight":4,"bottomRight":32,"bottomLeft":4},"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"#FAFAFA","stroke":"#D1D5DB","strokeWidth":0,"radius":0,"color":"#191919","fontSize":21,"fontWeight":400,"align":"center","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","strokePaint","borderSides","radiusCorners","align"],"defaultStyleSetId":null},{"id":"shadow-card","type":"rectangle","name":"向内 / 向外","x":816,"y":272,"width":336,"height":180,"rotation":0,"visible":true,"locked":false,"text":"向内 / 向外","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":null,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[{"inset":true,"x":0,"y":3,"blur":8,"spread":0,"color":"#000000","opacity":0.12},{"inset":false,"x":0,"y":10,"blur":22,"spread":-4,"color":"#000000","opacity":0.16}],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"#F4F4F4","stroke":"#D1D5DB","strokeWidth":0,"radius":16,"color":"#191919","fontSize":21,"fontWeight":400,"align":"center","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","align","shadows"],"defaultStyleSetId":null},{"id":"a-note","type":"text","name":"移动鼠标后，渐变色和阴影慢慢改变。","x":48,"y":476,"width":336,"height":45,"rotation":0,"visible":true,"locked":false,"text":"移动鼠标后，渐变色和阴影慢慢改变。","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":21,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#666666","fontSize":14,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"b-note","type":"text","name":"圆角渐变边框保留各边不同的宽度。","x":432,"y":476,"width":336,"height":45,"rotation":0,"visible":true,"locked":false,"text":"圆角渐变边框保留各边不同的宽度。","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":21,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#666666","fontSize":14,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"c-note","type":"text","name":"阴影独立于填充，也不会挡住文字。","x":816,"y":476,"width":336,"height":45,"rotation":0,"visible":true,"locked":false,"text":"阴影独立于填充，也不会挡住文字。","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":21,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#666666","fontSize":14,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"d-title","type":"text","name":"04  文字留出呼吸空间","x":48,"y":568,"width":336,"height":32,"rotation":0,"visible":true,"locked":false,"text":"04  文字留出呼吸空间","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":28.5,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#191919","fontSize":19,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"e-title","type":"text","name":"05  输入仍是原生控件","x":432,"y":568,"width":336,"height":32,"rotation":0,"visible":true,"locked":false,"text":"05  输入仍是原生控件","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":28.5,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#191919","fontSize":19,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"f-title","type":"text","name":"06  图片可以用来填充","x":816,"y":568,"width":336,"height":32,"rotation":0,"visible":true,"locked":false,"text":"06  图片可以用来填充","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":28.5,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#191919","fontSize":19,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"typeset-card","type":"rectangle","name":"清楚表达\n恰当留白","x":48,"y":618,"width":336,"height":180,"rotation":0,"visible":true,"locked":false,"text":"清楚表达\n恰当留白","src":"","style":{"fontFamily":"Microsoft YaHei","italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":46,"letterSpacing":4,"verticalAlign":"bottom","padding":{"top":18,"right":22,"bottom":22,"left":28},"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"#FAFAFA","stroke":"#E0E0E0","strokeWidth":1,"radius":10,"color":"#191919","fontSize":25,"fontWeight":400,"align":"center","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","stroke","fontFamily","lineHeight","letterSpacing","verticalAlign","padding"],"defaultStyleSetId":null},{"id":"demo-input","type":"input","name":"请在这里输入","x":432,"y":632,"width":336,"height":54,"rotation":0,"visible":true,"locked":false,"text":"请在这里输入","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":null,"letterSpacing":0,"verticalAlign":null,"padding":{"top":7,"right":14,"bottom":7,"left":14},"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"#FFFFFF","stroke":"#BDBDBD","strokeWidth":1,"radius":10,"color":"#191919","fontSize":17,"fontWeight":400,"align":"left","opacity":1},"interactions":[{"event":"input","actions":[{"type":"setText","targetId":"input-echo","value":{"op":"concat","args":["你刚刚输入：",{"op":"event","name":"value"}]}}],"name":"","condition":null,"caseMode":"if","enabled":true}],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{"focus":{"stroke":"#191919","strokeWidth":2,"shadows":[{"inset":false,"x":0,"y":0,"blur":0,"spread":4,"color":"#000000","opacity":0.07}]}},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","stroke","padding"],"defaultStyleSetId":null},{"id":"input-echo","type":"text","name":"你刚刚输入：","x":432,"y":706,"width":336,"height":70,"rotation":0,"visible":true,"locked":false,"text":"你刚刚输入：","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":22.5,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#666666","fontSize":15,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"picture-fill","type":"rectangle","name":"远山 / 近景","x":816,"y":618,"width":336,"height":180,"rotation":0,"visible":true,"locked":false,"text":"远山 / 近景","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":null,"letterSpacing":0,"verticalAlign":"bottom","padding":{"top":12,"right":18,"bottom":18,"left":18},"fillPaint":{"type":"image","src":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAACgCAYAAAAy2+FlAAAEKUlEQVR4nO3TQU4rSRREUfa/CjbDNtgF426pJSR/BPy2y1nxIusMzsAz18u4Lx8fH/8AnV7SfwB4nIChmIChmIChmIChmIChmIChmIChmIChmIChmIChmIChmIChmIChmIChmIChmIChmIChmIChmIAZ7/39/WHp/76agBnpSLRXilnAjLIi3J1DFjAjnBHujiELmLhEvLtELGCikvHuELGAiUhHu0vIAuZ06VB3iljAnCod6G4RC5hTpeMUMDwoHeaOEQuYU6SD3DViAbNcOsSdIxYwy6UjFDA8KB3g7hELmKXS8QkYHpQO7woRC5hl0tEJGA5IRydgeFA6uKtELGCWSMcmYDggHZuA4YB0bAKGA9KxCRgOSMcmYDggHZuA4YB0bAKGA9KxCRgOSMcmYDggHZuA4YB0bCu8vb39IX3jDwGzSjq2MwKeELSAWSIdWyLgRMwCZol0bOmAz4pZwDzd53DTwU2Id3XMAuYpvhtrOrqJAT87ZgHzsL8NNB3d9ICfEbKAuds940yHNz3eozELmP/tkUGm42sL+N6QBcyvnjHGdIBt8d4TsoD51jNHmI6wOeC/xSxg/rBqfOkQ2+P9KWQB858zhpcOcod4v4Ys4AtLjC4d5i7xfhLwBSUHl45TwNRKj60h4vRt7g749kd6YOwd7vSI0zc5HLCQ95IeV0vI6Rs8PWAh90oPqi3i9LcvDVjIPdJDaow4/c2nBSzkudIDagw5/Y2xgMU8R3o4jSGnv2lUwEIW7VlE+7PDAX9Kj3tn6ZEw19MCvpUe/C7S42C+JQF/SgfQKD0IuiwN+FY6jMnSI6DXaQHfSgczRfrx6RcJ+FY6ItHSLB7wrXRcgqXNqIC/SscnWqYbHfBX6TDFyjRVAf9ErFzVFgHzu9fX12XS33Z1At7QymAFPYuAN5AMVtBZAi6VDlPMMwi4SDpAMc8j4OHSoYl5NgEPlY5KyB0EPEw6ognSb9BEwAOkg5ks/TbTCTgoHUeT9FtNJeCAdAzN0m83jYBPlB7/TtJvOYWAF0sPfXfp9017cYw10sO+ovSbJ7w4xHOlR8y19vttwFc8xFHp0XLN/f4a8JUOIdx9pTcSD/gqxxDt3tK7GRHwzscQ7nWktxQPeLdDCPea0tuKB7zTMUR7benNxQNuP0Z6QMyR3mI84JZjpIfCfOmNxgOedJD0GOg3ab+RgM88SPrb2F9yuyMCBh4jYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCgmYCj2L7188d6oKlgiAAAAAElFTkSuQmCC","fit":"cover","positionX":0.5,"positionY":0.5},"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"#D1D5DB","strokeWidth":0,"radius":12,"color":"#191919","fontSize":19,"fontWeight":400,"align":"center","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","fillPaint","verticalAlign","padding"],"defaultStyleSetId":null},{"id":"d-note","type":"text","name":"行高、字距、对齐和内距可以分别调整。","x":48,"y":824,"width":336,"height":45,"rotation":0,"visible":true,"locked":false,"text":"行高、字距、对齐和内距可以分别调整。","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":21,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#666666","fontSize":14,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"e-note","type":"text","name":"聚焦时改变外框，文字与选择位置保留。","x":432,"y":824,"width":336,"height":45,"rotation":0,"visible":true,"locked":false,"text":"聚焦时改变外框，文字与选择位置保留。","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":21,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#666666","fontSize":14,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"f-note","type":"text","name":"本页山形图片在本项目内绘制，无外链。","x":816,"y":824,"width":336,"height":45,"rotation":0,"visible":true,"locked":false,"text":"本页山形图片在本项目内绘制，无外链。","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":21,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#666666","fontSize":14,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"state-title","type":"text","name":"07  同一张卡片，也能切换状态","x":48,"y":918,"width":1104,"height":36,"rotation":0,"visible":true,"locked":false,"text":"07  同一张卡片，也能切换状态","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":33,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#191919","fontSize":22,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"state-card","type":"rectangle","name":"等待选择","x":48,"y":980,"width":336,"height":100,"rotation":0,"visible":true,"locked":false,"text":"等待选择","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":null,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"#FFFFFF","stroke":"#BBBBBB","strokeWidth":1,"radius":10,"color":"#191919","fontSize":20,"fontWeight":400,"align":"center","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{"selected":{"fill":"#333333","color":"#FFFFFF","strokePaint":{"type":"linear","angle":90,"stops":[{"offset":0,"color":"#000000","opacity":1},{"offset":1,"color":"#888888","opacity":1}]}},"error":{"stroke":"#191919","strokePaint":null,"strokeWidth":3,"strokeStyle":"dashed"}},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","stroke","align"],"defaultStyleSetId":null},{"id":"select-state","type":"button","name":"切换选中","x":432,"y":980,"width":158,"height":42,"rotation":0,"visible":true,"locked":false,"text":"切换选中","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":null,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"#FFFFFF","stroke":"#D5D5D5","strokeWidth":1,"radius":5,"color":"#191919","fontSize":14,"fontWeight":500,"align":"center","opacity":1},"interactions":[{"event":"click","actions":[{"type":"setSelected","targetId":"state-card","value":{"op":"not","args":[{"op":"node","nodeId":"state-card","property":"selected"}]}}],"name":"","condition":null,"caseMode":"if","enabled":true}],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","stroke"],"defaultStyleSetId":null},{"id":"error-state","type":"button","name":"显示错误状态","x":610,"y":980,"width":158,"height":42,"rotation":0,"visible":true,"locked":false,"text":"显示错误状态","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":null,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"#FFFFFF","stroke":"#D5D5D5","strokeWidth":1,"radius":5,"color":"#191919","fontSize":14,"fontWeight":500,"align":"center","opacity":1},"interactions":[{"event":"click","actions":[{"type":"setError","targetId":"state-card","value":true}],"name":"","condition":null,"caseMode":"if","enabled":true}],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","stroke"],"defaultStyleSetId":null},{"id":"reset-state","type":"button","name":"恢复初始","x":432,"y":1038,"width":336,"height":42,"rotation":0,"visible":true,"locked":false,"text":"恢复初始","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":null,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"#FFFFFF","stroke":"#D5D5D5","strokeWidth":1,"radius":5,"color":"#191919","fontSize":14,"fontWeight":500,"align":"center","opacity":1},"interactions":[{"event":"click","actions":[{"type":"setSelected","targetId":"state-card","value":false},{"type":"setError","targetId":"state-card","value":false}],"name":"","condition":null,"caseMode":"if","enabled":true}],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","stroke"],"defaultStyleSetId":null},{"id":"state-note","type":"text","name":"按钮只改变网页运行时的状态。\n回到编辑器，原始设计仍然完整保留。","x":816,"y":980,"width":336,"height":90,"rotation":0,"visible":true,"locked":false,"text":"按钮只改变网页运行时的状态。\n回到编辑器，原始设计仍然完整保留。","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":22.5,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#666666","fontSize":15,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"footer","type":"text","name":"在原搭主窗口打开本文件 → 选中卡片 → 右侧「样式」 → 调整后点击「预览」。\n想回退一步按 Ctrl + Z。保存副本后，你可以继续做自己的设计。","x":48,"y":1160,"width":1104,"height":88,"rotation":0,"visible":true,"locked":false,"text":"在原搭主窗口打开本文件 → 选中卡片 → 右侧「样式」 → 调整后点击「预览」。\n想回退一步按 Ctrl + Z。保存副本后，你可以继续做自己的设计。","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":24,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#666666","fontSize":16,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null},{"id":"footnote","type":"text","name":"此样本为原创演示；并不代表已完成全部 Axure 能力。","x":48,"y":1270,"width":1104,"height":28,"rotation":0,"visible":true,"locked":false,"text":"此样本为原创演示；并不代表已完成全部 Axure 能力。","src":"","style":{"fontFamily":null,"italic":false,"underline":false,"strike":false,"textCase":"none","lineHeight":19.5,"letterSpacing":0,"verticalAlign":null,"padding":null,"fillPaint":null,"strokePaint":null,"fillOpacity":1,"strokeOpacity":1,"borderSides":null,"strokeStyle":"solid","radiusCorners":null,"shadows":[],"textShadows":[],"blur":0,"backdropBlur":0,"transition":{"duration":0,"delay":0,"easing":"ease"},"transformOrigin":{"x":0.5,"y":0.5},"fill":"transparent","stroke":"transparent","strokeWidth":0,"radius":0,"color":"#777777","fontSize":13,"fontWeight":400,"align":"left","opacity":1},"interactions":[],"annotation":"","styleId":null,"checked":false,"options":[],"value":"","radioGroup":"","rows":[],"inputType":"text","readOnly":false,"maxLength":null,"disabled":false,"selected":false,"error":false,"placed":true,"stateStyles":{},"bindings":{},"eventSettings":{},"panel":null,"repeater":null,"path":null,"connector":null,"richText":null,"image":null,"styleOverrideKeys":["fill","strokeWidth","radius","color","fontSize","lineHeight"],"defaultStyleSetId":null}],"parentId":null,"guides":{"horizontal":[],"vertical":[]},"groups":[],"annotation":"","views":[],"interactions":[],"viewSetId":null,"viewOverrides":{},"eventSettings":{}}],"styles":[],"components":[],"variables":[],"viewSets":[],"styleInheritanceVersion":1,"defaultStyleSets":[],"defaultStyleSetId":null}</script>
+<script>const fmt=value=>String(Math.round(value*10000)/10000);
+function evaluateExpression(expression, context = {}) {
+  const finite = value => { const number = Number(value); return Number.isFinite(number) ? number : 0; };
+  function evaluate(value, depth) {
+    if (depth > 32) throw new Error('表达式嵌套过深');
+    if (value === null || typeof value !== 'object') return value;
+    if (value.op === 'var') return Object.hasOwn(context.variables || {}, value.name) ? context.variables[value.name] : null;
+    if (value.op === 'item') return Object.hasOwn(context.item || {}, value.column) ? context.item[value.column] : null;
+    if (value.op === 'row') return Object.hasOwn(context.row || {}, value.property) ? context.row[value.property] : null;
+    if (value.op === 'repeater') { const stats = context.getRepeater?.(value.repeaterId) ?? context.repeaters?.[value.repeaterId]; return stats && Object.hasOwn(stats, value.property) ? stats[value.property] : null; }
+    if (value.op === 'event') return Object.hasOwn(context.event || {}, value.name) ? context.event[value.name] : null;
+    if (value.op === 'node') {
+      const node = context.nodes instanceof Map ? context.nodes.get(value.nodeId) : context.nodes?.[value.nodeId];
+      return node && Object.hasOwn(node, value.property) ? node[value.property] : null;
+    }
+    const args = (value.args || []).map(argument => evaluate(argument, depth + 1));
+    switch (value.op) {
+      case 'eq': return args[0] === args[1]; case 'neq': return args[0] !== args[1];
+      case 'gt': return args[0] > args[1]; case 'gte': return args[0] >= args[1]; case 'lt': return args[0] < args[1]; case 'lte': return args[0] <= args[1];
+      case 'and': return args.every(Boolean); case 'or': return args.some(Boolean); case 'not': return !args[0];
+      case 'add': return finite(finite(args[0]) + finite(args[1])); case 'sub': return finite(finite(args[0]) - finite(args[1]));
+      case 'mul': return finite(finite(args[0]) * finite(args[1])); case 'div': return finite(args[1]) === 0 ? 0 : finite(finite(args[0]) / finite(args[1]));
+      case 'concat': return args.map(item => item == null ? '' : String(item)).join('');
+      case 'contains': return String(args[0] ?? '').includes(String(args[1] ?? ''));
+      case 'length': return Array.isArray(args[0]) || typeof args[0] === 'string' ? args[0].length : 0;
+      default: throw new Error(`不支持的表达式：${String(value.op)}`);
+    }
+  }
+  return evaluate(expression, 0);
+}
+function chooseInteractionCases(interactions, event, context = {}, settings = {}) {
+  if (settings.enabled === false) return [];
+  const selected = []; let matched = false;
+  for (const item of interactions.filter(item => item.event === event)) {
+    const mode = item.caseMode ?? 'if'; if (mode === 'if') matched = false;
+    if (item.enabled === false || (mode !== 'if' && matched)) continue;
+    if (mode === 'else' || item.condition == null || Boolean(evaluateExpression(item.condition, context))) { selected.push(item); matched = true; }
+  }
+  return selected;
+}
+function getEventSettings(target, event) {
+  const settings = target?.eventSettings && Object.hasOwn(target.eventSettings, event) ? target.eventSettings[event] : null;
+  return { enabled: settings?.enabled !== false, executionMode: settings?.executionMode === 'menu' ? 'menu' : 'automatic' };
+}
+function selectRepeaterRows(repeater, context = {}) {
+  const marked = new Set(repeater.markedRowIds || []);
+  let rows = repeater.rows.filter(row => repeater.filter == null || Boolean(evaluateExpression(repeater.filter, { ...context, item: row.values, row: { id: row.id, marked: marked.has(row.id) } })));
+  if (repeater.sort) {
+    const { column, descending } = repeater.sort;
+    rows = [...rows].sort((a, b) => { const first = a.values[column], second = b.values[column]; const result = first === second ? 0 : first < second ? -1 : 1; return descending ? -result : result; });
+  }
+  return rows;
+}
+function selectRepeaterPage(repeater, context = {}, requestedPage = repeater.pagination?.initialPage ?? 1, pageSize = repeater.pagination?.pageSize ?? null) {
+  const filtered = selectRepeaterRows(repeater, context), pageCount = pageSize === null ? 1 : Math.max(1, Math.ceil(filtered.length / pageSize));
+  const currentPage = Math.max(1, Math.min(pageCount, Math.trunc(Number(requestedPage)) || 1));
+  return { rows: pageSize === null ? filtered : filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize), currentPage, pageCount, pageSize, totalCount: repeater.rows.length, filteredCount: filtered.length, markedCount: (repeater.markedRowIds || []).length };
+}
+function newStyleDefaults() {
+  return {fontFamily:null,italic:false,underline:false,strike:false,textCase:'none',lineHeight:null,letterSpacing:0,verticalAlign:null,padding:null,
+    fillPaint:null,strokePaint:null,fillOpacity:1,strokeOpacity:1,borderSides:null,strokeStyle:'solid',radiusCorners:null,
+    shadows:[],textShadows:[],blur:0,backdropBlur:0,transition:{duration:0,delay:0,easing:'ease'},transformOrigin:{x:.5,y:.5}};
+}
+function getBuiltinStyle(type) {
+  const style={...newStyleDefaults(),fill:type==='text'?'transparent':type==='button'?'#191919':'#FFFFFF',stroke:type==='text'?'transparent':'#D1D5DB',strokeWidth:type==='text'?0:1,radius:type==='text'?0:4,color:type==='button'?'#FFFFFF':'#191919',fontSize:type==='text'?16:14,fontWeight:type==='button'?500:400,align:['text','input','textarea','checkbox','radio','select'].includes(type)?'left':'center',opacity:1};
+  if(type==='ellipse')style.radius=50000;
+  if(['line','path','connector'].includes(type))Object.assign(style,{fill:'transparent',stroke:'#191919',strokeWidth:2,radius:0});
+  if(['textarea','select','table'].includes(type))style.stroke='#D7DCE7';
+  if(['checkbox','radio'].includes(type))Object.assign(style,{fill:'transparent',strokeWidth:0,radius:0});
+  if(type==='table')style.radius=0;
+  if(['dynamicPanel','repeater'].includes(type))style.fill='transparent';
+  return style;
+}
+function resolveNamedStylePatch(project,styleId) {
+  const chain=[],seen=new Set();let id=styleId;
+  while(id!=null){if(seen.has(id)||chain.length>=32)throw Object.assign(new Error('命名样式继承不能循环或超过 32 层'),{code:'VALIDATION_ERROR'});seen.add(id);const value=(project.styles||[]).find(item=>item.id===id);if(!value)throw Object.assign(new Error('引用样式不存在：'+id),{code:'VALIDATION_ERROR'});chain.unshift(value);id=value.parentId??null;}
+  const result={style:{},stateStyles:{}};
+  for(const named of chain){for(const key of named.overrideKeys??Object.keys(named.style))Object.defineProperty(result.style,key,{value:structuredClone(named.style[key]),enumerable:true,writable:true,configurable:true});for(const[state,patch]of Object.entries(named.stateStyles||{}))Object.defineProperty(result.stateStyles,state,{value:{...result.stateStyles[state],...structuredClone(patch)},enumerable:true,writable:true,configurable:true});}
+  return result;
+}
+function resolveNodeBaseStyle(project,node) {
+  const id=node.defaultStyleSetId??project.defaultStyleSetId??null,set=id===null?null:(project.defaultStyleSets||[]).find(item=>item.id===id);
+  if(id!==null&&!set)throw Object.assign(new Error('默认样式集不存在：'+id),{code:'VALIDATION_ERROR'});
+  const defaults=set&&Object.hasOwn(set.byType,node.type)?set.byType[node.type].style||{}:{};
+  const local={};for(const key of node.styleOverrideKeys??Object.keys(node.style||{}))Object.defineProperty(local,key,{value:structuredClone(node.style[key]),enumerable:true,writable:true,configurable:true});
+  return {...getBuiltinStyle(node.type),...structuredClone(defaults),...resolveNamedStylePatch(project,node.styleId).style,...local};
+}
+function resolveNodeStateStyles(project,node) {
+  const id=node.defaultStyleSetId??project.defaultStyleSetId??null,set=id===null?null:(project.defaultStyleSets||[]).find(item=>item.id===id);
+  if(id!==null&&!set)throw Object.assign(new Error('默认样式集不存在：'+id),{code:'VALIDATION_ERROR'});
+  const result={},defaults=set&&Object.hasOwn(set.byType,node.type)?set.byType[node.type].stateStyles||{}:{};
+  for(const layer of [defaults,resolveNamedStylePatch(project,node.styleId).stateStyles,node.stateStyles||{}])for(const[state,patch]of Object.entries(layer))Object.defineProperty(result,state,{value:{...result[state],...structuredClone(patch)},enumerable:true,writable:true,configurable:true});
+  return result;
+}
+function resolveNodeBaseAppearance(project,node){return {style:resolveNodeBaseStyle(project,node),stateStyles:resolveNodeStateStyles(project,node)};}
+function resolveComponentCanvas(project, canvas, viewContext = {}) {
+  const clone = value => structuredClone(value);
+  const visualKeys = ['x', 'y', 'width', 'height', 'rotation', 'placed'];
+  const components = new Map((project.components || []).map(component => [component.id, component]));
+  const pathFor = (component, viewId) => {
+    const chain = [], seen = new Set(); let current = viewId;
+    while (current !== null && current !== undefined) {
+      if (seen.has(current) || seen.size >= 16) throw new Error('组件视图继承无效');
+      seen.add(current); const view = (component.views || []).find(item => item.id === current);
+      if (!view) throw new Error('组件视图不存在'); chain.unshift(view); current = view.parentId;
+    }
+    return chain;
+  };
+  const select = (component, group, path) => {
+    if (group.viewMode !== 'auto') return group.viewId ?? null;
+    const expected = JSON.stringify(path || []);
+    return (component.views || []).find(view => JSON.stringify(pathFor(component, view.id).map(item => item.name)) === expected)?.id ?? null;
+  };
+  const memo = new Map(), active = new Set();
+  function resolve(source, selectedId, hostPath, isComponent) {
+    const key = JSON.stringify([source.id, selectedId, hostPath]); if (memo.has(key)) return clone(memo.get(key));
+    if (active.has(source.id) || active.size >= 17) throw new Error('组件嵌套不能循环或超过 16 层');
+    active.add(source.id);
+    const result = clone(source);
+    if(Array.isArray(project.styles))for(const node of result.nodes)Object.assign(node,resolveNodeBaseAppearance(project,node));
+    const chain = isComponent ? pathFor(source, selectedId) : [];
+    const hostViews = isComponent ? source.views || [] : source.viewSetId != null ? project.viewSets.find(set => set.id === source.viewSetId)?.views || [] : source.views || [];
+    const hostChain = []; let hostId = selectedId; const hostSeen = new Set();
+    while (hostId != null) { if (hostSeen.has(hostId) || hostSeen.size >= 50) throw new Error('实例宿主视图继承无效'); hostSeen.add(hostId); const view = hostViews.find(item => item.id === hostId); if (!view) throw new Error('实例宿主视图不存在'); hostChain.unshift(view); hostId = view.parentId; }
+    const path = isComponent ? chain.map(view => view.name) : hostPath;
+    const byId = new Map(result.nodes.map(node => [node.id, node])), groupPlacements = new Map(), sourceUnplaced = new Set();
+    for (const group of source.groups || []) {
+      if (!group.componentId) continue;
+      const component = components.get(group.componentId); if (!component) throw new Error('组件主定义不存在');
+      const projected = resolve(component, select(component, group, path), path, true);
+      let position = { x: group.x, y: group.y, placed: group.placed !== false };
+      for (const view of hostChain) if (Object.hasOwn(group.viewOverrides || {}, view.id)) position = { ...position, ...group.viewOverrides[view.id] };
+      groupPlacements.set(group.id, position.placed);
+      const originals = new Map(projected.nodes.map(node => [node.id, node]));
+      for (let index = 0; index < group.sourceIds.length; index++) {
+        const node = byId.get(group.nodeIds[index]), original = originals.get(group.sourceIds[index]);
+        if (!node || !original) throw new Error('组件实例映射不完整');
+        for (const key of visualKeys) if (Object.hasOwn(original, key)) node[key] = clone(original[key]);
+        node.x = original.x + position.x; node.y = original.y + position.y; node.style = clone(original.style); node.stateStyles = clone(original.stateStyles);
+        if (original.placed === false) sourceUnplaced.add(node.id);
+      }
+    }
+    for (const view of chain) for (const [nodeId, patch] of Object.entries(source.viewOverrides?.[view.id] || {})) {
+      const node = byId.get(nodeId); if (!node) continue;
+      for (const key of visualKeys) if (Object.hasOwn(patch, key)) node[key] = clone(patch[key]);
+      if (patch.style) node.style = { ...node.style, ...clone(patch.style) };
+    }
+    // A host view may hide an instance member, but cannot place a member that
+    // its selected source view or containing group has excluded.
+    for (const group of source.groups || []) if ((groupPlacements.has(group.id) ? groupPlacements.get(group.id) : group.placed) === false) for (const nodeId of group.nodeIds) sourceUnplaced.add(nodeId);
+    for (const nodeId of sourceUnplaced) { const node = byId.get(nodeId); if (node) node.placed = false; }
+    active.delete(source.id); memo.set(key, result); return clone(result);
+  }
+  return resolve(canvas, viewContext.viewId ?? null, viewContext.path || [], components.has(canvas.id));
+}
+function resolveViewChain(views, viewId) {
+  if (viewId == null) return [];
+  const byId = new Map(views.map(view => [view.id, view])), seen = new Set(), chain = [];
+  for (let id = viewId; id != null;) {
+    if (seen.has(id) || chain.length >= 50) throw Object.assign(new Error('视图继承存在循环或超过 50 层'), { code: 'VIEW_ERROR' });
+    const view = byId.get(id);
+    if (!view) throw Object.assign(new Error('视图或父视图不存在：' + id), { code: 'VIEW_ERROR' });
+    seen.add(id); chain.unshift(view); id = view.parentId ?? null;
+  }
+  return chain;
+}
+function getCanvasViewOverrides(project, canvas, viewId) {
+  if (viewId == null) return undefined;
+  const component = (project.components || []).some(item => item.id === canvas.id);
+  return component || canvas.viewSetId != null ? Object.hasOwn(canvas.viewOverrides || {},viewId) ? canvas.viewOverrides[viewId] : undefined : canvas.views?.find(view => view.id === viewId)?.overrides;
+}
+function getCanvasViews(project, canvas) {
+  if (canvas.viewSetId != null) {
+    const set = (project.viewSets || []).find(item => item.id === canvas.viewSetId);
+    if (!set) throw Object.assign(new Error('页面引用的视图集不存在'), { code: 'VIEW_ERROR' });
+    return set.views;
+  }
+  return canvas.views || [];
+}
+function selectAdaptiveView(project, page, viewportWidth, requestedView) {
+  const views = getCanvasViews(project, page);
+  if (requestedView === null) return null;
+  if (requestedView !== undefined) return views.some(view => view.id === requestedView) ? requestedView : null;
+  return [...views].filter(view => view.minWidth <= viewportWidth).sort((a, b) => b.minWidth - a.minWidth)[0]?.id ?? (page.viewSetId != null ? [...views].sort((a,b)=>a.minWidth-b.minWidth)[0]?.id ?? null : null);
+}
+function resolveCanvasView(project, canvas, viewId = null) {
+  const views = getCanvasViews(project, canvas), chain = resolveViewChain(views, viewId), component = (project.components || []).some(item => item.id === canvas.id);
+  const result = resolveComponentCanvas(project, canvas, { viewId, path: chain.map(view => view.name) });
+  // Capture source/group gates before page overrides. A legacy page override
+  // is not a source gate, so a child view can still override that page value.
+  const projectedNodes = new Map(result.nodes.map(node => [node.id, node])), placementBlocks = new Set();
+  for (const group of result.groups || []) for (const id of group.nodeIds) {
+    if (group.componentId ? projectedNodes.get(id)?.placed === false : group.placed === false) placementBlocks.add(id);
+  }
+  if (!component) for (const view of chain) {
+    const overrides = getCanvasViewOverrides(project, canvas, view.id) || {};
+    result.width = view.width; result.height = view.height;
+    result.nodes = result.nodes.map(node => {
+      const patch = Object.hasOwn(overrides,node.id) ? overrides[node.id] : undefined;
+      if (!patch) return node;
+      const next = { ...node, ...structuredClone(patch), style: { ...node.style, ...(patch.style || {}) } };
+      if (Object.hasOwn(patch, 'text')) next.richText = null;
+      return next;
+    });
+  }
+  for (const node of result.nodes) if (placementBlocks.has(node.id)) node.placed = false;
+  // Placement is inherited through logical containers, including panels whose
+  // DOM may be portalled outside the parent. Visibility remains a separate flag.
+  const nodes = new Map(result.nodes.map(node => [node.id, node])), parents = new Map(), done = new Map();
+  for (const node of result.nodes) for (const id of node.panel?.states.flatMap(state => state.nodeIds) || node.repeater?.templateIds || []) parents.set(id, node.id);
+  function placed(id, seen = new Set()) {
+    if (done.has(id)) return done.get(id);
+    if (seen.has(id)) throw Object.assign(new Error('元件容器存在循环'), { code: 'VIEW_ERROR' });
+    seen.add(id); const node = nodes.get(id), parent = parents.get(id);
+    const value = node?.placed !== false && (!parent || placed(parent, seen)); done.set(id, value); return value;
+  }
+  for (const node of result.nodes) { node.placed ??= true; node.effectivePlaced = placed(node.id); }
+  return result;
+}
+function resolveAdaptivePage(page, viewportWidth, requestedView, project = { pages: [page], components: [], viewSets: [] }) {
+  return resolveCanvasView(project, page, selectAdaptiveView(project, page, viewportWidth, requestedView));
+}
+function getNodeDescendants(nodes, nodeId) {
+  const map = new Map(nodes.map(node => [node.id, node])); const found = new Set();
+  function visit(id) { const node = map.get(id); if (!node) return; const children = node.panel ? node.panel.states.flatMap(state => state.nodeIds) : node.repeater ? node.repeater.templateIds : []; for (const child of children) if (!found.has(child)) { found.add(child); visit(child); } }
+  visit(nodeId); found.delete(nodeId); return [...found];
+}
+function getNodeOrigin(node) {
+  const origin = node.style?.transformOrigin || { x: .5, y: .5 };
+  return { x: node.x + node.width * origin.x, y: node.y + node.height * origin.y };
+}
+function rotateNodePoint(node, x, y) {
+  const origin = getNodeOrigin(node), angle = (node.rotation || 0) * Math.PI / 180;
+  const dx = x - origin.x, dy = y - origin.y, cosine = Math.cos(angle), sine = Math.sin(angle);
+  return { x: origin.x + dx * cosine - dy * sine, y: origin.y + dx * sine + dy * cosine };
+}
+function getNodeBounds(node) {
+  const points = [[node.x, node.y], [node.x + node.width, node.y], [node.x + node.width, node.y + node.height], [node.x, node.y + node.height]].map(([x, y]) => rotateNodePoint(node, x, y));
+  const left = Math.min(...points.map(point => point.x)), top = Math.min(...points.map(point => point.y));
+  const right = Math.max(...points.map(point => point.x)), bottom = Math.max(...points.map(point => point.y));
+  return { x: left, y: top, left, top, right, bottom, width: right - left, height: bottom - top };
+}
+function connectorAnchor(node, side) {
+  const offsets = { top: [0, -node.height / 2], right: [node.width / 2, 0], bottom: [0, node.height / 2], left: [-node.width / 2, 0], center: [0, 0] };
+  const [x, y] = offsets[side] || offsets.center;
+  return rotateNodePoint(node, node.x + node.width / 2 + x, node.y + node.height / 2 + y);
+}
+function connectorPoints(node, nodes) {
+  const data = node.connector;
+  if (!data) return [];
+  const from = nodes.find(item => item.id === data.from.nodeId), to = nodes.find(item => item.id === data.to.nodeId);
+  if (!from || !to) return [];
+  const a = connectorAnchor(from, data.from.side), b = connectorAnchor(to, data.to.side);
+  if (data.route === 'straight') return [a, b];
+  if (['top', 'bottom'].includes(data.from.side)) { const middle = (a.y + b.y) / 2; return [a, { x: a.x, y: middle }, { x: b.x, y: middle }, b]; }
+  const middle = (a.x + b.x) / 2; return [a, { x: middle, y: a.y }, { x: middle, y: b.y }, b];
+}
+function pathData(path, width, height) {
+  const points = path?.points; if (!points?.length) return '';
+  let d = `M ${fmt(points[0].x * width)} ${fmt(points[0].y * height)}`;
+  const count = path.closed ? points.length + 1 : points.length;
+  for (let index = 1; index < count; index++) {
+    const a = points[index - 1], b = points[index % points.length];
+    if (a.outX !== null || b.inX !== null) d += ` C ${fmt((a.outX ?? a.x) * width)} ${fmt((a.outY ?? a.y) * height)} ${fmt((b.inX ?? b.x) * width)} ${fmt((b.inY ?? b.y) * height)} ${fmt(b.x * width)} ${fmt(b.y * height)}`;
+    else d += ` L ${fmt(b.x * width)} ${fmt(b.y * height)}`;
+  }
+  return d + (path.closed ? ' Z' : '');
+}
+function getVectorGeometry(node, nodes = []) {
+  if (node.type === 'path' && node.path) return { width: node.width, height: node.height, d: pathData(node.path, node.width, node.height), closed: node.path.closed, arrow: 'none' };
+  if (node.type !== 'connector' || !node.connector) return null;
+  const points = connectorPoints(node, nodes);
+  const d = points.map((point, index) => `${index ? 'L' : 'M'} ${fmt(point.x - node.x)} ${fmt(point.y - node.y)}`).join(' ');
+  return { width: node.width, height: node.height, d, closed: false, arrow: node.connector.arrow };
+}
+function richRunStyle(run) {
+  return { fontWeight: run.bold ? '700' : '400', fontStyle: run.italic ? 'italic' : 'normal', textDecoration: [run.underline ? 'underline' : '', run.strike ? 'line-through' : ''].filter(Boolean).join(' ') || 'none', verticalAlign: run.baseline === 'super' ? 'super' : run.baseline === 'sub' ? 'sub' : 'baseline', fontSize: run.baseline && run.baseline !== 'normal' ? '.75em' : '1em', color: run.color || 'inherit' };
+}
+function inspectImageBytes(input) {
+  const IMAGE_LIMITS = {bytes:4*1024*1024,edge:8192,pixels:16*1024*1024,frames:300,animationPixels:64*1024*1024};
+  const mimes = {png:'image/png',jpeg:'image/jpeg',webp:'image/webp',gif:'image/gif',bmp:'image/bmp',svg:'image/svg+xml'};
+  const fail = message => { throw Object.assign(new Error(message),{code:'IMAGE_ERROR'}); };
+  const size = (width,height,frames=1) => {
+    if (!Number.isInteger(width)||!Number.isInteger(height)||width<1||height<1||width>IMAGE_LIMITS.edge||height>IMAGE_LIMITS.edge||width*height>IMAGE_LIMITS.pixels) fail('图片尺寸超过限制（单边 8192、总像素 16 Mi）');
+    if (!Number.isInteger(frames)||frames<1||frames>IMAGE_LIMITS.frames||frames>1&&width*height*frames>IMAGE_LIMITS.animationPixels) fail('动画超过 300 帧或累计像素 64 Mi');
+  };
+  const b = input instanceof Uint8Array ? input : input instanceof ArrayBuffer ? new Uint8Array(input) : null;
+  if (!b||!b.length||b.length>IMAGE_LIMITS.bytes) fail('图片须为 1 字节至 4 MiB');
+  const view = new DataView(b.buffer,b.byteOffset,b.byteLength);
+  const ascii = (start,end) => {let value='';for(let i=start;i<end;i++)value+=String.fromCharCode(b[i]);return value;};
+  const signature = (offset,bytes) => bytes.every((value,index)=>b[offset+index]===value);
+  const findPair = (first,second,start) => {for(let i=start;i<b.length-1;i++)if(b[i]===first&&b[i+1]===second)return i;return -1;};
+  const u24 = offset => b[offset]+b[offset+1]*256+b[offset+2]*65536;
+  const crcTable=Array.from({length:256},(_,value)=>{for(let bit=0;bit<8;bit++)value=value&1?0xEDB88320^(value>>>1):value>>>1;return value>>>0;});
+  const crc32=bytes=>{let value=0xFFFFFFFF;for(const byte of bytes)value=crcTable[(value^byte)&255]^(value>>>8);return(value^0xFFFFFFFF)>>>0;};
+  let format, width, height, frames = 1;
+  const need = (offset, count) => { if (offset < 0 || count < 0 || offset + count > b.length) fail('图片内容截断'); };
+  if (b.length >= 8 && signature(0,[137,80,78,71,13,10,26,10])) {
+    format = 'png'; let p = 8, ended = false, imageData = false, animation = false, frameCount = 0;
+    while (p < b.length) { need(p, 12); const length = view.getUint32(p), type = ascii(p + 4,p + 8); need(p + 12, length);
+      if (crc32(b.subarray(p + 4, p + 8 + length)) !== view.getUint32(p + 8 + length)) fail('PNG 数据校验失败，图片可能已损坏');
+      if (p === 8) { if (type !== 'IHDR' || length !== 13) fail('PNG 图像头无效'); width = view.getUint32(p + 8); height = view.getUint32(p + 12); size(width, height); }
+      else if (type === 'IHDR') fail('PNG 图像头重复');
+      if (type === 'acTL') { if (length !== 8 || animation) fail('PNG 动画头无效'); animation = true; frames = view.getUint32(p + 8); size(width, height, frames); }
+      if (type === 'fcTL') { if (length !== 26 || !animation) fail('PNG 动画帧头无效'); const w = view.getUint32(p + 12), h = view.getUint32(p + 16), x = view.getUint32(p + 20), y = view.getUint32(p + 24); size(w, h); if (x + w > width || y + h > height) fail('PNG 动画帧超出画布'); size(width, height, ++frameCount); }
+      if (type === 'IDAT') imageData = true; p += length + 12;
+      if (type === 'IEND') { if (length || p !== b.length) fail('PNG 结尾无效'); ended = true; break; }
+    } if (!ended || !imageData || animation && frameCount !== frames) fail('PNG 内容或动画帧数不完整');
+  } else if (b.length >= 3 && b[0] === 255 && b[1] === 216 && b[2] === 255) {
+    format = 'jpeg'; let p = 2;
+    while (p < b.length) { if (b[p++] !== 255) fail('JPEG 标记无效'); while (b[p] === 255) p++; need(p, 1); const marker = b[p++]; if (marker === 0xDA || marker === 0xD9) break; if (marker === 1 || marker >= 0xD0 && marker <= 0xD7) continue;
+      need(p, 2); const length = view.getUint16(p); if (length < 2) fail('JPEG 数据长度无效'); need(p, length);
+      if ([0xC0,0xC1,0xC2,0xC3,0xC5,0xC6,0xC7,0xC9,0xCA,0xCB,0xCD,0xCE,0xCF].includes(marker)) { if (length < 8) fail('JPEG 图像头无效'); height = view.getUint16(p + 3); width = view.getUint16(p + 5); size(width, height); }
+      p += length;
+    } if (!width || findPair(255,217,p) < 0) fail('JPEG 内容不完整');
+  } else if (b.length >= 6 && ['GIF87a', 'GIF89a'].includes(ascii(0,6))) {
+    format = 'gif'; need(0, 13); width = view.getUint16(6,true); height = view.getUint16(8,true); size(width, height);
+    let p = 13 + (b[10] & 128 ? 3 * 2 ** ((b[10] & 7) + 1) : 0), ended = false; frames = 0;
+    const blocks = () => { while (true) { need(p, 1); const length = b[p++]; if (!length) return; need(p, length); p += length; } };
+    while (p < b.length) { const tag = b[p++]; if (tag === 0x3B) { ended = true; if (p !== b.length) fail('GIF 结尾无效'); break; }
+      if (tag === 0x21) { need(p++, 1); blocks(); }
+      else if (tag === 0x2C) { need(p, 9); const x = view.getUint16(p,true), y = view.getUint16(p + 2,true), w = view.getUint16(p + 4,true), h = view.getUint16(p + 6,true), packed = b[p + 8]; size(w, h); if (x + w > width || y + h > height) fail('GIF 帧超出画布'); p += 9 + (packed & 128 ? 3 * 2 ** ((packed & 7) + 1) : 0); need(p, 1); const codeSize = b[p++]; if (codeSize < 2 || codeSize > 8) fail('GIF 编码无效'); blocks(); frames++; size(width, height, frames); }
+      else fail('GIF 数据块无效');
+    } if (!ended || !frames) fail('GIF 内容不完整');
+  } else if (b.length >= 12 && ascii(0,4) === 'RIFF' && ascii(8,12) === 'WEBP') {
+    format = 'webp'; if (view.getUint32(4,true) + 8 !== b.length) fail('WebP 数据长度无效'); let p = 12, counted = 0, extended = false;
+    while (p < b.length) { need(p, 8); const type = ascii(p,p + 4), length = view.getUint32(p + 4,true), start = p + 8; need(start, length); p = start + length + length % 2; need(p, 0);
+      if (type === 'VP8X') { if (length !== 10 || extended || width) fail('WebP 图像头无效'); extended = true; width = u24(start + 4) + 1; height = u24(start + 7) + 1; size(width, height); }
+      if (type === 'VP8 ' || type === 'VP8L') {
+        let w, h;
+        if (type === 'VP8 ') { if (length < 10 || !signature(start + 3,[0x9D,1,0x2A])) fail('WebP 帧头无效'); w = view.getUint16(start + 6,true) & 0x3FFF; h = view.getUint16(start + 8,true) & 0x3FFF; }
+        else { if (length < 5 || b[start] !== 0x2F) fail('WebP 无损帧头无效'); const bits = view.getUint32(start + 1,true); w = (bits & 0x3FFF) + 1; h = ((bits >>> 14) & 0x3FFF) + 1; }
+        size(w, h); if (width && (w > width || h > height)) fail('WebP 像素帧超出画布'); width ??= w; height ??= h;
+      }
+      if (type === 'ANMF') {
+        if (length < 16 || !extended) fail('WebP 动画帧无效'); const x = u24(start) * 2, y = u24(start + 3) * 2, w = u24(start + 6) + 1, h = u24(start + 9) + 1;
+        size(w, h); if (x + w > width || y + h > height) fail('WebP 动画帧超出画布'); counted++; size(width, height, counted);
+        let nested = start + 16, found = false;
+        while (nested < start + length) {
+          need(nested, 8); const tag = ascii(nested,nested + 4), bytes = view.getUint32(nested + 4,true), data = nested + 8;
+          if (data + bytes + bytes % 2 > start + length) fail('WebP 动画压缩帧截断'); let pw, ph;
+          if (tag === 'VP8 ') { if (bytes < 10 || !signature(data + 3,[0x9D,1,0x2A])) fail('WebP 动画压缩帧头无效'); pw = view.getUint16(data + 6,true) & 0x3FFF; ph = view.getUint16(data + 8,true) & 0x3FFF; }
+          if (tag === 'VP8L') { if (bytes < 5 || b[data] !== 0x2F) fail('WebP 动画无损帧头无效'); const bits = view.getUint32(data + 1,true); pw = (bits & 0x3FFF) + 1; ph = ((bits >>> 14) & 0x3FFF) + 1; }
+          if (pw !== undefined) { size(pw, ph); if (pw !== w || ph !== h || found) fail('WebP 动画压缩尺寸不一致'); found = true; }
+          nested = data + bytes + bytes % 2;
+        }
+        if (!found) fail('WebP 动画缺少压缩帧');
+      }
+    } frames = counted || 1;
+  } else if (b.length >= 2 && ascii(0,2) === 'BM') {
+    format = 'bmp'; need(0, 26); const header = view.getUint32(14,true), offset = view.getUint32(10,true); need(14, header); if (offset < 14 + header || offset >= b.length) fail('BMP 像素位置无效');
+    if (header === 12) { width = view.getUint16(18,true); height = view.getUint16(20,true); }
+    else { if (header < 40 || header > 124) fail('暂不支持此 BMP 图像头'); width = view.getInt32(18,true); height = Math.abs(view.getInt32(22,true)); }
+  } else if (/^\s*(?:<\?xml\b|<!--|<svg\b)/i.test(new TextDecoder('utf-8').decode(b).replace(/^\uFEFF/, ''))) format = 'svg';
+  else fail('无法识别图片，请使用 PNG、JPEG、WebP、GIF、BMP 或静态 SVG');
+  if (format !== 'svg') size(width, height, frames);
+  return { format, mime: mimes[format], width, height, animated: frames > 1, frames };
+}
+function inspectImageDataUrl(src) {
+  const fail=message=>{throw Object.assign(new Error(message),{code:'IMAGE_ERROR'});};
+  if(typeof src!=='string'||src.length>Math.ceil(4*1024*1024/3)*4+40)fail('单张图片必须不超过 4 MiB');
+  const match=/^data:(image\/(?:png|jpeg|webp|gif));base64,([A-Za-z0-9+/]+={0,2})$/.exec(src);
+  if(!match||match[2].length%4)fail('图片仅支持有效的内嵌 PNG、JPEG、WebP、GIF 数据');
+  let binary;try{binary=atob(match[2]);}catch{fail('图片 Base64 无效');}
+  if(btoa(binary)!==match[2])fail('图片 Base64 无效');
+  const bytes=Uint8Array.from(binary,character=>character.charCodeAt(0)),info=inspectImageBytes(bytes);
+  if(info.mime!==match[1])fail('图片声明格式与实际数据不一致');
+  return {...info,bytes:bytes.byteLength};
+}
+function styleColor(color, opacity = 1) {
+  let value = String(color || '#000000').toLowerCase();
+  if (value === 'transparent') return 'rgba(0,0,0,0)';
+  if (value === 'white') value = '#ffffff'; if (value === 'black') value = '#000000';
+  value = value.slice(1); if (value.length <= 4) value = [...value].map(char => char + char).join('');
+  const alpha = value.length === 8 ? parseInt(value.slice(6), 16) / 255 : 1;
+  return `rgba(${parseInt(value.slice(0, 2), 16)},${parseInt(value.slice(2, 4), 16)},${parseInt(value.slice(4, 6), 16)},${alpha * opacity})`;
+}
+function resolveNodeVisual(node, options = {}) {
+  const style = options.style || node.style || {}, width = Math.max(0, node.width || 0), height = Math.max(0, node.height || 0);
+  const vector = ['path', 'connector', 'line'].includes(node.type), uniform = style.strokeWidth || 0;
+  const border = vector ? { top: 0, right: 0, bottom: 0, left: 0 } : { top: uniform, right: uniform, bottom: uniform, left: uniform, ...style.borderSides };
+  const horizontal = Math.min(1, width / (border.left + border.right || 1)), vertical = Math.min(1, height / (border.top + border.bottom || 1));
+  border.left *= horizontal; border.right *= horizontal; border.top *= vertical; border.bottom *= vertical;
+  let radii = { topLeft: style.radius || 0, topRight: style.radius || 0, bottomRight: style.radius || 0, bottomLeft: style.radius || 0, ...style.radiusCorners };
+  if (node.type === 'ellipse') radii = { topLeft: 0, topRight: 0, bottomRight: 0, bottomLeft: 0 };
+  const ratio = Math.min(1, width / (radii.topLeft + radii.topRight || 1), width / (radii.bottomLeft + radii.bottomRight || 1), height / (radii.topLeft + radii.bottomLeft || 1), height / (radii.topRight + radii.bottomRight || 1));
+  radii = Object.fromEntries(Object.entries(radii).map(([key, value]) => [key, value * ratio]));
+  const fallbackPadding = node.type === 'image' ? { top: node.image?.text?.padding ?? 8, right: node.image?.text?.padding ?? 8, bottom: node.image?.text?.padding ?? 8, left: node.image?.text?.padding ?? 8 }
+    : ['button', 'rectangle'].includes(node.type) ? { top: 4, right: 8, bottom: 4, left: 8 }
+      : ['input', 'select'].includes(node.type) ? { top: 0, right: 10, bottom: 0, left: 10 }
+        : node.type === 'textarea' ? { top: 9, right: 10, bottom: 9, left: 10 } : { top: 0, right: 0, bottom: 0, left: 0 };
+  const padding = { ...(style.padding || fallbackPadding) }, inner = { x: border.left, y: border.top, width: Math.max(0, width - border.left - border.right), height: Math.max(0, height - border.top - border.bottom) };
+  const fontSize = style.fontSize || 14, family = style.fontFamily ?? node.richText?.fontFamily;
+  const text = { fontFamily: family ? JSON.stringify(family) + ',"Segoe UI","Microsoft YaHei",sans-serif' : 'Inter,"Segoe UI","Microsoft YaHei",sans-serif', fontSize,
+    fontWeight: style.fontWeight || 400, lineHeight: style.lineHeight ?? fontSize * (node.richText?.lineHeight || 1.45), letterSpacing: style.letterSpacing || 0,
+    verticalAlign: style.verticalAlign ?? (node.type === 'image' ? node.image?.text?.verticalAlign || 'middle' : ['text', 'textarea', 'table'].includes(node.type) ? 'top' : 'middle'),
+    align: style.align || 'left', color: style.color || '#191919', italic: !!style.italic, decoration: [style.underline ? 'underline' : '', style.strike ? 'line-through' : ''].filter(Boolean).join(' ') || 'none', textCase: style.textCase || 'none' };
+  return { style, width, height, border, radii, inner, padding, text, content: { x: inner.x + padding.left, y: inner.y + padding.top, width: Math.max(0, inner.width - padding.left - padding.right), height: Math.max(0, inner.height - padding.top - padding.bottom) } };
+}
+function styleGradientGeometry(paint, width, height) {
+  if (paint.type === 'radial') return { cx: paint.cx * width, cy: paint.cy * height, rx: paint.radius * width, ry: paint.radius * height };
+  const angle = paint.angle * Math.PI / 180, dx = Math.sin(angle), dy = -Math.cos(angle), length = Math.abs(width * dx) + Math.abs(height * dy);
+  return { x1: width / 2 - dx * length / 2, y1: height / 2 - dy * length / 2, x2: width / 2 + dx * length / 2, y2: height / 2 + dy * length / 2 };
+}
+function styleRoundedPath(x, y, width, height, corners) {
+  const pairs = Object.fromEntries(['topLeft', 'topRight', 'bottomRight', 'bottomLeft'].map(key => { const v = corners[key] || 0; return [key, typeof v === 'number' ? { x: v, y: v } : { x: v.x, y: v.y }]; }));
+  const { topLeft: a, topRight: b, bottomRight: c, bottomLeft: d } = pairs;
+  const factor = Math.min(1, width / (a.x + b.x || 1), width / (c.x + d.x || 1), height / (a.y + d.y || 1), height / (b.y + c.y || 1));
+  for (const p of Object.values(pairs)) { p.x = Math.max(0, p.x * factor); p.y = Math.max(0, p.y * factor); }
+  const arc = (p, endX, endY) => p.x && p.y ? `A ${p.x} ${p.y} 0 0 1 ${endX} ${endY}` : `L ${endX} ${endY}`;
+  return `M ${x + a.x} ${y} H ${x + width - b.x} ${arc(b, x + width, y + b.y)} V ${y + height - c.y} ${arc(c, x + width - c.x, y + height)} H ${x + d.x} ${arc(d, x, y + height - d.y)} V ${y + a.y} ${arc(a, x + a.x, y)} Z`;
+}
+function loadStyleImage(src) {
+  const cache = loadStyleImage.cache ||= new Map(); if (cache.has(src)) return cache.get(src);
+  let info; try { info = inspectImageDataUrl(src); } catch (error) { return Promise.reject(error); }
+  const pending = new Promise((resolve, reject) => { const image = new Image(); image.onload = () => resolve({ image, width: image.naturalWidth, height: image.naturalHeight, info }); image.onerror = () => reject(new Error('填充图片无法解码')); image.src = src; });
+  cache.set(src, pending); while (cache.size > 16) cache.delete(cache.keys().next().value); pending.catch(() => { if (cache.get(src) === pending) cache.delete(src); }); return pending;
+}
+function applyStylePaint(defs, key, paint, color, width, height, uid, onReady) {
+  const doc = defs.ownerDocument, ns = 'http://www.w3.org/2000/svg', make = tag => doc.createElementNS(ns, tag), id = uid + '-' + key;
+  const states = defs.__yuandaPaints ||= new Map(); let state = states.get(key);
+  const type = paint?.type || 'solid';
+  if (!paint) { if (state) { state.element.remove(); states.delete(key); } return color; }
+  if (!state || state.type !== type) {
+    state?.element.remove(); const element = make(type === 'linear' ? 'linearGradient' : type === 'radial' ? 'radialGradient' : 'pattern'); element.id = id; defs.append(element); state = { element, type, src: null, imageSize: null, stops: [] }; states.set(key, state);
+  }
+  const el = state.element, attr = values => { for (const [name, value] of Object.entries(values)) el.setAttribute(name, String(value)); };
+  if (type === 'image') {
+    if (!state.image) { state.image = make('image'); el.append(state.image); }
+    if (state.src !== paint.src) {
+      state.src = paint.src; state.imageSize = null; const source = paint.src;
+      try {
+        const info = inspectImageDataUrl(source); state.imageSize = info; state.image.setAttribute('href', source);
+        state.framePulse?.remove(); state.framePulse = null;
+        // Chromium does not invalidate cached SVG patterns for GIF frames alone.
+        // A native, visually negligible opacity pulse invalidates the paint server
+        // while retaining the original image and its decoder/animation timeline.
+        if (info.animated) { const pulse = make('animate'); for (const [key,value] of Object.entries({attributeName:'opacity',values:'1;0.99999;1',dur:'0.1s',repeatCount:'indefinite'})) pulse.setAttribute(key,value); state.image.append(pulse); state.framePulse = pulse; }
+      }
+      catch (error) { state.image.removeAttribute('href'); state.error = error; return 'none'; }
+      state.ready = loadStyleImage(source).then(size => { if (state.src === source) { state.imageSize = size; state.error = null; onReady?.(); } }).catch(error => { if (state.src === source) { state.error = error; state.image.removeAttribute('href'); } });
+    }
+    const size = state.imageSize || { width: 1, height: 1 }, tile = paint.fit === 'tile';
+    const scale = paint.fit === 'cover' ? Math.max(width / size.width, height / size.height) : paint.fit === 'contain' ? Math.min(width / size.width, height / size.height) : 1;
+    const w = paint.fit === 'stretch' ? width : size.width * scale, h = paint.fit === 'stretch' ? height : size.height * scale;
+    attr({ patternUnits: 'userSpaceOnUse', x: tile ? (width - w) * paint.positionX : 0, y: tile ? (height - h) * paint.positionY : 0, width: Math.max(.0001, tile ? w : width), height: Math.max(.0001, tile ? h : height) });
+    for (const [name, value] of Object.entries({ x: tile ? 0 : (width - w) * paint.positionX, y: tile ? 0 : (height - h) * paint.positionY, width: w, height: h, preserveAspectRatio: 'none' })) state.image.setAttribute(name, String(value));
+  } else {
+    const g = styleGradientGeometry(paint, width, height); attr({ gradientUnits: 'userSpaceOnUse' });
+    if (type === 'linear') attr(g); else attr({ cx: 0, cy: 0, r: 1, gradientTransform: `translate(${g.cx} ${g.cy}) scale(${g.rx} ${g.ry})` });
+    while (state.stops.length > paint.stops.length) state.stops.pop().remove();
+    while (state.stops.length < paint.stops.length) { const stop = make('stop'); el.append(stop); state.stops.push(stop); }
+    paint.stops.forEach((value, index) => { const stop = state.stops[index]; stop.setAttribute('offset', String(value.offset)); stop.setAttribute('stop-color', value.color); stop.setAttribute('stop-opacity', String(value.opacity)); });
+  }
+  return `url(#${id})`;
+}
+function applyStyleShadows(defs, shadows, uid, width, height) {
+  const previous = defs.__yuandaShadow; const signature = JSON.stringify([shadows, width, height]);
+  if (previous?.signature === signature) return previous.url;
+  previous?.element?.remove();
+  if (!shadows?.length) { defs.__yuandaShadow = { signature, url: '' }; return ''; }
+  const make = (tag, attrs = {}) => { const el = defs.ownerDocument.createElementNS('http://www.w3.org/2000/svg', tag); for (const [key, value] of Object.entries(attrs)) el.setAttribute(key, String(value)); return el; };
+  const extent = Math.max(...shadows.map(s => Math.max(Math.abs(s.x), Math.abs(s.y)) + s.blur * 3 + Math.abs(s.spread) + 4)), id = uid + '-shadow';
+  const filter = make('filter', { id, filterUnits: 'userSpaceOnUse', x: -extent, y: -extent, width: width + extent * 2, height: height + extent * 2, 'color-interpolation-filters': 'sRGB' }); defs.append(filter);
+  const outer = [], inner = [];
+  shadows.forEach((s, index) => {
+    const name = 'shadow' + index, spread = s.inset ? -s.spread : s.spread;
+    filter.append(make('feMorphology', { in: 'SourceAlpha', operator: spread >= 0 ? 'dilate' : 'erode', radius: Math.abs(spread), result: name + '-spread' }), make('feGaussianBlur', { in: name + '-spread', stdDeviation: s.blur / 2, result: name + '-blur' }), make('feOffset', { in: name + '-blur', dx: s.x, dy: s.y, result: name + '-offset' }));
+    if (s.inset) filter.append(make('feComposite', { in: 'SourceAlpha', in2: name + '-offset', operator: 'out', result: name + '-mask' }));
+    filter.append(make('feFlood', { 'flood-color': s.color, 'flood-opacity': s.opacity, result: name + '-color' }), make('feComposite', { in: name + '-color', in2: name + (s.inset ? '-mask' : '-offset'), operator: 'in', result: name }));
+    (s.inset ? inner : outer).unshift(name);
+  });
+  const merge = make('feMerge'); for (const name of [...outer, 'SourceGraphic', ...inner]) merge.append(make('feMergeNode', { in: name })); filter.append(merge);
+  const url = `url(#${id})`; defs.__yuandaShadow = { signature, element: filter, url }; return url;
+}
+function applyVectorVisual(drawing, path, node, options = {}) {
+  const style = options.style || node.style, geometry = options.geometry || { width: node.width, height: node.height, closed: true }, doc = drawing.ownerDocument;
+  let state = drawing.__yuandaVectorStyle;
+  if (!state) { const defs = doc.createElementNS('http://www.w3.org/2000/svg', 'defs'); drawing.prepend(defs); state = { defs, uid: options.uid || `yvs-${applyVectorVisual.serial = (applyVectorVisual.serial || 0) + 1}` }; Object.defineProperty(drawing, '__yuandaVectorStyle', { value: state }); }
+  state.node = node; state.options = options;
+  const refresh = () => { if (drawing.__yuandaVectorStyle === state) applyVectorVisual(drawing, path, state.node, state.options); };
+  const timing = style.transition || {}, cssTransition = options.transitions !== false && (timing.duration || timing.delay) ? ['fill','fill-opacity','stroke','stroke-opacity','stop-color','stop-opacity'].map(key => `${key} ${timing.duration || 0}ms ${timing.easing || 'ease'} ${timing.delay || 0}ms`).join(',') : 'none';
+  path.style.transition = cssTransition;
+  const fill = applyStylePaint(state.defs, 'fill', style.fillPaint, style.fill, geometry.width, geometry.height, state.uid, refresh), stroke = applyStylePaint(state.defs, 'stroke', style.strokePaint, style.stroke, geometry.width, geometry.height, state.uid, refresh);
+  for (const paint of state.defs.__yuandaPaints?.values() || []) for (const stop of paint.stops) stop.style.transition = cssTransition;
+  for (const [key, value] of Object.entries({ fill: geometry.closed ? fill : 'none', 'fill-opacity': style.fillOpacity ?? 1, stroke, 'stroke-opacity': style.strokeOpacity ?? 1, 'stroke-width': style.strokeWidth, 'stroke-linejoin': 'round', 'stroke-linecap': style.strokeStyle === 'dotted' ? 'round' : 'butt' })) path.setAttribute(key, String(value));
+  const dash = style.strokeStyle === 'dashed' ? `${style.strokeWidth * 3} ${style.strokeWidth * 2}` : style.strokeStyle === 'dotted' ? `0 ${style.strokeWidth * 2}` : '';
+  if (dash) path.setAttribute('stroke-dasharray', dash); else path.removeAttribute('stroke-dasharray');
+  const filter = applyStyleShadows(state.defs, style.shadows, state.uid, geometry.width, geometry.height); if (filter) path.setAttribute('filter', filter); else path.removeAttribute('filter');
+  for (const marker of options.markers || []) { marker.setAttribute('fill', stroke); marker.setAttribute('fill-opacity', String(style.strokeOpacity ?? 1)); }
+  drawing.style.overflow = 'visible'; return state;
+}
+function applyNodeVisual(element, node, options = {}) {
+  const metrics = resolveNodeVisual(node, options), { style, width, height, border, radii, padding, text } = metrics, doc = element.ownerDocument;
+  const vector = ['path', 'connector', 'line'].includes(node.type), transition = style.transition || {}, animated = options.transitions !== false && (transition.duration || transition.delay);
+  const cssTransition = animated ? `color ${transition.duration || 0}ms ${transition.easing || 'ease'} ${transition.delay || 0}ms,opacity ${transition.duration || 0}ms ${transition.easing || 'ease'} ${transition.delay || 0}ms,filter ${transition.duration || 0}ms ${transition.easing || 'ease'} ${transition.delay || 0}ms,box-shadow ${transition.duration || 0}ms ${transition.easing || 'ease'} ${transition.delay || 0}ms,transform ${transition.duration || 0}ms ${transition.easing || 'ease'} ${transition.delay || 0}ms` : 'none';
+  const boxShadows = (style.shadows || []).filter(s => !s.inset).map(s => `${s.inset ? 'inset ' : ''}${s.x}px ${s.y}px ${s.blur}px ${s.spread}px ${styleColor(s.color, s.opacity)}`).join(',') || 'none';
+  Object.assign(element.style, { boxSizing: 'border-box', width: width + 'px', height: height + 'px', background: 'transparent', borderStyle: 'solid', borderColor: 'transparent', borderWidth: `${border.top}px ${border.right}px ${border.bottom}px ${border.left}px`, borderRadius: node.type === 'ellipse' ? '50%' : `${radii.topLeft}px ${radii.topRight}px ${radii.bottomRight}px ${radii.bottomLeft}px`, opacity: String(style.opacity ?? 1), color: text.color, fontFamily: text.fontFamily, fontSize: text.fontSize + 'px', fontWeight: String(text.fontWeight), fontStyle: text.italic ? 'italic' : 'normal', letterSpacing: text.letterSpacing + 'px', lineHeight: text.lineHeight + 'px', textAlign: text.align, textDecoration: text.decoration, textTransform: text.textCase, textShadow: (style.textShadows || []).map(s => `${s.x}px ${s.y}px ${s.blur}px ${styleColor(s.color, s.opacity)}`).join(',') || 'none', padding: '0', filter: style.blur ? `blur(${style.blur}px)` : 'none', backdropFilter: style.backdropBlur ? `blur(${style.backdropBlur}px)` : 'none', transformOrigin: `${(style.transformOrigin?.x ?? .5) * 100}% ${(style.transformOrigin?.y ?? .5) * 100}%`, transition: cssTransition, boxShadow: vector ? 'none' : boxShadows });
+  if (node.type === 'image') { element.style.textDecoration = 'none'; element.style.textShadow = 'none'; }
+  const content = options.contentElement, control = options.controlElement;
+  if (content) Object.assign(content.style, { position: 'relative', zIndex: '2', boxSizing: 'border-box', width: '100%', maxHeight: '100%', overflow: 'hidden', fontFamily: text.fontFamily, lineHeight: text.lineHeight + 'px', whiteSpace: 'pre-wrap', overflowWrap: 'break-word', padding: `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px` });
+  if (content && !control) Object.assign(element.style, { display: 'flex', flexDirection: 'column', justifyContent: text.verticalAlign === 'top' ? 'flex-start' : text.verticalAlign === 'bottom' ? 'flex-end' : 'center', alignItems: 'stretch' });
+  if (control) Object.assign(control.style, { position: 'relative', zIndex: '2', boxSizing: 'border-box', width: '100%', height: '100%', minWidth: '0', minHeight: '0', border: '0', background: 'transparent', borderRadius: 'inherit', color: 'inherit', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'inherit', fontStyle: 'inherit', lineHeight: text.lineHeight + 'px', letterSpacing: 'inherit', textAlign: 'inherit', textDecoration: 'inherit', textTransform: 'inherit', textShadow: 'inherit', padding: `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`, outlineOffset: '2px', resize: 'none' });
+  if (vector) { element.style.overflow = 'visible'; return metrics; }
+  if (!node.panel) { element.style.overflow = 'clip'; element.style.overflowClipMargin = 'border-box'; }
+  let state = element.__yuandaVisual;
+  const make = (tag, attrs = {}) => { const el = doc.createElementNS('http://www.w3.org/2000/svg', tag); for (const [key, value] of Object.entries(attrs)) el.setAttribute(key, String(value)); return el; };
+  if (!state) {
+    const drawing = make('svg', { 'aria-hidden': 'true', focusable: 'false' }), defs = make('defs'), fill = make('path'), borderGroup = make('g'), ring = make('path'); drawing.append(defs, fill, borderGroup); borderGroup.append(ring); drawing.classList.add('yuanda-style-decoration');
+    Object.assign(drawing.style, { position: 'absolute', pointerEvents: 'none', overflow: 'visible', zIndex: '-1' }); state = { drawing, defs, fill, borderGroup, ring, uid: options.uid || `ys-${applyNodeVisual.serial = (applyNodeVisual.serial || 0) + 1}` };
+    Object.defineProperty(element, '__yuandaVisual', { value: state, configurable: true });
+  }
+  // Keep cached nodes even when a caller has just replaced ordinary text children.
+  if (state.drawing.parentElement !== element) element.prepend(state.drawing);
+  element.style.isolation = 'isolate'; state.node = node; state.options = options;
+  Object.assign(state.drawing.style, { left: -border.left + 'px', top: -border.top + 'px', width: width + 'px', height: height + 'px' }); state.drawing.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  const innerShadows = (style.shadows || []).filter(s => s.inset).map(s => `inset ${s.x}px ${s.y}px ${s.blur}px ${s.spread}px ${styleColor(s.color, s.opacity)}`).join(',');
+  if (innerShadows) {
+    if (!state.inset) { state.inset = doc.createElement('div'); state.inset.classList.add('yuanda-style-inset'); state.inset.setAttribute('aria-hidden', 'true'); }
+    if (state.inset.parentElement !== element) element.append(state.inset);
+    Object.assign(state.inset.style, { position: 'absolute', pointerEvents: 'none', zIndex: '1', boxSizing: 'border-box', left: -border.left + 'px', top: -border.top + 'px', width: width + 'px', height: height + 'px', borderRadius: 'inherit', border: 'solid transparent', borderWidth: `${border.top}px ${border.right}px ${border.bottom}px ${border.left}px`, boxShadow: innerShadows, transition: cssTransition });
+  } else state.inset?.remove();
+  const refresh = () => { if (element.__yuandaVisual === state) applyNodeVisual(element, state.node, state.options); };
+  const svgTransition = animated ? ['fill','fill-opacity','stroke','stroke-opacity','stop-color','stop-opacity'].map(key => `${key} ${transition.duration || 0}ms ${transition.easing || 'ease'} ${transition.delay || 0}ms`).join(',') : 'none';
+  state.fill.style.transition = svgTransition; state.ring.style.transition = svgTransition;
+  const fill = applyStylePaint(state.defs, 'fill', style.fillPaint, style.fill, width, height, state.uid, refresh), stroke = applyStylePaint(state.defs, 'stroke', style.strokePaint, style.stroke, width, height, state.uid, refresh);
+  const outer = node.type === 'ellipse' ? `M 0 ${height / 2} A ${width / 2} ${height / 2} 0 1 0 ${width} ${height / 2} A ${width / 2} ${height / 2} 0 1 0 0 ${height / 2} Z` : styleRoundedPath(0, 0, width, height, radii);
+  for (const paint of state.defs.__yuandaPaints?.values() || []) for (const stop of paint.stops) stop.style.transition = svgTransition;
+  state.fill.setAttribute('d', outer); state.fill.setAttribute('fill', fill); state.fill.setAttribute('fill-opacity', String(style.fillOpacity ?? 1));
+  const innerRadii = { topLeft: { x: Math.max(0, radii.topLeft - border.left), y: Math.max(0, radii.topLeft - border.top) }, topRight: { x: Math.max(0, radii.topRight - border.right), y: Math.max(0, radii.topRight - border.top) }, bottomRight: { x: Math.max(0, radii.bottomRight - border.right), y: Math.max(0, radii.bottomRight - border.bottom) }, bottomLeft: { x: Math.max(0, radii.bottomLeft - border.left), y: Math.max(0, radii.bottomLeft - border.bottom) } };
+  const iw = metrics.inner.width, ih = metrics.inner.height, inner = iw && ih ? node.type === 'ellipse' ? `M ${border.left} ${border.top + ih / 2} A ${iw / 2} ${ih / 2} 0 1 0 ${width - border.right} ${border.top + ih / 2} A ${iw / 2} ${ih / 2} 0 1 0 ${border.left} ${border.top + ih / 2} Z` : styleRoundedPath(border.left, border.top, iw, ih, innerRadii) : '';
+  state.ring.setAttribute('d', outer + ' ' + inner); state.ring.setAttribute('fill-rule', 'evenodd'); state.ring.setAttribute('fill', stroke); state.ring.setAttribute('fill-opacity', String(style.strokeOpacity ?? 1));
+  if (style.strokeStyle && style.strokeStyle !== 'solid') {
+    if (!state.dashMask) { state.dashMask = make('mask', { id: state.uid + '-dash', maskUnits: 'userSpaceOnUse' }); state.defs.append(state.dashMask); }
+    state.dashMask.replaceChildren();
+    const half = { top: border.top / 2, right: border.right / 2, bottom: border.bottom / 2, left: border.left / 2 }, cw = width - half.left - half.right, ch = height - half.top - half.bottom;
+    const middleCorners = { topLeft: { x: Math.max(0,radii.topLeft-half.left), y: Math.max(0,radii.topLeft-half.top) }, topRight: { x: Math.max(0,radii.topRight-half.right), y: Math.max(0,radii.topRight-half.top) }, bottomRight: { x: Math.max(0,radii.bottomRight-half.right), y: Math.max(0,radii.bottomRight-half.bottom) }, bottomLeft: { x: Math.max(0,radii.bottomLeft-half.left), y: Math.max(0,radii.bottomLeft-half.bottom) } };
+    const middle = node.type === 'ellipse' ? `M ${half.left} ${half.top+ch/2} A ${cw/2} ${ch/2} 0 1 0 ${width-half.right} ${half.top+ch/2} A ${cw/2} ${ch/2} 0 1 0 ${half.left} ${half.top+ch/2} Z` : styleRoundedPath(half.left,half.top,cw,ch,middleCorners);
+    const regions = [ [border.top,`0,0 ${width},0 ${width/2},${height/2}`], [border.right,`${width},0 ${width},${height} ${width/2},${height/2}`], [border.bottom,`${width},${height} 0,${height} ${width/2},${height/2}`], [border.left,`0,${height} 0,0 ${width/2},${height/2}`] ];
+    regions.forEach(([size, points], index) => { if (!size) return; const id = state.uid + '-side-' + index, clip = make('clipPath',{id}); clip.append(make('polygon',{points})); state.dashMask.append(clip,make('path',{d:middle,fill:'none',stroke:'white','stroke-width':size,'clip-path':`url(#${id})`,'stroke-linecap':style.strokeStyle==='dotted'?'round':'butt','stroke-dasharray':style.strokeStyle==='dotted'?`0 ${size*2}`:`${size*3} ${size*2}`})); });
+    state.ring.setAttribute('mask', `url(#${state.uid}-dash)`);
+  } else state.ring.removeAttribute('mask');
+  return metrics;
+}
+function computeImageLayout(node, options = {}) {
+  const image = node.image || {}, positive = (value, fallback) => Number.isFinite(value) && value > 0 ? value : fallback;
+  const width = Math.max(0, options.width ?? node.width ?? 0), height = Math.max(0, options.height ?? node.height ?? 0);
+  const sourceWidth = positive(options.naturalWidth, positive(image.naturalWidth, Math.max(1, width)));
+  const sourceHeight = positive(options.naturalHeight, positive(image.naturalHeight, Math.max(1, height)));
+  const originalWidth = positive(options.originalWidth, sourceWidth), originalHeight = positive(options.originalHeight, sourceHeight);
+  const normalized = image.crop || { x: 0, y: 0, width: 1, height: 1 };
+  const crop = { x: normalized.x * sourceWidth, y: normalized.y * sourceHeight, width: normalized.width * sourceWidth, height: normalized.height * sourceHeight };
+  const tiles = [], tile = (sx, sy, sw, sh, dx, dy, dw, dh) => {
+    if (sw > 0 && sh > 0 && dw > 0 && dh > 0) tiles.push({ source: { x: sx, y: sy, width: sw, height: sh }, destination: { x: dx, y: dy, width: dw, height: dh } });
+  };
+  if (width > 0 && height > 0 && crop.width > 0 && crop.height > 0) {
+    if (image.corners) {
+      const c = image.corners, maxWidth = normalized.width * originalWidth, maxHeight = normalized.height * originalHeight;
+      // A replacement image can have different dimensions. Clamp presentation,
+      // never mutate the saved corner choices while resolving the new resource.
+      const capX = Math.min(1, Math.max(0, maxWidth - 1e-6) / (c.left + c.right || 1));
+      const capY = Math.min(1, Math.max(0, maxHeight - 1e-6) / (c.top + c.bottom || 1));
+      const left = c.left * capX, right = c.right * capX, top = c.top * capY, bottom = c.bottom * capY;
+      const factor = Math.min(1, width / (left + right || 1), height / (top + bottom || 1));
+      const xs = [crop.x, crop.x + left * sourceWidth / originalWidth, crop.x + crop.width - right * sourceWidth / originalWidth, crop.x + crop.width];
+      const ys = [crop.y, crop.y + top * sourceHeight / originalHeight, crop.y + crop.height - bottom * sourceHeight / originalHeight, crop.y + crop.height];
+      const xd = [0, left * factor, width - right * factor, width], yd = [0, top * factor, height - bottom * factor, height];
+      for (let y = 0; y < 3; y++) for (let x = 0; x < 3; x++) tile(xs[x], ys[y], xs[x + 1] - xs[x], ys[y + 1] - ys[y], xd[x], yd[y], xd[x + 1] - xd[x], yd[y + 1] - yd[y]);
+    } else if ((image.fit || 'cover') === 'cover') {
+      const scale = Math.max(width / crop.width, height / crop.height), sw = width / scale, sh = height / scale;
+      tile(crop.x + (crop.width - sw) / 2, crop.y + (crop.height - sh) / 2, sw, sh, 0, 0, width, height);
+    } else tile(crop.x, crop.y, crop.width, crop.height, 0, 0, width, height);
+  }
+  const filters = image.filters || {}, filter = filters.enabled ? `hue-rotate(${filters.hue ?? 0}deg) saturate(${filters.saturation ?? 1}) brightness(${filters.brightness ?? 1}) contrast(${filters.contrast ?? 1})` : 'none';
+  return { width, height, sourceWidth, sourceHeight, crop, tiles, cuts: (image.cuts || []).map(rect => ({ x: rect.x * sourceWidth, y: rect.y * sourceHeight, width: rect.width * sourceWidth, height: rect.height * sourceHeight })), flipX: !!image.flipX, flipY: !!image.flipY, filter };
+}
+function loadImageSource(node, options = {}) {
+  const src = options.original ? node.src : node.image?.optimization?.src || node.src;
+  if (!src) return Promise.resolve({ image: null, src: '', width: 0, height: 0 });
+  if (!/^data:image\/(?:png|jpeg|webp|gif);base64,[A-Za-z0-9+/]+={0,2}$/.test(src)) return Promise.reject(new Error('图片必须是内嵌 PNG、JPEG、WebP 或 GIF'));
+  const cache = loadImageSource.cache ||= new Map();
+  if (cache.has(src)) { const value = cache.get(src); cache.delete(src); cache.set(src, value); return value; }
+  try { inspectImageDataUrl(src); } catch (error) { return Promise.reject(error); }
+  const pending = new Promise((resolve, reject) => {
+    const img = new Image(); img.decoding = 'async';
+    img.onload = () => {
+      if (!img.naturalWidth || !img.naturalHeight) return reject(new Error('图片尺寸无效'));
+      if (img.naturalWidth > 8192 || img.naturalHeight > 8192 || img.naturalWidth * img.naturalHeight > 16 * 1024 * 1024) return reject(new Error('图片超过 8192 边长或 1600 万像素限制'));
+      resolve({ image: img, src, width: img.naturalWidth, height: img.naturalHeight });
+    };
+    img.onerror = () => reject(new Error('图片无法解码')); img.src = src;
+  });
+  cache.set(src, pending); while (cache.size > 32) cache.delete(cache.keys().next().value);
+  pending.catch(() => { if (cache.get(src) === pending) cache.delete(src); });
+  return pending;
+}
+function computeImageTextLayout(node, options = {}) {
+  const style = options.style || node.style || {}, visual = resolveNodeVisual(node,{style}), settings = visual.text, width = options.width ?? visual.inner.width, height = options.height ?? visual.inner.height;
+  const box = visual.padding, padding = box.left, fontSize = settings.fontSize, lineHeight = settings.lineHeight, usable = Math.max(0, width - box.left - box.right);
+  const font = `${settings.italic?'italic ':''}${settings.fontWeight} ${fontSize}px ${settings.fontFamily}`;
+  const measure = options.measure || (value => ({ width: [...value].length * fontSize })), lines = [];
+  let content = String(node.text || '');if(settings.textCase==='uppercase')content=content.toUpperCase();else if(settings.textCase==='lowercase')content=content.toLowerCase();else if(settings.textCase==='capitalize')content=content.replace(/(^|\s)(\S)/gu,(_,space,char)=>space+char.toUpperCase());
+  for (const paragraph of content.split('\n')) { let line = ''; for (const char of paragraph) { if (line && measure(line + char).width > usable) { lines.push(line); line = char; } else line += char; } lines.push(line); }
+  const blockHeight = lines.length * lineHeight, y = settings.verticalAlign === 'top' ? box.top : settings.verticalAlign === 'bottom' ? height - box.bottom - blockHeight : box.top+(height-box.top-box.bottom-blockHeight)/2;
+  const metrics = measure('Mg'), ascent = metrics.fontBoundingBoxAscent ?? fontSize * .8, descent = metrics.fontBoundingBoxDescent ?? fontSize * .2;
+  const baseline=(lineHeight-ascent-descent)/2+ascent,decorations=[];
+  lines.forEach((line,index)=>{const length=measure(line).width,x=settings.align==='right'?width-box.right-length:settings.align==='center'?box.left+(usable-length)/2:box.left,bottom=y+index*lineHeight+baseline,thickness=Math.max(1,fontSize/14);if(style.underline)decorations.push({x,y:bottom+Math.max(1,fontSize*.08),width:length,height:thickness});if(style.strike)decorations.push({x,y:bottom-fontSize*.3,width:length,height:thickness});});
+  return { lines, font, fontSize, lineHeight, padding, paddingBox:box, usable, y, baseline, align: settings.align, color: settings.color, letterSpacing:settings.letterSpacing, decoration:settings.decoration,decorations };
+}
+function paintImageContent(container, node, options = {}) {
+  let state = container.__yuandaImage;
+  const doc = container.ownerDocument, create = cls => { const el = doc.createElement('div'); el.className = cls; el.style.pointerEvents = 'none'; return el; };
+  if (!state) {
+    const raster = create('yuanda-image-raster'), text = create('yuanda-image-text');
+    Object.assign(raster.style, { position: 'absolute', zIndex: '0', inset: '0', overflow: 'hidden', transformOrigin: '50% 50%' });
+    Object.assign(text.style, { position: 'absolute', zIndex: '2', inset: '0', display: 'flex', whiteSpace: 'pre-wrap', overflow: 'hidden', lineHeight: '1.45' });
+    const span = doc.createElement('div'); Object.assign(span.style, { position: 'absolute', whiteSpace: 'pre' }); text.append(span);
+    container.replaceChildren(raster, text); state = { raster, text, span, tiles: [], source: null, original: null, src: null, originalSrc: null, ready: Promise.resolve(), error: null, request: 0 };
+    Object.defineProperty(container, '__yuandaImage', { value: state, configurable: true });
+  }
+  state.node = node; state.options = options;
+  const render = () => {
+    const current = state.node, settings = current.image || {}, style = state.options.style || current.style || {}, visual = resolveNodeVisual(current,{style});
+    const width = state.options.width ?? visual.inner.width, height = state.options.height ?? visual.inner.height;
+    const layout = computeImageLayout(current, { width, height, naturalWidth: state.source?.width, naturalHeight: state.source?.height, originalWidth: state.original?.width, originalHeight: state.original?.height }); state.layout = layout;
+    Object.assign(state.raster.style, { width: `${width}px`, height: `${height}px`, transform: `scale(${layout.flipX ? -1 : 1},${layout.flipY ? -1 : 1})`, filter: layout.filter, visibility: state.source?.image ? 'visible' : 'hidden' });
+    while (state.tiles.length > layout.tiles.length) { const removed = state.tiles.pop(); removed.box.remove(); }
+    while (state.tiles.length < layout.tiles.length) {
+      const box = create('yuanda-image-tile'), img = doc.createElement('img'); img.alt = ''; img.setAttribute('aria-hidden', 'true'); img.draggable = false;
+      Object.assign(box.style, { position: 'absolute', overflow: 'hidden' });
+      Object.assign(img.style, { position: 'absolute', maxWidth: 'none', maxHeight: 'none', objectFit: 'fill', pointerEvents: 'none' }); box.append(img); state.raster.append(box); state.tiles.push({ box, img });
+    }
+    // Luminance masking makes overlapping cut rectangles a union, not XOR.
+    const mask = layout.cuts.length ? 'url("data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${layout.sourceWidth} ${layout.sourceHeight}" preserveAspectRatio="none"><rect width="100%" height="100%" fill="white"/>${layout.cuts.map(cut => `<rect x="${cut.x}" y="${cut.y}" width="${cut.width}" height="${cut.height}" fill="black"/>`).join('')}</svg>`) + '")' : 'none';
+    for (let index = 0; index < layout.tiles.length; index++) {
+      const { source: s, destination: d } = layout.tiles[index], { box, img } = state.tiles[index], sx = d.width / s.width, sy = d.height / s.height;
+      Object.assign(box.style, { left: `${d.x}px`, top: `${d.y}px`, width: `${d.width}px`, height: `${d.height}px` });
+      Object.assign(img.style, { left: `${-s.x * sx}px`, top: `${-s.y * sy}px`, width: `${layout.sourceWidth * sx}px`, height: `${layout.sourceHeight * sy}px`, maskImage: mask, maskMode: 'luminance', maskSize: '100% 100%', maskRepeat: 'no-repeat' });
+      if (state.source?.src && img.getAttribute('src') !== state.source.src) img.src = state.source.src;
+    }
+    const text = settings.text || {}; state.text.hidden = !text.enabled;
+    if (text.enabled) {
+    const measureContext = state.measureContext ||= doc.createElement('canvas').getContext('2d');
+    measureContext.font = `${visual.text.italic?'italic ':''}${visual.text.fontWeight} ${visual.text.fontSize}px ${visual.text.fontFamily}`;measureContext.letterSpacing=`${visual.text.letterSpacing}px`;
+    const textLayout = computeImageTextLayout(current, { width, height, style, measure: value => measureContext.measureText(value) });
+    const pad=textLayout.paddingBox;
+    const shadows=(style.textShadows||[]).map(shadow=>`${shadow.x}px ${shadow.y}px ${shadow.blur}px ${styleColor(shadow.color,shadow.opacity)}`).join(',')||'none';
+    Object.assign(state.text.style, { width: `${width}px`, height: `${height}px`, color: textLayout.color, font: textLayout.font, lineHeight: `${textLayout.lineHeight}px`, letterSpacing:`${textLayout.letterSpacing}px`, textDecoration:'none', textTransform:'none', textAlign: textLayout.align, clipPath: `inset(${pad.top}px ${pad.right}px ${pad.bottom}px ${pad.left}px)`, textShadow:shadows });
+    Object.assign(state.span.style, { left: `${pad.left}px`, top: `${textLayout.y}px`, width: `${textLayout.usable}px` });
+    const signature = JSON.stringify(textLayout.lines);
+    if (state.textSignature !== signature) { state.span.replaceChildren(...textLayout.lines.map(line => { const row = doc.createElement('div'); row.style.height = `${textLayout.lineHeight}px`; row.textContent = line || '\u200b'; return row; })); state.textSignature = signature; }
+    for (const row of state.span.children) row.style.height = `${textLayout.lineHeight}px`;
+    if(!state.decorations){state.decorations=doc.createElement('div');state.decorations.className='yuanda-image-text-decoration';Object.assign(state.decorations.style,{position:'absolute',inset:'0',pointerEvents:'none'});state.text.append(state.decorations);}
+    state.decorations.replaceChildren(...textLayout.decorations.map(rect=>{const line=doc.createElement('div');Object.assign(line.style,{position:'absolute',left:`${rect.x}px`,top:`${rect.y}px`,width:`${rect.width}px`,height:`${rect.height}px`,background:textLayout.color,boxShadow:shadows});return line;}));
+    }
+    container.dataset.imageReady = String(!!state.source?.image); container.dataset.imageError = state.error?.message || '';
+  };
+  const src = node.image?.optimization?.src || node.src || '', originalSrc = node.src || '';
+  if (state.src !== src || state.originalSrc !== originalSrc) {
+    state.src = src; state.originalSrc = originalSrc; state.source = null; state.original = null; state.error = null; const request = ++state.request;
+    state.ready = Promise.all([loadImageSource(node), loadImageSource(node, { original: true })]).then(([source, original]) => {
+      if (request !== state.request) return state.layout; state.source = source; state.original = original; render(); return state.layout;
+    }).catch(error => { if (request === state.request) { state.error = error; render(); } return null; });
+  }
+  render(); return state;
+}
+(function htmlRuntime(evaluateExpression, chooseInteractionCases, selectRepeaterRows, resolveAdaptivePage, getNodeDescendants, getVectorGeometry, connectorPoints, selectRepeaterPage, getCanvasViews, selectAdaptiveView, paintImageContent, applyNodeVisual, applyVectorVisual, resolveNodeVisual, getNodeBounds, rotateNodePoint, richRunStyle, getEventSettings) {
+  'use strict';
+  const project = JSON.parse(document.getElementById('yuanda-model').textContent);
+  const stage = document.getElementById('stage'), picker = document.getElementById('pages'), viewPicker = document.getElementById('views');
+  const clone = value => JSON.parse(JSON.stringify(value));
+  const variables = Object.fromEntries((project.variables || []).map(variable => [variable.name, clone(variable.value)]));
+  let page = null, root = null, generation = 0, serial = 0, requestedView, activeView = null, pending = new Map(), queues = new Map();
+  let records = new Set(), instanceCount = 0, lastPointer = { x: 0, y: 0 };
+  let runtimeChanges = new WeakMap();
+  let repeaterStates = new WeakMap();
+  const pinnedLayer=element('div','pinned-layer');document.body.append(pinnedLayer);
+  let pointerDrag=null,suppressedClick=null,protectedGesture=null;
+  let caseMenu=null, focusCause=null, menuFocusTransfer=0, continuousEvents=new Map();
+  const causeDepth=event=>Math.max(event?._interactionDepth||0,event?._viewDepth||0);
+  const nextCause=event=>({_interactionDepth:causeDepth(event)+1,_viewDepth:causeDepth(event)+1});
+  function focusMenuControl(control){menuFocusTransfer++;try{control?.focus({preventScroll:true});}finally{menuFocusTransfer--;}}
+  function changed(node, ...keys) { const fields = runtimeChanges.get(node) || new Set(); keys.forEach(key => fields.add(key)); runtimeChanges.set(node, fields); }
+  const number = value => Number.isFinite(Number(value)) ? Number(value) : 0;
+  const context = (scope, event = {}) => ({ variables, nodes: scope?.nodes || root?.nodes, item: scope?.item || {}, row: scope?.rowId ? { id: scope.rowId, marked: (scope.repeaterNode?.repeater.markedRowIds || []).includes(scope.rowId) } : null, getRepeater: id => { const owner = scopeFor(scope, id); return getRepeaterPage(owner?.nodes.get(id), owner); }, event });
+  function getRepeaterPage(node, scope) {
+    if (!node?.repeater) return null;
+    let state = repeaterStates.get(node);
+    if (!state) { state = { currentPage: node.repeater.pagination?.initialPage ?? 1, pageSize: node.repeater.pagination?.pageSize ?? null }; repeaterStates.set(node, state); }
+    const result = selectRepeaterPage(node.repeater, context(scope), state.currentPage, state.pageSize); state.currentPage = result.currentPage; return result;
+  }
+  const evaluate = (value, scope, event) => evaluateExpression(value, context(scope, event));
+  function notice(error) { const output = document.getElementById('runtime-status'); if (output) { output.hidden = false; output.textContent = '此步骤未完成：' + error.message; } console.error(error); }
+  function wait(ms, stamp) {
+    return new Promise(resolve => { const timer = setTimeout(() => { pending.delete(timer); resolve(stamp === generation); }, ms); pending.set(timer, resolve); });
+  }
+  function element(tag, className) { const result = document.createElement(tag); if (className) result.className = className; return result; }
+  function svg(tag, attributes) { const result = document.createElementNS('http://www.w3.org/2000/svg', tag); for (const [key, value] of Object.entries(attributes)) result.setAttribute(key, String(value)); return result; }
+  function scopeFor(scope, id) { for (let found = scope; found; found = found.parent) if (found.own.has(id)) return found; return root; }
+  function recordFor(scope, id) { return scopeFor(scope, id)?.records.get(id); }
+  function disabled(record) { for (let current = record; current; current = current.parentRecord) if (current.node.disabled) return true; return false; }
+  function belongsTo(record,ancestor){for(let current=record;current;current=current.parentRecord)if(current===ancestor)return true;return false;}
+  function shown(record){for(let current=record;current;current=current.parentRecord){if(!current.node.visible||current.node.effectivePlaced===false)return false;for(let parent=current.anchor?.parentElement||current.el.parentElement;parent&&parent!==pinnedLayer;parent=parent.parentElement)if(parent.hidden)return false;}return true;}
+  function viewport(){const top=document.querySelector('.viewer-bar').getBoundingClientRect().bottom;return{left:0,top,width:window.innerWidth,height:Math.max(1,window.innerHeight-top),right:window.innerWidth,bottom:window.innerHeight};}
+  function descendants(scope, id) { return getNodeDescendants([...scope.nodes.values()], id); }
+  function newScope(parent, ids, item, key) {
+    const nodes = new Map(parent.nodes), own = new Set(ids);
+    for (const id of ids) if (nodes.has(id)) { const source = nodes.get(id), copied = clone(source); nodes.set(id, copied); if (runtimeChanges.has(source)) runtimeChanges.set(copied, new Set(runtimeChanges.get(source))); }
+    return { parent, nodes, own, item, key, records: new Map() };
+  }
+  function applyBinding(node, key, scope, chain = new Set()) {
+    const token = scope.key + ':' + node.id + ':' + key;
+    if (chain.has(token)) throw new Error('数据绑定存在循环引用：' + node.name);
+    chain.add(token); const expression = node.bindings[key];
+    function dependencies(value) {
+      if (!value || typeof value !== 'object') return;
+      if (value.op === 'node') {
+        const owner = scopeFor(scope, value.nodeId), referenced = owner?.nodes.get(value.nodeId);
+        if (referenced && Object.hasOwn(referenced.bindings || {}, value.property)) applyBinding(referenced, value.property, owner, chain);
+      }
+      for (const argument of value.args || []) dependencies(argument);
+    }
+    dependencies(expression); const value = evaluate(expression, scope);
+    node[key] = key === 'checked' || key === 'visible' ? Boolean(value) : String(value ?? '');
+    if (key === 'text') node.richText = null;
+    chain.delete(token);
+  }
+  function stateStyle(record) {
+    const node = record.node, styles = node.stateStyles || {}, flags = record.flags, inactive = disabled(record);
+    return { ...node.style, ...(['input', 'textarea'].includes(node.type) && !node.value ? styles.hint : {}), ...(!inactive && flags.hover ? styles.hover : {}), ...(!inactive && flags.focus ? styles.focus : {}), ...(!inactive && flags.pressed ? styles.pressed : {}), ...(node.selected ? styles.selected : {}), ...(node.error ? styles.error : {}), ...(inactive ? styles.disabled : {}) };
+  }
+  function drawVector(record, style) {
+    const node = record.node, all = [...record.scope.nodes.values()].map(value => { const source = recordFor(record.scope, value.id); return source ? { ...value, style: stateStyle(source) } : value; });
+    if (node.type === 'connector') {
+      const points = connectorPoints(node, all);
+      if (points.length) { node.x = Math.min(...points.map(point => point.x)); node.y = Math.min(...points.map(point => point.y)); node.width = Math.max(1, Math.max(...points.map(point => point.x)) - node.x); node.height = Math.max(1, Math.max(...points.map(point => point.y)) - node.y); }
+    }
+    const geometry = getVectorGeometry(node, all); if (!geometry) return;
+    let visual = record.vector;
+    if (!visual) { const drawing = svg('svg', { width: '100%', height: '100%', 'aria-hidden': 'true' }), path = svg('path', {}); drawing.append(path); record.el.replaceChildren(drawing); visual = record.vector = { drawing, path, markerPaths: [], arrow: null }; }
+    const { drawing, path } = visual; drawing.setAttribute('viewBox', `0 0 ${geometry.width} ${geometry.height}`); path.setAttribute('d', geometry.d); const id = 'arrow-' + record.uid;
+    if (visual.arrow !== geometry.arrow) { visual.arrowDefs?.remove(); visual.markerPaths = []; path.removeAttribute('marker-start'); path.removeAttribute('marker-end'); if (geometry.arrow !== 'none') { const defs = svg('defs', {}), marker = svg('marker', { id, viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto-start-reverse' }), arrow = svg('path', { d: 'M 0 0 L 10 5 L 0 10 Z' }); marker.append(arrow); defs.append(marker); drawing.append(defs); visual.arrowDefs = defs; visual.markerPaths = [arrow]; path.setAttribute('marker-end', `url(#${id})`); if (geometry.arrow === 'both') path.setAttribute('marker-start', `url(#${id})`); } visual.arrow = geometry.arrow; }
+    applyVectorVisual(drawing, path, node, { style, geometry, uid: 'vector-' + record.uid, markers: visual.markerPaths });
+  }
+  function drawRichText(record) {
+    const rich = record.node.richText, content = element('div', 'rich-content yuanda-node-content'); let index = 0;
+    for (const paragraph of rich.paragraphs) {
+      const line = element('div', 'rich-paragraph'); line.style.textAlign = paragraph.align;
+      const prefix = paragraph.list === 'bullet' ? '• ' : paragraph.list === 'number' ? `${++index}. ` : (index = 0, '');
+      if (prefix) { const marker = element('span'); marker.textContent = prefix; line.append(marker); }
+      for (const run of paragraph.runs) { const span = element('span'); span.textContent = run.text; Object.assign(span.style, richRunStyle(run)); line.append(span); }
+      content.append(line);
+    }
+    record.el.replaceChildren(content); record.textContent = content;
+  }
+  function updateRecord(record) {
+    const { node, el, scope } = record;
+    for (const key of Object.keys(node.bindings || {})) if (key !== 'checked' || !record.pendingChecked) applyBinding(node, key, scope);
+    const inactive = disabled(record); if (inactive) record.flags = {};
+    const style = stateStyle(record), parentNode = record.parentRecord?.node;
+    if (node.type === 'path' || node.type === 'connector') drawVector(record, style);
+    Object.assign(el.style, { left: node.x - (parentNode?.x || 0) + 'px', top: node.y - (parentNode?.y || 0) + 'px', width: node.width + 'px', height: node.height + 'px', transform: `rotate(${node.rotation || 0}deg)` });
+    el.hidden = !node.visible || node.effectivePlaced === false; el.setAttribute('aria-disabled', String(inactive)); el.setAttribute('aria-invalid', String(!!node.error)); el.dataset.selected = String(!!node.selected);
+    if (node.type === 'path' || node.type === 'connector') { el.style.border = 'none'; el.style.background = 'transparent'; el.style.overflow = 'visible'; }
+    if (node.type === 'line') { if (!record.line) { const drawing = svg('svg', { width: '100%', height: '100%' }), path = svg('path', {}); drawing.append(path); el.replaceChildren(drawing); record.line = { drawing, path }; } record.line.drawing.setAttribute('viewBox', `0 0 ${node.width} ${node.height}`); record.line.path.setAttribute('d', `M 0 ${style.strokeWidth / 2} H ${node.width}`); applyVectorVisual(record.line.drawing, record.line.path, node, { style, geometry: { width: node.width, height: node.height, closed: false }, uid: 'line-' + record.uid }); }
+    if (record.input) {
+      const input = record.input; input.disabled = inactive;
+      if (node.type === 'input' || node.type === 'textarea') {
+        if (node.type === 'input' && input.type !== (node.inputType || 'text')) input.type = node.inputType || 'text';
+        input.readOnly = !!node.readOnly;
+        if (node.maxLength != null) input.maxLength = node.maxLength; else input.removeAttribute('maxlength');
+        input.setAttribute('aria-readonly', String(!!node.readOnly));
+      }
+      if (node.type === 'checkbox' || node.type === 'radio') { input.checked = !!node.checked; record.label.textContent = node.text; }
+      else { if (input.value !== String(node.value ?? '')) input.value = String(node.value ?? ''); if ('placeholder' in input) input.placeholder = node.text; }
+    } else if (node.type === 'image') { paintImageContent(el, node, { style }); }
+    else if (!node.panel && !node.repeater && !['path', 'connector', 'line', 'table'].includes(node.type)) {
+      const signature = JSON.stringify([node.text, node.richText]); if (record.textSignature !== signature) { if (node.richText) drawRichText(record); else { record.textContent = element('div', 'yuanda-node-content'); record.textContent.textContent = node.text; el.replaceChildren(record.textContent); } record.textSignature = signature; }
+    }
+    if (el.tagName === 'BUTTON') el.disabled = inactive;
+    if (node.panel) { el.style.overflow='visible';const scroll=node.panel.scroll||{x:'none',y:'none'},scrolling=scroll.x!=='none'||scroll.y!=='none';for(const [id,state]of record.states){state.hidden=id!==record.stateId;for(const axis of ['x','y'])state.style[axis==='x'?'overflowX':'overflowY']=scroll[axis]==='auto'?'auto':scroll[axis]==='always'?'scroll':scrolling||node.panel.clip?'hidden':'visible';}el.style.touchAction=node.panel.drag?.enabled?'none':'auto'; }
+    if (node.repeater) updateRepeater(record);
+    applyNodeVisual(el, node, { style, contentElement: record.textContent || record.checkLabel, controlElement: ['input', 'textarea', 'select'].includes(node.type) ? record.input : null, uid: 'node-' + record.uid });
+  }
+  function disposeWithin(container) {
+    const roots=[...records].filter(record=>container.contains(record.el)||record.anchor&&container.contains(record.anchor));
+    for (const record of [...records]) if(roots.some(root=>belongsTo(record,root))){if(pointerDrag?.record===record)endDrag(null,true);records.delete(record);record.scope.records.delete(record.node.id);record.el.remove();record.anchor?.remove();instanceCount--;}
+    container.replaceChildren();
+  }
+  function updateRepeater(record) {
+    const data = record.node.repeater, rows = getRepeaterPage(record.node, record.scope).rows;
+    // Keep a row's own nodes, focus and input values when sorting/filtering. Only
+    // deleting a data row disposes that row; a filter merely hides it.
+    record.items ||= new Map();
+    const existing = new Map(data.rows.map(row => [row.id, row])), visible = new Set(rows.map(row => row.id));
+    for (const [id, item] of record.items) {
+      if (!existing.has(id)) { disposeWithin(item.el); item.el.remove(); record.items.delete(id); }
+      else { item.el.hidden = !visible.has(id); item.scope.item = existing.get(id).values; }
+    }
+    const ids = [...new Set(data.templateIds.flatMap(id => [id, ...descendants(record.scope, id)]))];
+    let index = 0;
+    for (const row of rows) {
+      let entry = record.items.get(row.id);
+      if (!entry) {
+        const item = element('div', 'repeater-item'); item.dataset.rowId = row.id;
+        const scope = newScope(record.scope, ids, row.values, record.scope.key + ':' + record.node.id + ':' + row.id);
+        scope.rowId = row.id; scope.repeaterNode = record.node;
+        entry = { el: item, scope }; record.items.set(row.id, entry); record.content.append(item);
+        for (const id of data.templateIds) createNode(scope.nodes.get(id), item, scope, record);
+      }
+      const item = entry.el; entry.scope.item = row.values; item.hidden = false;
+      const column = data.layout === 'vertical' ? 0 : data.layout === 'horizontal' ? index : index % data.columnsCount;
+      const line = data.layout === 'vertical' ? index : data.layout === 'horizontal' ? 0 : Math.floor(index / data.columnsCount);
+      Object.assign(item.style, { left: column * (data.itemWidth + data.gap) + 'px', top: line * (data.itemHeight + data.gap) + 'px', width: data.itemWidth + 'px', height: data.itemHeight + 'px' });
+      const next = record.content.children[index] || null;
+      if (next !== item) {
+        if (record.content.moveBefore) record.content.moveBefore(item, next);
+        else record.content.insertBefore(item, next);
+      }
+      index++;
+    }
+  }
+  function refresh() {
+    for (const record of [...records]) if (records.has(record) && record.node.type !== 'connector') updateRecord(record);
+    for (const record of [...records]) if (record.node.type === 'connector') updateRecord(record);
+    layoutPanels();
+    if(caseMenu?.owner&&(!records.has(caseMenu.owner)||disabled(caseMenu.owner)||!shown(caseMenu.owner)))caseMenu.cancel();
+    for(const record of records)queueLoad(record);
+  }
+  function queueLoad(record){if(record.loadFired||record.node.effectivePlaced===false)return;record.loadFired=true;Promise.resolve().then(()=>{if(records.has(record))activate(record,'load');});}
+  function layoutPanels(){
+    for(const record of [...records].reverse())if(record.node.panel){const {node,el}=record,panel=node.panel;
+      if(panel.sizeMode==='content'){let width=1,height=1;const state=panel.states.find(state=>state.id===record.stateId);for(const id of state?.nodeIds||[]){const child=record.scope.records.get(id);if(!child?.node.visible||child.node.effectivePlaced===false||child.node.panel?.pin)continue;const bounds=getNodeBounds({...child.node,style:stateStyle(child)});width=Math.max(width,bounds.right-node.x);height=Math.max(height,bounds.bottom-node.y);}node.width=Math.min(100000,width);node.height=Math.min(100000,height);applyNodeVisual(el,node,{style:stateStyle(record),uid:'node-'+record.uid});}
+      if(panel.pin){if(el.parentElement!==pinnedLayer)pinnedLayer.append(el);const view=viewport(),pin=panel.pin,shift=record.pinShift||{x:0,y:0};const x=pin.horizontal==='left'?pin.offsetX:pin.horizontal==='right'?view.width-node.width-pin.offsetX:(view.width-node.width)/2+pin.offsetX;const y=pin.vertical==='top'?view.top+pin.offsetY:pin.vertical==='bottom'?view.bottom-node.height-pin.offsetY:view.top+(view.height-node.height)/2+pin.offsetY;Object.assign(el.style,{position:'fixed',left:x+shift.x+'px',top:y+shift.y+'px'});}
+      else{if(record.anchor&&el.parentElement===pinnedLayer)record.anchor.after(el);el.style.position='absolute';}
+    }
+    for(const record of records)if(record.node.panel?.pin)record.el.hidden=!shown(record);
+    if(pointerDrag&&(!shown(pointerDrag.record)||disabled(pointerDrag.record)))endDrag(null,true);
+  }
+  function translateRecord(record,dx,dy){const targets=new Set([record.node.id,...descendants(record.scope,record.node.id)].map(id=>record.scope.nodes.get(id)));for(const child of records)if(belongsTo(child,record))targets.add(child.node);for(const target of targets)if(target){target.x+=dx;target.y+=dy;changed(target,'x','y');}if(record.node.panel?.pin){record.pinShift||={x:0,y:0};record.pinShift.x+=dx;record.pinShift.y+=dy;}}
+  function dragData(record,event,dx=0,dy=0,cancelled=false){return{...eventData(event,record),deltaX:dx,deltaY:dy,cancelled};}
+  function parentAngle(record){let angle=0;for(let parent=record.parentRecord;parent;parent=parent.parentRecord){angle+=parent.node.rotation||0;if(parent.node.panel?.pin)break;}return angle*Math.PI/180;}
+  function dragBoundary(record,rect,angle){
+    if(record.node.panel.drag.bounds==='viewport'){const bound=viewport();return{angle:0,left:bound.left-rect.left,right:bound.right-rect.right,top:bound.top-rect.top,bottom:bound.bottom-rect.bottom};}
+    if(record.node.panel.drag.bounds!=='parent')return null;
+    // Bounds belong to the visible state/row viewport, not its screen-aligned
+    // bounding box. Inverse rotation keeps a child inside oblique parents too.
+    const container=record.anchor?.parentElement||stage,bound=container.getBoundingClientRect(),rotation=parentAngle(record),c=Math.cos(rotation),s=Math.sin(rotation);
+    const dx=rect.left+rect.width/2-bound.left-bound.width/2,dy=rect.top+rect.height/2-bound.top-bound.height/2;
+    const x=dx*c+dy*s+container.offsetWidth/2,y=-dx*s+dy*c+container.offsetHeight/2,relative=angle+(record.node.rotation||0)*Math.PI/180-rotation;
+    const width=Math.abs(record.node.width*Math.cos(relative))+Math.abs(record.node.height*Math.sin(relative)),height=Math.abs(record.node.width*Math.sin(relative))+Math.abs(record.node.height*Math.cos(relative));
+    return{angle:rotation,left:container.clientLeft-x+width/2,right:container.clientLeft+container.clientWidth-x-width/2,top:container.clientTop-y+height/2,bottom:container.clientTop+container.clientHeight-y-height/2};
+  }
+  function beginDrag(record,event){
+    if(pointerDrag||event.button!==0||!record.node.panel.drag?.enabled||disabled(record)||!shown(record))return;
+    if(event.target.closest('input,textarea,select,button,label,a,[contenteditable=true]'))return;
+    for(let el=event.target;el&&el!==record.el;el=el.parentElement)if(el.classList.contains('interactive')||el.classList.contains('node-dynamicPanel')&&[...records].some(other=>other.el===el&&other.node.panel.drag?.enabled))return;
+    const rect=record.el.getBoundingClientRect(),angle=record.node.panel.pin?0:parentAngle(record);
+    pointerDrag={record,pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,lastX:0,lastY:0,angle,bound:dragBoundary(record,rect,angle),started:false,stamp:generation};
+    record.el.setPointerCapture(event.pointerId);
+  }
+  function moveDrag(event){const drag=pointerDrag;if(!drag||event.pointerId!==drag.pointerId)return;const record=drag.record;if(drag.stamp!==generation||!records.has(record)||disabled(record)||!shown(record)){endDrag(event,true);return;}
+    let dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;if(!drag.started&&Math.hypot(dx,dy)<3)return;
+    if(!drag.started){drag.started=true;activate(record,'dragStart',event,dragData(record,event));}
+    const settings=record.node.panel.drag,c=Math.cos(drag.angle),s=Math.sin(drag.angle);let localX=dx*c+dy*s,localY=-dx*s+dy*c;if(settings.axis==='x')localY=0;if(settings.axis==='y')localX=0;dx=localX*c-localY*s;dy=localX*s+localY*c;
+    const bound=drag.bound;
+    if(bound){const relative=drag.angle-bound.angle,bc=Math.cos(relative),bs=Math.sin(relative),clamp=(value,low,high)=>low<=high?Math.max(low,Math.min(high,value)):(low+high)/2;
+      if(settings.axis==='both'){const x=clamp(localX*bc-localY*bs,bound.left,bound.right),y=clamp(localX*bs+localY*bc,bound.top,bound.bottom);localX=x*bc+y*bs;localY=-x*bs+y*bc;}
+      else{let low=-Infinity,high=Infinity;const unit=settings.axis==='x'?{x:bc,y:bs}:{x:-bs,y:bc};for(const [component,min,max]of [[unit.x,bound.left,bound.right],[unit.y,bound.top,bound.bottom]])if(Math.abs(component)>1e-8){const a=min/component,b=max/component;low=Math.max(low,Math.min(a,b));high=Math.min(high,Math.max(a,b));}const value=low<=high?clamp(settings.axis==='x'?localX:localY,low,high):0;if(settings.axis==='x')localX=value;else localY=value;}
+    }
+    const stepX=localX-drag.lastX,stepY=localY-drag.lastY;drag.lastX=localX;drag.lastY=localY;translateRecord(record,stepX,stepY);refresh();if(pointerDrag!==drag)return;event.preventDefault();activate(record,'drag',event,dragData(record,event,localX,localY));
+  }
+  function endDrag(event,cancelled=false){const drag=pointerDrag;if(!drag)return;pointerDrag=null;try{if(drag.record.el.hasPointerCapture(drag.pointerId))drag.record.el.releasePointerCapture(drag.pointerId);}catch{}if(drag.started){suppressedClick={record:drag.record,until:Date.now()+600};if(records.has(drag.record)&&drag.stamp===generation)activate(drag.record,'dragEnd',event||{},dragData(drag.record,event,drag.lastX,drag.lastY,cancelled));}}
+  document.addEventListener('pointerdown',event=>{const control=event.target.closest('input,textarea,select,button,label,a,[contenteditable=true],.interactive');protectedGesture=control?.closest('.node-dynamicPanel')?{control,pointerId:event.pointerId}:null;},true);
+  document.addEventListener('pointermove',moveDrag,{passive:false});document.addEventListener('pointerup',event=>{if(pointerDrag?.pointerId===event.pointerId)endDrag(event);});document.addEventListener('pointercancel',event=>{if(pointerDrag?.pointerId===event.pointerId)endDrag(event,true);if(protectedGesture?.pointerId===event.pointerId)protectedGesture=null;});
+  document.addEventListener('click',event=>{const protectedControl=protectedGesture?.control;protectedGesture=null;if(event.detail>0&&protectedControl&&!protectedControl.contains(event.target)){event.preventDefault();event.stopImmediatePropagation();return;}if(suppressedClick&&Date.now()<suppressedClick.until){const record=suppressedClick.record;if(record.el.contains(event.target)||event.target===record.el){event.preventDefault();event.stopImmediatePropagation();suppressedClick=null;}}},true);
+  window.addEventListener('blur',()=>endDrag(null,true));
+  function eventData(event, record) { const input = record?.input || event?.target,content=record?.states.get(record.stateId);return { value: input?.value ?? record?.node.value ?? '', checked: input?.checked ?? record?.node.checked ?? false, rowId: record?.scope.rowId ?? null, key: event?.key || '', x: event?.clientX == null ? lastPointer.x : event.clientX - stage.getBoundingClientRect().left, y: event?.clientY == null ? lastPointer.y : event.clientY - stage.getBoundingClientRect().top,deltaX:0,deltaY:0,scrollX:record?content?.scrollLeft||0:window.scrollX,scrollY:record?content?.scrollTop||0:window.scrollY,cancelled:false,windowWidth:window.innerWidth,windowHeight:window.innerHeight,scrollDeltaX:0,scrollDeltaY:0,ctrlKey:!!event?.ctrlKey,shiftKey:!!event?.shiftKey,altKey:!!event?.altKey,metaKey:!!event?.metaKey }; }
+  function hasEvent(record,type) {const target=record?.node||page;return !!target&&getEventSettings(target,type).enabled&&(target.interactions||[]).some(branch=>branch.event===type&&branch.enabled!==false&&branch.actions.some(action=>action.enabled!==false));}
+  function selectCase(cases,owner,data,stamp) {
+    caseMenu?.cancel();
+    return new Promise(resolve=>{
+      const panel=element('div','runtime-case-menu'),heading=element('div'),previous=document.activeElement,buttons=[];
+      panel.setAttribute('role','dialog');panel.setAttribute('aria-label','选择要执行的分支');
+      Object.assign(panel.style,{position:'fixed',zIndex:'30000',minWidth:'210px',maxWidth:'min(420px, calc(100vw - 16px))',maxHeight:'min(480px, calc(100vh - 16px))',overflow:'auto',padding:'8px',border:'1px solid #cbd5e1',borderRadius:'8px',background:'#fff',color:'#172033',boxShadow:'0 12px 36px #0003',font:'14px "Segoe UI",sans-serif'});
+      heading.textContent='选择要执行的分支';Object.assign(heading.style,{padding:'6px 8px',fontSize:'12px',color:'#64748b'});panel.append(heading);
+      let finished=false;
+      const finish=chosen=>{if(finished)return;finished=true;document.removeEventListener('pointerdown',outside,true);document.removeEventListener('keydown',keyboard,true);window.removeEventListener('blur',cancel);panel.remove();if(caseMenu?.element===panel)caseMenu=null;resolve(stamp===generation&&(!owner||records.has(owner)&&shown(owner)&&!disabled(owner))?chosen:null);if(previous?.isConnected&&document.activeElement===document.body)focusMenuControl(previous);};
+      const cancel=()=>finish(null),outside=event=>{if(!panel.contains(event.target))cancel();};
+      const keyboard=event=>{if(!panel.contains(event.target)&&event.key!=='Escape')return;let index=buttons.indexOf(document.activeElement);if(['ArrowDown','ArrowUp','Home','End'].includes(event.key)){event.preventDefault();event.stopImmediatePropagation();index=event.key==='Home'?0:event.key==='End'?buttons.length-1:(index+(event.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length;focusMenuControl(buttons[index]);}else if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopImmediatePropagation();if(index>=0)finish(cases[index]);}else if(event.key==='Escape'){event.preventDefault();event.stopImmediatePropagation();cancel();}else if(event.key==='Tab'){event.preventDefault();event.stopImmediatePropagation();focusMenuControl(buttons[(index+(event.shiftKey?-1:1)+buttons.length)%buttons.length]);}};
+      cases.forEach((branch,index)=>{const button=element('button');button.type='button';button.dataset.caseIndex=String(index);button.textContent=branch.name||`分支 ${index+1}`;Object.assign(button.style,{display:'block',width:'100%',border:'0',borderRadius:'4px',padding:'9px 10px',background:'#f1f5f9',color:'inherit',textAlign:'left',cursor:'pointer',marginTop:'3px',whiteSpace:'normal'});button.addEventListener('click',()=>finish(branch));panel.append(button);buttons.push(button);});
+      document.body.append(panel);const bounds=owner?.el.getBoundingClientRect(),stageBounds=stage.getBoundingClientRect(),x=bounds?.left??stageBounds.left+data.x,y=bounds?.bottom??stageBounds.top+data.y;
+      panel.style.left=Math.max(8,Math.min(x,window.innerWidth-panel.offsetWidth-8))+'px';panel.style.top=Math.max(8,Math.min(y,window.innerHeight-panel.offsetHeight-8))+'px';
+      caseMenu={owner,cancel,element:panel};document.addEventListener('pointerdown',outside,true);document.addEventListener('keydown',keyboard,true);window.addEventListener('blur',cancel);focusMenuControl(buttons[0]);
+    });
+  }
+  async function executeEvent(record,type,data,stamp) {
+    if(stamp!==generation||(record&&(!records.has(record)||disabled(record))))return;
+    if(causeDepth(data)>32)throw new Error('交互事件相互触发超过 32 次，请检查循环条件');
+    const scope=record?.scope||root,target=record?.node||page,settings=getEventSettings(target,type);
+    let cases=chooseInteractionCases(target.interactions||[],type,context(scope,data),settings);
+    if(settings.executionMode==='menu') {cases=cases.filter(branch=>branch.actions.some(action=>action.enabled!==false));if(!cases.length)return;const chosen=await selectCase(cases,record,data,stamp);cases=chosen?[chosen]:[];}
+    await run(cases.flatMap(branch=>branch.actions),scope,data,stamp,record);
+  }
+  function activate(record, type, event = {}, suppliedData) {
+    if (record && (disabled(record) || !records.has(record))) return;
+    if(menuFocusTransfer&&['focus','blur'].includes(type))return;
+    if(!hasEvent(record,type))return;
+    const stamp = generation, key = record?.uid || 'page';
+    const data = suppliedData || eventData(event, record);
+    if(focusCause&&['focus','blur'].includes(type))Object.assign(data,nextCause(focusCause));
+    const continuous=['mousemove','windowResize','windowScroll','scroll'].includes(type),token=key+':'+type;
+    if(continuous&&continuousEvents.has(token)){continuousEvents.get(token).data=data;return;}
+    const entry={data};if(continuous)continuousEvents.set(token,entry);
+    const previous = queues.get(key) || Promise.resolve();
+    const task = previous.then(async () => {
+      if(continuous)await new Promise(resolve=>requestAnimationFrame(resolve));
+      if (stamp !== generation || (record && (!records.has(record) || disabled(record)))) return;
+      await executeEvent(record,type,entry.data,stamp);
+    }).catch(notice);
+    queues.set(key, task); task.finally(() => { if (queues.get(key) === task) queues.delete(key);if(continuous&&continuousEvents.get(token)===entry)continuousEvents.delete(token); });
+  }
+  function nativeChange(record) {
+    const { node, input, scope } = record;
+    // Native checkbox click -> input -> change is one gesture. Do not let a
+    // checked binding undo its new value before the change event captures it.
+    if (['checkbox', 'radio'].includes(node.type)) record.pendingChecked = true;
+    if (node.type === 'radio' && input.checked && node.radioGroup) for (const other of records) if (other.node.type === 'radio' && other.scope === scope && other.node.radioGroup === node.radioGroup) { other.node.checked = other === record; other.input.checked = other === record; }
+    node.value = input.value; node.checked = !!input.checked; changed(node, 'value');
+  }
+  function bindEvents(record) {
+    const { el, node } = record, target = record.input || el;
+    const events = ['click', 'dblclick', 'contextmenu', 'mousemove', 'mouseenter', 'mouseleave', 'mousedown', 'mouseup', 'change', 'input', 'focus', 'blur', 'keydown', 'keyup'];
+    for (const type of events) (['mouseenter','mouseleave'].includes(type) ? el : target).addEventListener(type, event => {
+      if (disabled(record)) return;
+      if(type==='contextmenu'&&hasEvent(record,type))event.preventDefault();
+      if(node.panel&&event.target!==el){for(let child=event.target;child&&child!==el;child=child.parentElement)if(child.matches('input,textarea,select,button,label,a,[contenteditable=true],.interactive,.node-dynamicPanel'))return;}
+      if (['input', 'change', 'click'].includes(type) && record.input) nativeChange(record);
+      // A value binding may repaint the input during refresh. Capture the
+      // visitor's native value first so input -> variable -> binding works.
+      const data = eventData(event, record);
+      if (type === 'change') record.pendingChecked = false;
+      if (type === 'mouseenter') record.flags.hover = true; if (type === 'mouseleave') { record.flags.hover = false; record.flags.pressed = false; }
+      if (type === 'mousedown') record.flags.pressed = true; if (type === 'mouseup') record.flags.pressed = false;
+      if (type === 'focus') record.flags.focus = true; if (type === 'blur') record.flags.focus = false;
+      if (['input', 'change'].includes(type)) refresh(); else {updateRecord(record);if(node.panel)layoutPanels();for(const connector of records)if(connector.node.type==='connector'&&[connector.node.connector?.from?.nodeId,connector.node.connector?.to?.nodeId].some(id=>id&&recordFor(connector.scope,id)===record))updateRecord(connector);}
+      activate(record, type, event, data);
+      if (type === 'keydown' && !record.input && el.tagName !== 'BUTTON' && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); activate(record, 'click', event); }
+    });
+    if(node.panel){el.addEventListener('pointerdown',event=>beginDrag(record,event));el.addEventListener('lostpointercapture',event=>{if(pointerDrag?.record===record&&pointerDrag.pointerId===event.pointerId)endDrag(event,true);});}
+    if (['click','dblclick','contextmenu','keydown','keyup','focus','blur'].some(type=>hasEvent(record,type))) {
+      el.classList.add('interactive'); if (!record.input && el.tagName !== 'BUTTON') { el.tabIndex = 0; el.setAttribute('role', 'button'); }
+    }
+  }
+  function createNode(node, container, scope, parentRecord = null) {
+    if (!node) return; if (++instanceCount > 30000) throw new Error('此页展开后的元件超过 30000 个，请减少中继器展示数据。');
+    const tag = node.type === 'button' ? 'button' : 'div';
+    const el = element(tag, 'node node-' + node.type); el.dataset.nodeId = node.id; el.setAttribute('aria-label', node.name);
+    const record = { node, el, scope, parentRecord, uid: 'n' + ++serial, flags: {}, input: null, label: null, states: new Map(), stateId: node.panel?.initialStateId };
+    records.add(record); scope.records.set(node.id, record);if(node.panel){record.anchor=document.createComment('panel '+node.id);container.append(record.anchor);}container.append(el);
+    if (tag === 'button') el.type = 'button'; if (tag === 'img') el.draggable = false;
+    if (['input', 'textarea', 'select'].includes(node.type)) {
+      const input = record.input = element(node.type, 'yuanda-native-control'); input.setAttribute('aria-label', node.name); input.autocomplete = 'off'; if (node.type === 'input') input.type = node.inputType || 'text'; el.append(input);
+      if (node.type === 'select') { for (const value of node.options || []) { const option = element('option'); option.value = value; option.textContent = value; input.append(option); } if (!node.value && node.options?.length) node.value = node.options[0]; }
+    }
+    if (node.type === 'checkbox' || node.type === 'radio') { const label = element('label', 'check-label'), input = element('input'); input.type = node.type; input.name = node.radioGroup ? scope.key + ':' + node.radioGroup : record.uid; input.setAttribute('aria-label', node.name); const text = element('span'); label.append(input, text); el.append(label); record.input = input; record.label = text; record.checkLabel = label; }
+    if (node.type === 'table') { const table = element('table'); for (const [index, cells] of (node.rows || []).entries()) { const row = element('tr'); for (const value of cells) { const cell = element(index === 0 ? 'th' : 'td'); cell.textContent = value; row.append(cell); } table.append(row); } el.append(table); }
+    if (node.panel) for (const state of node.panel.states) { const content = element('div', 'panel-state'); content.dataset.stateId = state.id; record.states.set(state.id, content);el.append(content);content.addEventListener('scroll',event=>{if(record.stateId===state.id&&!disabled(record)&&shown(record))activate(record,'scroll',event,eventData(event,record));},{passive:true});for (const id of state.nodeIds) createNode(scope.nodes.get(id), content, scope, record); }
+    if (node.repeater) { record.content = element('div', 'repeater-content'); el.append(record.content); el.style.overflow = 'auto'; }
+    updateRecord(record); bindEvents(record);
+    queueLoad(record);
+    return record;
+  }
+  async function run(actions, scope, event, stamp, owner) {
+    for (const action of actions) {
+      if (stamp !== generation || (owner && !records.has(owner))) return;
+      if(action.enabled===false)continue;
+      const record = recordFor(scope, action.targetId || action.panelId || action.repeaterId), node = record?.node;
+      const value = () => evaluate(action.value, scope, event);
+      let variableEvent=null;
+      if (action.type === 'wait') { if (!await wait(action.ms, stamp)) return; continue; }
+      if (action.type === 'navigate') { requestedView=undefined;showPage(action.pageId); return; }
+      if(action.type==='setAdaptiveView'){const depth=causeDepth(event)+1;if(depth>32)throw new Error('视图切换事件相互触发超过 32 次，请检查交互条件');requestedView=action.mode==='auto'?undefined:action.mode==='base'?null:action.viewId;applyAdaptiveView('action',depth);continue;}
+      if (action.type === 'setVariable') { const variable = (project.variables || []).find(item => item.name === action.name), result = value(),previousValue=variables[action.name]; variables[action.name] = variable?.type === 'number' ? number(result) : variable?.type === 'boolean' ? Boolean(result) : String(result ?? '');if(!Object.is(previousValue,variables[action.name]))variableEvent={...eventData({}),variableName:action.name,previousValue,value:variables[action.name],...nextCause(event)}; }
+      else if (!node) continue;
+      else if(action.type==='focus') {if(!disabled(record)&&shown(record)){focusCause=event;try{(record.input||record.el).focus();}finally{focusCause=null;}}}
+      else if(action.type==='triggerEvent') {await executeEvent(record,action.event,{...eventData({},record),...nextCause(event)},stamp);if(stamp!==generation)return;}
+      else if (action.type === 'setText') { node.text = String(value() ?? ''); node.richText = null; changed(node, 'text'); if (record.input && !['checkbox', 'radio'].includes(node.type)) { node.value = node.text; changed(node, 'value'); } }
+      else if (action.type === 'setValue') { node.value = String(value() ?? ''); changed(node, 'value'); }
+      else if (action.type === 'setChecked') { node.checked = Boolean(value()); if (node.type === 'radio' && node.checked && node.radioGroup) for (const other of records) if (other !== record && other.scope === record.scope && other.node.type === 'radio' && other.node.radioGroup === node.radioGroup) other.node.checked = false; }
+      else if (action.type === 'setVisible') { node.visible = Boolean(value()); changed(node, 'visible'); }
+      else if (action.type === 'toggleVisible') { node.visible = !node.visible; changed(node, 'visible'); }
+      else if (['setDisabled', 'setSelected', 'setError'].includes(action.type)) { const key = { setDisabled: 'disabled', setSelected: 'selected', setError: 'error' }[action.type]; node[key] = Boolean(value()); changed(node, key); }
+      else if (action.type === 'setStyle') { node.style = { ...node.style, ...clone(action.style) }; changed(node, ...Object.keys(action.style).map(key => 'style.' + key)); }
+      else if (action.type === 'move') {
+        const x = number(evaluate(action.x, scope, event)), y = number(evaluate(action.y, scope, event)); const dx = action.relative ? x : x - node.x, dy = action.relative ? y : y - node.y;
+        translateRecord(record,dx,dy);
+      } else if (action.type === 'resize') { node.width = Math.max(1, number(evaluate(action.width, scope, event))); node.height = Math.max(1, number(evaluate(action.height, scope, event)));if(node.panel)node.panel.sizeMode='fixed'; changed(node, 'width', 'height'); }
+      else if (['setPanelState', 'nextPanelState', 'previousPanelState'].includes(action.type) && node.panel) {
+        let id = action.stateId; if (action.type !== 'setPanelState') { const states = node.panel.states, index = states.findIndex(state => state.id === record.stateId), next = index + (action.type === 'nextPanelState' ? 1 : -1); id = states[action.wrap ? (next + states.length) % states.length : Math.max(0, Math.min(states.length - 1, next))].id; }
+        if (record.stateId !== id) { record.stateId = id; activate(record, 'stateChange', {}, {...eventData(event,record),...nextCause(event)}); }
+      } else if (node.repeater) {
+        const data = node.repeater, rowContext = row => ({ ...context(scope, event), item: row.values, row: { id: row.id, marked: (data.markedRowIds || []).includes(row.id) } });
+        const matches = row => action.where == null || Boolean(evaluateExpression(action.where, rowContext(row)));
+        if (action.type === 'addRows') {
+          if (data.rows.length + action.rows.length > 10000) throw new Error('数据列表最多 10000 行');
+          data.rows.push(...action.rows.map(row => { let id; do { id = 'runtime-row-' + ++serial; } while (data.rows.some(item => item.id === id)); return { id, values: Object.fromEntries(Object.entries(row.values).map(([key, value]) => [key, evaluate(value, scope, event)])) }; }));
+        }
+        else if (action.type === 'deleteRows') { data.rows = data.rows.filter(row => !matches(row)); data.markedRowIds = (data.markedRowIds || []).filter(id => data.rows.some(row => row.id === id)); }
+        else if (action.type === 'updateRows') { for (const row of data.rows) if (matches(row)) { const updates = Object.fromEntries(Object.entries(action.values).map(([key, expression]) => [key, evaluateExpression(expression, rowContext(row))])); Object.assign(row.values, updates); } }
+        else if (action.type === 'filterRows') data.filter = clone(action.where);
+        else if (action.type === 'sortRows') data.sort = { column: action.column, descending: action.descending };
+        else if (action.type === 'markRows') {
+          const changes = data.rows.filter(matches).map(row => { const marked = evaluateExpression(action.marked, rowContext(row)); if (typeof marked !== 'boolean') throw new Error('行标记需要“是/否”布尔值'); return [row.id, marked]; });
+          const marks = new Set(data.markedRowIds || []); for (const [id, marked] of changes) { if (marked) marks.add(id); else marks.delete(id); } data.markedRowIds = [...marks];
+        } else if (action.type === 'setRepeaterPage' || action.type === 'setRepeaterPageSize') {
+          getRepeaterPage(node, record.scope); const state = repeaterStates.get(node), next = value();
+          if (action.type === 'setRepeaterPageSize' && next === null) { state.pageSize = null; state.currentPage = 1; }
+          else { if (typeof next !== 'number' || !Number.isInteger(next) || (action.type === 'setRepeaterPageSize' && (next < 1 || next > 10000))) throw new Error('分页需要整数；每页数量应为 1–10000，或不限');
+            if (action.type === 'setRepeaterPage') state.currentPage = next; else { state.pageSize = next; state.currentPage = 1; }
+          }
+        }
+      }
+      refresh();
+      if(variableEvent)activate(null,'variableChange',{},variableEvent);
+    }
+  }
+  function selectedView(source) { return selectAdaptiveView(project,source,window.innerWidth,requestedView); }
+  const viewOptionValue=id=>id==='auto'||id==='base'?'view:'+id:id;
+  const selectedOptionValue=()=>requestedView===undefined?'auto':requestedView===null?'base':viewOptionValue(requestedView);
+  function applyAdaptiveView(reason='selector',depth=0) {
+    if (!page) return;
+    const source = project.pages.find(item => item.id === page.id), previousViewId=activeView, adapted = resolveAdaptivePage(source, window.innerWidth, requestedView, project);
+    const models = new Map(adapted.nodes.map(node => [node.id, node]));
+    const live = new Set(root.nodes.values());
+    for (const record of records) for (const node of record.scope.nodes.values()) live.add(node);
+    // Reapply design-time view values only to properties not changed by the
+    // visitor or an interaction. No DOM rebuild, load event, or wait reset.
+    for (const node of live) {
+      const model = models.get(node.id), touched = runtimeChanges.get(node) || new Set(); if (!model) continue;
+      node.placed=model.placed;node.effectivePlaced=model.effectivePlaced;
+      for (const key of ['x', 'y', 'width', 'height', 'rotation', 'visible', 'disabled', 'text', 'value']) if (!touched.has(key)) node[key] = clone(model[key]);
+      if(!touched.has('text'))node.richText=clone(model.richText);
+      for (const [key, value] of Object.entries(model.style)) if (!touched.has('style.' + key)) node.style[key] = clone(value);
+      // State patches are authored effective layers, never runtime/local ownership metadata.
+      node.stateStyles = clone(model.stateStyles || {});
+    }
+    page.width = adapted.width; page.height = adapted.height; activeView = selectedView(source);
+    Object.assign(stage.style, { width: page.width + 'px', height: page.height + 'px' }); refresh();
+    if(viewPicker)viewPicker.value=selectedOptionValue();
+    if(previousViewId!==activeView)activate(null,'adaptiveViewChange',{}, {viewId:activeView,previousViewId,reason,_viewDepth:depth,_interactionDepth:depth});
+  }
+  function showPage(id) {
+    const source = project.pages.find(page => page.id === id); if (!source) return;
+    generation++;caseMenu?.cancel();continuousEvents=new Map();endDrag(null,true);suppressedClick=null;protectedGesture=null;pinnedLayer.replaceChildren(); for (const [timer, resolve] of pending) { clearTimeout(timer); resolve(false); } pending = new Map(); queues = new Map(); records = new Set(); instanceCount = 0; runtimeChanges = new WeakMap(); repeaterStates = new WeakMap();
+    const status = document.getElementById('runtime-status'); if (status) { status.hidden = true; status.textContent = ''; }
+    activeView = selectedView(source); page = resolveAdaptivePage(source, window.innerWidth, requestedView, project); stage.replaceChildren();
+    root = { nodes: new Map(page.nodes.map(node => [node.id, node])), own: new Set(page.nodes.map(node => node.id)), records: new Map(), parent: null, item: {}, key: page.id };
+    Object.assign(stage.style, { width: page.width + 'px', height: page.height + 'px', background: page.background }); picker.value = page.id;
+    document.getElementById('current-page').textContent = page.name; document.title = page.name + ' · ' + project.name;
+    if (viewPicker) {const views=getCanvasViews(project,source);viewPicker.replaceChildren(); for (const [id, title] of [['auto', '自动适应'], ['base', '基础视图'], ...views.map(view => [viewOptionValue(view.id), view.name])]) { const option = element('option'); option.value = id; option.textContent = title; viewPicker.append(option); } viewPicker.value = selectedOptionValue(); viewPicker.hidden = !views.length; }
+    const owned = new Set(page.nodes.flatMap(node => node.panel ? node.panel.states.flatMap(state => state.nodeIds) : node.repeater?.templateIds || []));
+    try { for (const node of page.nodes) if (!owned.has(node.id)) createNode(node, stage, root); refresh(); activate(null, 'load');activate(null,'windowResize',{}, {...eventData({}),reason:'load'}); } catch (error) { notice(error); }
+  }
+  for (const page of project.pages) { const option = element('option'); option.value = page.id; option.textContent = page.name; picker.append(option); }
+  picker.addEventListener('change', () => { requestedView = undefined; showPage(picker.value); });
+  if (viewPicker) viewPicker.addEventListener('change', () => { requestedView = viewPicker.value === 'auto' ? undefined : viewPicker.value === 'base' ? null : viewPicker.value.startsWith('view:')?viewPicker.value.slice(5):viewPicker.value; applyAdaptiveView(); });
+  document.getElementById('restart').addEventListener('click', () => { for (const variable of project.variables || []) variables[variable.name] = clone(variable.value); showPage(page.id); });
+  window.addEventListener('resize', () => { if(!page)return;caseMenu?.cancel();if(requestedView===undefined){const source=project.pages.find(item=>item.id===page.id);if(selectedView(source)!==activeView)applyAdaptiveView('resize');}layoutPanels();activate(null,'windowResize',{}, {...eventData({}),reason:'resize'}); });
+  let previousScroll={x:window.scrollX,y:window.scrollY};
+  window.addEventListener('scroll',event=>{const current={x:window.scrollX,y:window.scrollY},data={...eventData(event),scrollDeltaX:current.x-previousScroll.x,scrollDeltaY:current.y-previousScroll.y};previousScroll=current;if(page)activate(null,'windowScroll',event,data);},{passive:true});
+  stage.tabIndex = 0;
+  for (const type of ['click', 'dblclick', 'contextmenu', 'mousemove', 'mouseenter', 'mouseleave', 'mousedown', 'mouseup', 'change', 'input', 'focus', 'blur']) {
+    for(const surface of [stage,pinnedLayer])surface.addEventListener(type, event => { if (page) {if(['mouseenter','mouseleave'].includes(type)&&event.target!==surface)return;if(type==='contextmenu'&&hasEvent(null,type))event.preventDefault();activate(null, type, event, eventData(event));} }, true);
+  }
+  for(const type of ['keydown','keyup'])document.addEventListener(type,event=>{if(page&&!event.target.closest?.('.viewer-bar,.runtime-case-menu'))activate(null,type,event,eventData(event));},true);
+  stage.addEventListener('pointermove', event => { lastPointer = { x: event.clientX - stage.getBoundingClientRect().left, y: event.clientY - stage.getBoundingClientRect().top }; });
+  showPage(project.pages[0].id);
+})(evaluateExpression,chooseInteractionCases,selectRepeaterRows,resolveAdaptivePage,getNodeDescendants,getVectorGeometry,connectorPoints,selectRepeaterPage,getCanvasViews,selectAdaptiveView,paintImageContent,applyNodeVisual,applyVectorVisual,resolveNodeVisual,getNodeBounds,rotateNodePoint,richRunStyle,getEventSettings);</script>
+</body></html>

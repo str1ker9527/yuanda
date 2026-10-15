@@ -1,0 +1,33 @@
+.advanced-interactions { padding:12px; }
+.interaction-case { border:1px solid var(--border,#ddd); border-radius:4px; margin:12px 0; padding:10px; }
+.interaction-case > .workspace-row > strong { flex:1; font-weight:500; font-size:12px; }
+.expression-field { display:flex; flex-direction:column; gap:5px; margin:9px 0; font-size:12px; color:var(--muted,#767676); }
+.expression-value { text-align:left; overflow-wrap:anywhere; white-space:normal; color:var(--text,#191919); }
+.expression-dialog { z-index:2000; }
+.advanced-action-row { display:grid; grid-template-columns:18px repeat(4,minmax(0,1fr)); gap:4px; align-items:center; margin:9px 0; }
+.advanced-action-row > :nth-child(2) { grid-column:2 / -1; text-align:left; }
+.advanced-action-row > :nth-child(3) { grid-row:2; grid-column:2; }
+.advanced-action-row > :nth-child(4) { grid-row:2; grid-column:3; }
+.advanced-action-row > :nth-child(5) { grid-row:2; grid-column:4; }
+.advanced-action-row > :nth-child(6) { grid-row:2; grid-column:5; }
+.advanced-action-row > button { padding:5px 3px; min-width:0; }
+.action-sequence { font-size:11px; color:var(--muted,#767676); }
+.interaction-event-settings { border-bottom:1px solid var(--border,#ddd);padding:4px 0 12px; }
+.interaction-case[data-enabled=false] { border-style:dashed; }
+.interaction-case[data-enabled=false] > .workspace-row > strong,.advanced-action-row[data-enabled=false] > button:nth-child(2) { color:var(--muted,#767676);text-decoration:line-through; }
+.advanced-action-row > .action-enabled { grid-column:2/-1;grid-row:3;margin:0;font-size:11px; }
+.advanced-details { margin:12px 0; font-size:12px; }
+.advanced-details > summary { cursor:pointer; font-weight:500; margin:8px 0; }
+.advanced-details > .workspace-button { margin:3px 0; width:100%; text-align:left; }
+.adaptive-view-picker { max-width:140px; background:var(--surface,#fff); border:1px solid var(--border,#ddd); border-radius:4px; padding:4px 5px; color:var(--text,#191919); font:inherit; font-size:11px; margin-left:auto; }
+.view-edit-controls{display:flex;align-items:center;gap:5px;margin-left:auto;min-width:0}.view-edit-controls .adaptive-view-picker{margin-left:0;max-width:190px}.view-scope-picker{font:inherit;font-size:11px;padding:4px;border:1px solid var(--border,#ddd);border-radius:4px;color:var(--text,#191919);background:var(--surface,#fff)}.view-edit-controls .workspace-button{font-size:11px;padding:4px 6px}.view-edit-help{font-size:11px;padding:5px 12px;color:var(--muted,#767676);background:var(--surface,#fff);border-bottom:1px solid var(--border,#ddd)}.view-edit-help[data-scope=all]{color:var(--text,#191919);font-weight:500}.view-inspector{padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid var(--border,#ddd)}.view-inspector>.workspace-button{margin:4px 4px 4px 0}.view-manager{width:min(850px,92vw)}.view-manager-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px;margin:15px 0}.view-manager-list .workspace-section{border:1px solid var(--border,#ddd);border-radius:4px;padding:12px}.selected-unplaced{opacity:.32!important;outline:2px dashed #999}.outline-unplaced{opacity:.6}
+.advanced-library .workspace-button { margin-right:5px; }
+.design-container { background:transparent!important; border:1px dashed #888!important; justify-content:flex-start!important; align-items:flex-start!important; overflow:visible!important; }
+.container-caption { position:absolute; left:0; top:-22px; font:12px 'Segoe UI',sans-serif; color:#737373; white-space:nowrap; pointer-events:none; }
+.container-count { align-self:flex-end; margin:8px; font-size:12px; color:#737373; pointer-events:none; }
+.repeater-import-dialog { width:min(960px,94vw); }
+.repeater-import-dialog textarea { min-height:130px; width:100%; }
+.repeater-import-mapping { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; }
+.repeater-import-preview { max-height:260px; overflow:auto; margin:14px 0; }
+.repeater-import-preview td { padding:7px; white-space:pre-wrap; overflow-wrap:anywhere; }
+.panel-state-order{display:flex;flex-direction:column;gap:5px;margin:8px 0}.panel-state-order-row{display:flex;align-items:center;gap:4px;border:1px solid var(--border,#ddd);padding:5px;cursor:grab}.panel-state-order-row span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}.panel-state-order-row button{padding:3px 6px}.panel-state-order-row.drop-target{outline:2px solid #777}.panel-options-dialog{max-width:650px;width:min(650px,92vw)}

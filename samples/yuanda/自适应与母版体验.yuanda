@@ -1,0 +1,2038 @@
+{
+  "format": "yuanda",
+  "version": 1,
+  "id": "view-demo-project",
+  "name": "同一份设计，适合不同屏幕",
+  "pages": [
+    {
+      "id": "view-demo-home",
+      "name": "响应式体验",
+      "width": 1200,
+      "height": 850,
+      "background": "#FFFFFF",
+      "nodes": [
+        {
+          "id": "demo-heading",
+          "type": "text",
+          "name": "一份内容，三种布局。",
+          "x": 48,
+          "y": 40,
+          "width": 1104,
+          "height": 52,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "一份内容，三种布局。",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "transparent",
+            "stroke": "transparent",
+            "strokeWidth": 0,
+            "radius": 0,
+            "color": "#191919",
+            "fontSize": 34,
+            "fontWeight": 600,
+            "align": "left",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fontSize",
+            "color",
+            "fontWeight"
+          ],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "demo-intro",
+          "type": "text",
+          "name": "先在卡片里输入一句话、点几次按钮，再切换尺寸。内容和计数会留下，排版会变化。",
+          "x": 48,
+          "y": 108,
+          "width": 1104,
+          "height": 56,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "先在卡片里输入一句话、点几次按钮，再切换尺寸。内容和计数会留下，排版会变化。",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "transparent",
+            "stroke": "transparent",
+            "strokeWidth": 0,
+            "radius": 0,
+            "color": "#191919",
+            "fontSize": 16,
+            "fontWeight": 400,
+            "align": "left",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fontSize",
+            "color",
+            "fontWeight"
+          ],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "view-change-log",
+          "type": "text",
+          "name": "选择上方尺寸，或拖动浏览器窗口。",
+          "x": 48,
+          "y": 232,
+          "width": 1104,
+          "height": 36,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "选择上方尺寸，或拖动浏览器窗口。",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "transparent",
+            "stroke": "transparent",
+            "strokeWidth": 0,
+            "radius": 0,
+            "color": "#191919",
+            "fontSize": 14,
+            "fontWeight": 400,
+            "align": "left",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fontSize",
+            "color",
+            "fontWeight"
+          ],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "wide-note",
+          "type": "text",
+          "name": "宽屏补充说明：在手机视图中，这段内容被取消放置；其他内容依然可以操作。",
+          "x": 48,
+          "y": 640,
+          "width": 1104,
+          "height": 70,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "宽屏补充说明：在手机视图中，这段内容被取消放置；其他内容依然可以操作。",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "transparent",
+            "stroke": "transparent",
+            "strokeWidth": 0,
+            "radius": 0,
+            "color": "#191919",
+            "fontSize": 15,
+            "fontWeight": 400,
+            "align": "left",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fontSize",
+            "color",
+            "fontWeight"
+          ],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "show-wide",
+          "type": "button",
+          "name": "桌面",
+          "x": 48,
+          "y": 180,
+          "width": 120,
+          "height": 38,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "桌面",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "#191919",
+            "stroke": "#D1D5DB",
+            "strokeWidth": 1,
+            "radius": 4,
+            "color": "#FFFFFF",
+            "fontSize": 14,
+            "fontWeight": 500,
+            "align": "center",
+            "opacity": 1
+          },
+          "interactions": [
+            {
+              "event": "click",
+              "actions": [
+                {
+                  "type": "setAdaptiveView",
+                  "mode": "view",
+                  "viewId": "page-wide"
+                }
+              ],
+              "name": "",
+              "condition": null,
+              "caseMode": "if",
+              "enabled": true
+            }
+          ],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "show-tablet",
+          "type": "button",
+          "name": "平板",
+          "x": 188,
+          "y": 180,
+          "width": 120,
+          "height": 38,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "平板",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "#191919",
+            "stroke": "#D1D5DB",
+            "strokeWidth": 1,
+            "radius": 4,
+            "color": "#FFFFFF",
+            "fontSize": 14,
+            "fontWeight": 500,
+            "align": "center",
+            "opacity": 1
+          },
+          "interactions": [
+            {
+              "event": "click",
+              "actions": [
+                {
+                  "type": "setAdaptiveView",
+                  "mode": "view",
+                  "viewId": "page-tablet"
+                }
+              ],
+              "name": "",
+              "condition": null,
+              "caseMode": "if",
+              "enabled": true
+            }
+          ],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "show-phone",
+          "type": "button",
+          "name": "手机",
+          "x": 328,
+          "y": 180,
+          "width": 120,
+          "height": 38,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "手机",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "#191919",
+            "stroke": "#D1D5DB",
+            "strokeWidth": 1,
+            "radius": 4,
+            "color": "#FFFFFF",
+            "fontSize": 14,
+            "fontWeight": 500,
+            "align": "center",
+            "opacity": 1
+          },
+          "interactions": [
+            {
+              "event": "click",
+              "actions": [
+                {
+                  "type": "setAdaptiveView",
+                  "mode": "view",
+                  "viewId": "page-phone"
+                }
+              ],
+              "name": "",
+              "condition": null,
+              "caseMode": "if",
+              "enabled": true
+            }
+          ],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "instance-card-background",
+          "type": "rectangle",
+          "name": "card-background",
+          "x": 48,
+          "y": 300,
+          "width": 1104,
+          "height": 292,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "#FAFAFA",
+            "stroke": "#DEDEDE",
+            "strokeWidth": 1,
+            "radius": 8,
+            "color": "#191919",
+            "fontSize": 14,
+            "fontWeight": 400,
+            "align": "center",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fill",
+            "stroke",
+            "radius"
+          ],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "instance-card-title",
+          "type": "text",
+          "name": "你可以编辑，也可以直接操作。",
+          "x": 72,
+          "y": 324,
+          "width": 1000,
+          "height": 36,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "你可以编辑，也可以直接操作。",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "transparent",
+            "stroke": "transparent",
+            "strokeWidth": 0,
+            "radius": 0,
+            "color": "#191919",
+            "fontSize": 23,
+            "fontWeight": 400,
+            "align": "left",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fontSize",
+            "color",
+            "fontWeight"
+          ],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "instance-card-input",
+          "type": "input",
+          "name": "在这里写一句话",
+          "x": 72,
+          "y": 386,
+          "width": 660,
+          "height": 44,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "在这里写一句话",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "#FFFFFF",
+            "stroke": "#CCCCCC",
+            "strokeWidth": 1,
+            "radius": 4,
+            "color": "#191919",
+            "fontSize": 14,
+            "fontWeight": 400,
+            "align": "left",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fill",
+            "stroke"
+          ],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "instance-card-action",
+          "type": "button",
+          "name": "点击 +1",
+          "x": 72,
+          "y": 458,
+          "width": 160,
+          "height": 42,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "点击 +1",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "#191919",
+            "stroke": "#D1D5DB",
+            "strokeWidth": 1,
+            "radius": 4,
+            "color": "#FFFFFF",
+            "fontSize": 14,
+            "fontWeight": 500,
+            "align": "center",
+            "opacity": 1
+          },
+          "interactions": [
+            {
+              "event": "click",
+              "actions": [
+                {
+                  "type": "setVariable",
+                  "name": "demoCount",
+                  "value": {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "var",
+                        "name": "demoCount"
+                      },
+                      1
+                    ]
+                  }
+                }
+              ],
+              "name": "",
+              "condition": null,
+              "caseMode": "if",
+              "enabled": true
+            }
+          ],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "instance-card-count",
+          "type": "text",
+          "name": "card-count",
+          "x": 256,
+          "y": 462,
+          "width": 450,
+          "height": 36,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "transparent",
+            "stroke": "transparent",
+            "strokeWidth": 0,
+            "radius": 0,
+            "color": "#555555",
+            "fontSize": 16,
+            "fontWeight": 400,
+            "align": "left",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {
+            "text": {
+              "op": "concat",
+              "args": [
+                "已点击 ",
+                {
+                  "op": "var",
+                  "name": "demoCount"
+                },
+                " 次"
+              ]
+            }
+          },
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fontSize",
+            "color"
+          ],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "instance-card-note",
+          "type": "text",
+          "name": "卡片来自母版，三个尺寸共享同一段文字和交互。",
+          "x": 72,
+          "y": 524,
+          "width": 1000,
+          "height": 42,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "卡片来自母版，三个尺寸共享同一段文字和交互。",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "transparent",
+            "stroke": "transparent",
+            "strokeWidth": 0,
+            "radius": 0,
+            "color": "#191919",
+            "fontSize": 14,
+            "fontWeight": 400,
+            "align": "left",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fontSize",
+            "color",
+            "fontWeight"
+          ],
+          "defaultStyleSetId": null
+        }
+      ],
+      "parentId": null,
+      "guides": {
+        "horizontal": [],
+        "vertical": []
+      },
+      "groups": [
+        {
+          "id": "demo-instance",
+          "name": "响应式交互卡片",
+          "nodeIds": [
+            "instance-card-background",
+            "instance-card-title",
+            "instance-card-input",
+            "instance-card-action",
+            "instance-card-count",
+            "instance-card-note"
+          ],
+          "locked": false,
+          "parentGroupId": null,
+          "componentId": "demo-card",
+          "x": 48,
+          "y": 300,
+          "sourceIds": [
+            "card-background",
+            "card-title",
+            "card-input",
+            "card-action",
+            "card-count",
+            "card-note"
+          ],
+          "internalIds": {},
+          "overrides": {},
+          "viewMode": "auto",
+          "viewId": null,
+          "placed": true,
+          "viewOverrides": {}
+        }
+      ],
+      "annotation": "",
+      "views": [],
+      "interactions": [
+        {
+          "event": "adaptiveViewChange",
+          "condition": {
+            "op": "eq",
+            "args": [
+              {
+                "op": "event",
+                "name": "viewId"
+              },
+              "page-phone"
+            ]
+          },
+          "actions": [
+            {
+              "type": "setText",
+              "targetId": "view-change-log",
+              "value": "已切换到手机布局 · 输入和计数保留"
+            }
+          ],
+          "name": "",
+          "caseMode": "if",
+          "enabled": true
+        },
+        {
+          "event": "adaptiveViewChange",
+          "condition": {
+            "op": "eq",
+            "args": [
+              {
+                "op": "event",
+                "name": "viewId"
+              },
+              "page-tablet"
+            ]
+          },
+          "actions": [
+            {
+              "type": "setText",
+              "targetId": "view-change-log",
+              "value": "已切换到平板布局 · 输入和计数保留"
+            }
+          ],
+          "name": "",
+          "caseMode": "if",
+          "enabled": true
+        },
+        {
+          "event": "adaptiveViewChange",
+          "condition": {
+            "op": "eq",
+            "args": [
+              {
+                "op": "event",
+                "name": "viewId"
+              },
+              "page-wide"
+            ]
+          },
+          "actions": [
+            {
+              "type": "setText",
+              "targetId": "view-change-log",
+              "value": "已切换到桌面布局 · 输入和计数保留"
+            }
+          ],
+          "name": "",
+          "caseMode": "if",
+          "enabled": true
+        }
+      ],
+      "viewSetId": "demo-sizes",
+      "viewOverrides": {
+        "page-tablet": {
+          "demo-heading": {
+            "x": 32,
+            "width": 704
+          },
+          "demo-intro": {
+            "x": 32,
+            "width": 704
+          },
+          "view-change-log": {
+            "x": 32,
+            "width": 704
+          },
+          "wide-note": {
+            "x": 32,
+            "width": 704
+          },
+          "instance-card-background": {
+            "x": 32
+          },
+          "instance-card-title": {
+            "x": 56
+          },
+          "instance-card-input": {
+            "x": 56
+          },
+          "instance-card-action": {
+            "x": 56
+          },
+          "instance-card-count": {
+            "x": 240
+          },
+          "instance-card-note": {
+            "x": 56
+          }
+        },
+        "page-phone": {
+          "demo-heading": {
+            "x": 20,
+            "width": 350,
+            "height": 44,
+            "style": {
+              "fontSize": 26
+            }
+          },
+          "demo-intro": {
+            "x": 20,
+            "y": 104,
+            "width": 350,
+            "height": 72
+          },
+          "show-wide": {
+            "x": 20,
+            "width": 104
+          },
+          "show-tablet": {
+            "x": 134,
+            "width": 104
+          },
+          "show-phone": {
+            "x": 248,
+            "width": 122
+          },
+          "view-change-log": {
+            "x": 20,
+            "width": 350,
+            "height": 56
+          },
+          "wide-note": {
+            "placed": false
+          },
+          "instance-card-background": {
+            "x": 20
+          },
+          "instance-card-title": {
+            "x": 44
+          },
+          "instance-card-input": {
+            "x": 44
+          },
+          "instance-card-action": {
+            "x": 44
+          },
+          "instance-card-count": {
+            "x": 196
+          },
+          "instance-card-note": {
+            "x": 44
+          }
+        }
+      },
+      "eventSettings": {}
+    }
+  ],
+  "styles": [],
+  "components": [
+    {
+      "id": "demo-card",
+      "name": "响应式交互卡片",
+      "width": 1104,
+      "height": 292,
+      "nodes": [
+        {
+          "id": "card-background",
+          "type": "rectangle",
+          "name": "card-background",
+          "x": 0,
+          "y": 0,
+          "width": 1104,
+          "height": 292,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "#FAFAFA",
+            "stroke": "#DEDEDE",
+            "strokeWidth": 1,
+            "radius": 8,
+            "color": "#191919",
+            "fontSize": 14,
+            "fontWeight": 400,
+            "align": "center",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fill",
+            "stroke",
+            "radius"
+          ],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "card-title",
+          "type": "text",
+          "name": "你可以编辑，也可以直接操作。",
+          "x": 24,
+          "y": 24,
+          "width": 1000,
+          "height": 36,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "你可以编辑，也可以直接操作。",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "transparent",
+            "stroke": "transparent",
+            "strokeWidth": 0,
+            "radius": 0,
+            "color": "#191919",
+            "fontSize": 23,
+            "fontWeight": 400,
+            "align": "left",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fontSize",
+            "color",
+            "fontWeight"
+          ],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "card-input",
+          "type": "input",
+          "name": "在这里写一句话",
+          "x": 24,
+          "y": 86,
+          "width": 660,
+          "height": 44,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "在这里写一句话",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "#FFFFFF",
+            "stroke": "#CCCCCC",
+            "strokeWidth": 1,
+            "radius": 4,
+            "color": "#191919",
+            "fontSize": 14,
+            "fontWeight": 400,
+            "align": "left",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fill",
+            "stroke"
+          ],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "card-action",
+          "type": "button",
+          "name": "点击 +1",
+          "x": 24,
+          "y": 158,
+          "width": 160,
+          "height": 42,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "点击 +1",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "#191919",
+            "stroke": "#D1D5DB",
+            "strokeWidth": 1,
+            "radius": 4,
+            "color": "#FFFFFF",
+            "fontSize": 14,
+            "fontWeight": 500,
+            "align": "center",
+            "opacity": 1
+          },
+          "interactions": [
+            {
+              "event": "click",
+              "actions": [
+                {
+                  "type": "setVariable",
+                  "name": "demoCount",
+                  "value": {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "var",
+                        "name": "demoCount"
+                      },
+                      1
+                    ]
+                  }
+                }
+              ],
+              "name": "",
+              "condition": null,
+              "caseMode": "if",
+              "enabled": true
+            }
+          ],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "card-count",
+          "type": "text",
+          "name": "card-count",
+          "x": 208,
+          "y": 162,
+          "width": 450,
+          "height": 36,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "transparent",
+            "stroke": "transparent",
+            "strokeWidth": 0,
+            "radius": 0,
+            "color": "#555555",
+            "fontSize": 16,
+            "fontWeight": 400,
+            "align": "left",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {
+            "text": {
+              "op": "concat",
+              "args": [
+                "已点击 ",
+                {
+                  "op": "var",
+                  "name": "demoCount"
+                },
+                " 次"
+              ]
+            }
+          },
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fontSize",
+            "color"
+          ],
+          "defaultStyleSetId": null
+        },
+        {
+          "id": "card-note",
+          "type": "text",
+          "name": "卡片来自母版，三个尺寸共享同一段文字和交互。",
+          "x": 24,
+          "y": 224,
+          "width": 1000,
+          "height": 42,
+          "rotation": 0,
+          "visible": true,
+          "locked": false,
+          "text": "卡片来自母版，三个尺寸共享同一段文字和交互。",
+          "src": "",
+          "style": {
+            "fontFamily": null,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "textCase": "none",
+            "lineHeight": null,
+            "letterSpacing": 0,
+            "verticalAlign": null,
+            "padding": null,
+            "fillPaint": null,
+            "strokePaint": null,
+            "fillOpacity": 1,
+            "strokeOpacity": 1,
+            "borderSides": null,
+            "strokeStyle": "solid",
+            "radiusCorners": null,
+            "shadows": [],
+            "textShadows": [],
+            "blur": 0,
+            "backdropBlur": 0,
+            "transition": {
+              "duration": 0,
+              "delay": 0,
+              "easing": "ease"
+            },
+            "transformOrigin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "fill": "transparent",
+            "stroke": "transparent",
+            "strokeWidth": 0,
+            "radius": 0,
+            "color": "#191919",
+            "fontSize": 14,
+            "fontWeight": 400,
+            "align": "left",
+            "opacity": 1
+          },
+          "interactions": [],
+          "annotation": "",
+          "styleId": null,
+          "checked": false,
+          "options": [],
+          "value": "",
+          "radioGroup": "",
+          "rows": [],
+          "inputType": "text",
+          "readOnly": false,
+          "maxLength": null,
+          "disabled": false,
+          "selected": false,
+          "error": false,
+          "placed": true,
+          "stateStyles": {},
+          "bindings": {},
+          "eventSettings": {},
+          "panel": null,
+          "repeater": null,
+          "path": null,
+          "connector": null,
+          "richText": null,
+          "image": null,
+          "styleOverrideKeys": [
+            "fontSize",
+            "color",
+            "fontWeight"
+          ],
+          "defaultStyleSetId": null
+        }
+      ],
+      "views": [
+        {
+          "id": "card-wide",
+          "name": "桌面",
+          "parentId": null
+        },
+        {
+          "id": "card-tablet",
+          "name": "平板",
+          "parentId": null
+        },
+        {
+          "id": "card-phone",
+          "name": "手机",
+          "parentId": "card-tablet"
+        }
+      ],
+      "viewOverrides": {
+        "card-tablet": {
+          "card-background": {
+            "width": 704
+          },
+          "card-title": {
+            "width": 656
+          },
+          "card-input": {
+            "width": 656
+          },
+          "card-count": {
+            "width": 420
+          },
+          "card-note": {
+            "width": 656
+          }
+        },
+        "card-phone": {
+          "card-background": {
+            "width": 350,
+            "height": 330
+          },
+          "card-title": {
+            "width": 302,
+            "height": 62,
+            "style": {
+              "fontSize": 20
+            }
+          },
+          "card-input": {
+            "y": 104,
+            "width": 302
+          },
+          "card-action": {
+            "y": 172,
+            "width": 134
+          },
+          "card-count": {
+            "x": 176,
+            "y": 176,
+            "width": 152
+          },
+          "card-note": {
+            "y": 246,
+            "width": 302,
+            "height": 60
+          }
+        }
+      },
+      "background": "#FFFFFF",
+      "annotation": "",
+      "guides": {
+        "horizontal": [],
+        "vertical": []
+      },
+      "groups": []
+    }
+  ],
+  "variables": [
+    {
+      "name": "demoCount",
+      "type": "number",
+      "value": 0
+    }
+  ],
+  "viewSets": [
+    {
+      "id": "demo-sizes",
+      "name": "桌面 / 平板 / 手机",
+      "views": [
+        {
+          "id": "page-wide",
+          "name": "桌面",
+          "parentId": null,
+          "minWidth": 1000,
+          "width": 1200,
+          "height": 850
+        },
+        {
+          "id": "page-tablet",
+          "name": "平板",
+          "parentId": null,
+          "minWidth": 600,
+          "width": 768,
+          "height": 850
+        },
+        {
+          "id": "page-phone",
+          "name": "手机",
+          "parentId": "page-tablet",
+          "minWidth": 0,
+          "width": 390,
+          "height": 920
+        }
+      ]
+    }
+  ],
+  "styleInheritanceVersion": 1,
+  "defaultStyleSets": [],
+  "defaultStyleSetId": null
+}
