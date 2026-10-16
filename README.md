@@ -4,7 +4,7 @@
 
 原搭使用原创文档模型和交互运行器，把页面设计、桌面编辑、可撤销的 Agent 修改和独立 HTML 交付连接起来。它参考成熟原型工具的工作流，目标是持续覆盖 Axure 的核心能力；当前仍是开发预览项目，不能视为完整替代品。
 
-Yuanda is an independently implemented desktop prototyping editor with a shared command model for people and local AI agents. It supports editable projects, interactive HTML export, and a limited native RP export subset. Windows is the validated platform; macOS development is in progress. See the [feature matrix](docs/FEATURE_MATRIX.md), [architecture](docs/ARCHITECTURE.md), and [contribution guide](docs/CONTRIBUTING.md).
+Yuanda is an independently implemented desktop prototyping editor with a shared command model for people and local AI agents. It supports editable projects, interactive HTML export, and a limited native RP export subset. The current preview targets Windows. See the [feature matrix](docs/FEATURE_MATRIX.md), [architecture](docs/ARCHITECTURE.md), and [contribution guide](docs/CONTRIBUTING.md).
 
 ## 能做什么
 
@@ -28,9 +28,7 @@ npm start
 
 安装和首次运行需要下载依赖；缓存放在项目内。`npm start` 打开独立桌面窗口，不需要部署网站。`npm test` 是模型与接口检查，不等于全量桌面验收。
 
-**Windows：**已提供源码与便携构建流程。运行 `npm run build` 后，在生成的版本目录内双击 `原搭.exe`，保留整个目录；便携程序不需要另装 Node.js。不要从源码 ZIP 中寻找尚未构建的 EXE。
-
-**macOS：**从 [Mac 开发与迁移指南](docs/MAC_DEVELOPMENT.md) 开始。需要 Mac 真机验证启动、快捷键、权限、文件、MCP 和打包；当前不宣称已交付签名/公证的苹果应用。Linux 尚未作为已验收平台。
+当前版本面向 **Windows**。从源码运行 `npm run build` 后，在生成的版本目录内双击 `原搭.exe`。运行时请保留整个目录；便携程序无需另装 Node.js。
 
 打开 `samples/yuanda/原搭体验-0.2.yuanda`，可体验三页原创演示。更多样本及每一步在哪个窗口操作，见 [试玩指南](docs/试玩指南.md)。
 
@@ -58,7 +56,7 @@ npm start
 - [项目说明](docs/PROJECT_OVERVIEW.md) · [试玩指南](docs/试玩指南.md) · [Agent 接入](docs/Agent接入.md)
 - [架构](docs/ARCHITECTURE.md) · [接口约定](docs/开发接口约定.md) · [文件说明](docs/文件说明.md)
 - [能力清单](docs/FEATURE_MATRIX.md) · [路线图](docs/ROADMAP.md) · [继续开发交接](docs/CONTINUE_DEVELOPMENT.md)
-- [贡献指南](docs/CONTRIBUTING.md) · [安全说明](docs/SECURITY.md) · [Mac 开发](docs/MAC_DEVELOPMENT.md)
+- [贡献指南](docs/CONTRIBUTING.md) · [安全说明](docs/SECURITY.md)
 
 ```text
 npm run test:all

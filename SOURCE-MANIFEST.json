@@ -33,8 +33,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6665,
-      "sha256": "a5da237bef9fde7b579be54e6661c6b42e232ec175ccd3201848d909c30fa8da"
+      "bytes": 6288,
+      "sha256": "10f1b5e58f1f437b773ac4f1bc2f1a0062ca0cf65f966264aa17800c88310891"
     },
     {
       "path": "app/agent-files.mjs",
