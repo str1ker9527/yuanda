@@ -5,14 +5,16 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {randomUUID} from 'node:crypto';
-import {mkdirSync} from 'node:fs';
+import {mkdirSync,mkdtempSync} from 'node:fs';
 import {writeFile} from 'node:fs/promises';
 import {DocumentEngine,createBlankProject,makeNode,validateProject} from '../app/core/document.mjs';
 import {captureLibraryItem} from '../app/core/library-model.mjs';
+import {getNodeBounds} from '../app/core/widget-geometry.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const runtime=path.join(root,'.local','drag-preview-ui');mkdirSync(runtime,{recursive:true});
-for(const [name,folder] of [['userData','profile'],['sessionData','browser'],['logs','logs']])app.setPath(name,path.join(runtime,folder));
+const runDirectory=mkdtempSync(path.join(runtime,'run-'));
+for(const [name,folder] of [['userData','profile'],['sessionData','browser'],['logs','logs']])app.setPath(name,path.join(runDirectory,folder));
 const output=process.argv.find(value=>value.startsWith('--output='))?.slice(9)||'result.json';
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const png='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAYAAAD0In+KAAAADklEQVR4nGPgEpH7D8IACDMCd0kivAIAAAAASUVORK5CYII=';
@@ -30,6 +32,9 @@ async function run(){
   source.apply([{type:'insertComponent',pageId:'home',componentId:'drag-card',instanceId:'source-instance',x:90,y:80}]);
   const sourcePage=source.getSnapshot().pages[0];
   const {item}=captureLibraryItem(source.getSnapshot(),{pageId:'home',nodeIds:sourcePage.nodes.map(node=>node.id),name:'带图片和母版的自有库',description:'测试原创按钮与内嵌 PNG'}, {uuid:randomUUID,createBlankProject,validateProject});
+  const offsetNodes=[makeNode('rectangle',{id:'offset-rotated',x:30,y:40,width:120,height:60,rotation:90}),makeNode('button',{id:'offset-button',x:150,y:140,width:100,height:40}),makeNode('rectangle',{id:'offset-hidden',x:-200,y:-100,width:120,height:60,visible:false})];
+  const offsetSource=new DocumentEngine(base);offsetSource.apply(offsetNodes.map(node=>({type:'addNode',pageId:'home',node})));
+  const {item:offsetItem}=captureLibraryItem(offsetSource.getSnapshot(),{pageId:'home',nodeIds:offsetNodes.map(node=>node.id),name:'旋转与隐藏边界',description:'隐藏节点只影响插入原点，不参与可见吸附'}, {uuid:randomUUID,createBlankProject,validateProject});
   const catalog=[{id:'test-local-library',revision:1,library:{name:'拖动测试库',description:'项目内独立测试夹具',folders:[],items:[item]}}];
   const engine=new DocumentEngine(base);let selection={pageId:'home',nodeIds:[]},win;
   const agent={enabled:false,port:0,requests:0,connectionFile:'',cliPath:''};
@@ -53,10 +58,24 @@ async function run(){
   const begin=async(selector,to=undefined)=>{const from=await center(selector);await mouse('mouseMove',from);await mouse('mouseDown',from);const point=to||await target();for(let step=1;step<=6;step++)await mouse('mouseMove',{x:from.x+(point.x-from.x)*step/6,y:from.y+(point.y-from.y)*step/6});await waitFor(()=>js('!!window.YuandaDragPreview.getState()?.active'),'随动预览');return point;};
   const snapshot=()=>js(`(()=>{const root=document.querySelector('#yuanda-drag-preview'),bounds=root?.querySelector('.yuanda-drag-bounds')?.getBoundingClientRect(),nodes=[...(root?.querySelectorAll('[data-preview-node-id]')||[])];return {state:window.YuandaDragPreview.getState(),bounds:bounds?{x:bounds.x,y:bounds.y,width:bounds.width,height:bounds.height}:null,nodes:nodes.map(n=>({text:n.textContent,fills:[...n.querySelectorAll('.yuanda-style-decoration path[fill]')].map(p=>p.getAttribute('fill')),width:n.getBoundingClientRect().width,height:n.getBoundingClientRect().height,images:[...n.querySelectorAll('img')].map(i=>({src:i.src,complete:i.complete,width:i.naturalWidth}))})),dimensions:root?.querySelector('.yuanda-drag-dimensions')?.textContent,selection:window.YuandaEditor.getSelection()};})()`);
   const evidence=[];
-  const capture=async name=>{await delay(80);const file=path.join(runtime,`${name}.png`);await writeFile(file,(await win.webContents.capturePage()).toPNG());evidence.push(file);};
+  const capture=async name=>{await delay(80);const file=path.join(runDirectory,`${name}.png`);await writeFile(file,(await win.webContents.capturePage()).toPNG());evidence.push(file);};
   const checks=[],traces={};
-  const reset=async()=>{await js(`window.YuandaDragPreview.cancel();document.querySelectorAll('dialog[open]').forEach(d=>{d.close();d.remove();});window.YuandaEditor.openPage('home');window.YuandaDock.reset();window.YuandaDock.show('library');window.YuandaDock.activate('library');`);engine.replace(base);selection={pageId:'home',nodeIds:[]};emit();await waitFor(()=>js(`window.YuandaEditor.getState().revision===${engine.revision}`),'重置状态');await js('window.YuandaEditor.setZoom(1)');await delay(100);};
-  const check=async(name,task)=>{await reset();const start=Date.now();try{await task();checks.push({name,ok:true,durationMs:Date.now()-start});}catch(error){checks.push({name,ok:false,error:error.stack});await capture(`${name}-failure`);}traces[name]=await js('window.__dragTrace.splice(0)');};
+  const reset=async()=>{await js(`window.YuandaDragPreview.cancel();document.querySelectorAll('dialog[open]').forEach(d=>{d.close();d.remove();});window.YuandaEditor.openPage('home');window.YuandaDock.reset();window.YuandaDock.show('library');window.YuandaDock.activate('library');window.YuandaWorkspace.setPreferences({snapping:false,snapGrid:true,snapGuides:true,snapWidgets:true,gridSize:10,guides:true});`);engine.replace(base);selection={pageId:'home',nodeIds:[]};emit();await waitFor(()=>js(`window.YuandaEditor.getState().revision===${engine.revision}`),'重置状态');await js('window.YuandaEditor.setZoom(1);document.querySelector("#canvas-viewport").scrollTo(0,0)');await delay(100);};
+  const check=async(name,task)=>{await reset();const start=Date.now();try{await task();assert.equal(await js('document.querySelector("#smart-snap-layer")?.childElementCount||0'),0,'结束后无残留吸附线');checks.push({name,ok:true,durationMs:Date.now()-start});}catch(error){checks.push({name,ok:false,error:error.stack});await capture(`${name}-failure`);}traces[name]=await js('window.__dragTrace.splice(0)');};
+  const fixture=async commands=>{engine.apply(commands);emit();await waitFor(()=>js(`window.YuandaEditor.getState().revision===${engine.revision}`),'夹具状态已同步');};
+  const snapping=async patch=>js(`window.YuandaWorkspace.setPreferences(${JSON.stringify({snapping:true,snapGrid:false,snapGuides:false,snapWidgets:false,...patch})})`);
+  const canvasPoint=(x,y)=>js(`(()=>{const r=document.querySelector('#board').getBoundingClientRect(),z=window.YuandaEditor.getZoom();return {x:Math.round(r.left+${x}*z),y:Math.round(r.top+${y}*z)};})()`);
+  const snapLines=()=>js(`[...document.querySelectorAll('#smart-snap-layer .smart-snap-line')].map(n=>({axis:n.classList.contains('x')?'x':'y',value:parseFloat(n.style.left||n.style.top)}))`);
+  const placeAndUndo=async(point,before,revision,middle)=>{
+    const commandsBefore=commandLog.length;await mouse('mouseUp',point);await waitFor(()=>engine.revision===revision+1,'吸附落地一笔修改');await waitFor(()=>js(`window.YuandaEditor.getState().revision===${engine.revision}`),'落地模型已渲染');
+    assert.equal(commandLog.length,commandsBefore+1);assert.equal(commandLog.at(-1).commands.length,1);assert.equal(commandLog.at(-1).expectedRevision,revision);
+    const beforeIds=new Set(before.pages[0].nodes.map(node=>node.id)),added=engine.getSnapshot().pages[0].nodes.filter(node=>!beforeIds.has(node.id));assert(added.length);
+    const visible=added.filter(node=>node.visible&&node.placed!==false),bounds=visible.map(getNodeBounds),left=Math.min(...bounds.map(b=>b.left)),top=Math.min(...bounds.map(b=>b.top)),right=Math.max(...bounds.map(b=>b.right)),bottom=Math.max(...bounds.map(b=>b.bottom));
+    const board=await js(`(()=>{const r=document.querySelector('#board').getBoundingClientRect();return {x:r.left,y:r.top,zoom:window.YuandaEditor.getZoom()};})()`);
+    for(const [actual,expected,label]of [[middle.bounds.x,board.x+left*board.zoom,'left'],[middle.bounds.y,board.y+top*board.zoom,'top'],[middle.bounds.width,(right-left)*board.zoom,'width'],[middle.bounds.height,(bottom-top)*board.zoom,'height']])assert(Math.abs(actual-expected)<.04,`${label}: preview ${actual}, placed ${expected}`);
+    assert.equal(await js('window.YuandaDragPreview.getState()'),null);assert.deepEqual(await snapLines(),[]);
+    await key('Z',['control']);await waitFor(()=>engine.revision===revision+2,'吸附放置可一次撤销');assert.deepEqual(engine.getSnapshot(),before);return added;
+  };
 
   await check('button-real-appearance-follows-pointer-drop-one-undo',async()=>{
     const before=engine.getSnapshot(),revision=engine.revision;let point=await begin('.library-widget[data-library-type="button"]');const first=await snapshot();
@@ -86,7 +105,58 @@ async function run(){
     const revision=engine.revision,types=await js('[...document.querySelectorAll(".library-widget[data-library-type]")].map(n=>n.dataset.libraryType)');assert.equal(types.length,11);
     for(const type of types){const point=await begin(`.library-widget[data-library-type="${type}"]`);const middle=await snapshot();assert.equal(middle.nodes.length,1,type);assert(middle.bounds.width>0&&middle.bounds.height>0,type);if(type==='line')assert.equal(await js('!!document.querySelector("#yuanda-drag-preview svg path[d]")'),true);if(['input','textarea','select','checkbox','radio'].includes(type))assert.equal(await js('!!document.querySelector("#yuanda-drag-preview input,#yuanda-drag-preview textarea,#yuanda-drag-preview select")'),true);if(type==='table')assert.equal(await js('document.querySelectorAll("#yuanda-drag-preview td").length'),9);await key('Escape');await mouse('mouseUp',point);assert.equal(engine.revision,revision,type);assert.equal(await js('window.YuandaDragPreview.getState()'),null,type);}
   });
+  await check('grid-snap-basic-preview-and-drop-one-undo',async()=>{
+    await snapping({snapGrid:true});const before=engine.getSnapshot(),revision=engine.revision,point=await begin('.library-widget[data-library-type="button"]',await canvasPoint(133,157)),middle=await snapshot();
+    assert.deepEqual(middle.state.point,{x:130,y:160});const added=await placeAndUndo(point,before,revision,middle);assert.equal(added[0].x,130);assert.equal(added[0].y,160);
+  });
+  await check('hidden-page-and-global-guides-snap-two-axes',async()=>{
+    await fixture([{type:'setPageGuides',pageId:'home',guides:{vertical:[240],horizontal:[]}},{type:'setProjectGuides',guides:{vertical:[],horizontal:[210]}}]);await snapping({snapGuides:true,guides:false});
+    const before=engine.getSnapshot(),revision=engine.revision,point=await begin('.library-widget[data-library-type="button"]',await canvasPoint(237,207)),middle=await snapshot();assert.deepEqual(middle.state.point,{x:240,y:210});assert.deepEqual(await snapLines(),[{axis:'x',value:240},{axis:'y',value:210}]);await capture('page-global-guides-snapped');await placeAndUndo(point,before,revision,middle);
+  });
+  await check('existing-widget-edge-and-midpoint-snap',async()=>{
+    await fixture([{type:'addNode',pageId:'home',node:makeNode('rectangle',{id:'alignment-target',x:440,y:300,width:80,height:100})}]);await snapping({snapWidgets:true});
+    const before=engine.getSnapshot(),revision=engine.revision,point=await begin('.library-widget[data-library-type="button"]',await canvasPoint(281,329)),middle=await snapshot();assert.deepEqual(middle.state.point,{x:280,y:328});assert.deepEqual(await snapLines(),[{axis:'x',value:440},{axis:'y',value:350}]);await placeAndUndo(point,before,revision,middle);
+  });
+  await check('component-visible-rotated-offset-bounds-ignore-hidden-content',async()=>{
+    await fixture([{type:'addComponent',component:{id:'offset-component',name:'旋转偏移母版',nodes:offsetNodes}},{type:'setPageGuides',pageId:'home',guides:{vertical:[240],horizontal:[210]}}]);await snapping({snapGuides:true});
+    await js("window.YuandaDock.show('components');window.YuandaDock.activate('components')");const before=engine.getSnapshot(),revision=engine.revision,point=await begin('.component-item:last-child .component-name',await canvasPoint(177,197)),middle=await snapshot();
+    assert.equal(middle.nodes.length,2);assert.deepEqual(middle.state.point,{x:180,y:200});assert.equal(Math.round(middle.bounds.width),190);assert.equal(Math.round(middle.bounds.height),170);await placeAndUndo(point,before,revision,middle);
+  });
+  await check('library-visible-bounds-ignore-hidden-normalization-origin',async()=>{
+    catalog[0].library.items=[offsetItem];try{
+      await fixture([{type:'setPageGuides',pageId:'home',guides:{vertical:[340],horizontal:[310]}}]);await snapping({snapGuides:true});await js('window.YuandaLibrary.open()');await waitFor(()=>js('!!document.querySelector(".local-library-thumbnail")'),'偏移库条目');
+      const before=engine.getSnapshot(),revision=engine.revision,point=await begin('.local-library-thumbnail',await canvasPoint(77,197)),middle=await snapshot();assert.equal(middle.nodes.length,2);assert.deepEqual(middle.state.point,{x:80,y:200});await placeAndUndo(point,before,revision,middle);
+    }finally{catalog[0].library.items=[item];}
+  });
+  await check('snap-tolerance-scales-and-scroll-refreshes-exact-preview',async()=>{
+    await fixture([{type:'setProjectGuides',guides:{vertical:[400],horizontal:[300]}}]);await snapping({snapGuides:true});await js('window.YuandaEditor.setZoom(.5)');
+    let point=await begin('.library-widget[data-library-type="button"]',await canvasPoint(390,290));assert.deepEqual((await snapshot()).state.point,{x:400,y:300});
+    await js('window.YuandaEditor.setZoom(1.5)');point=await canvasPoint(394,294);await mouse('mouseMove',point);assert.deepEqual((await snapshot()).state.point,{x:394,y:294},'超过六个屏幕像素不吸附');assert.deepEqual(await snapLines(),[]);
+    await js("document.querySelector('#canvas-viewport').scrollLeft=120;document.querySelector('#canvas-viewport').scrollTop=60");point=await canvasPoint(397,297);await mouse('mouseMove',point);let middle=await snapshot();assert.deepEqual(middle.state.point,{x:400,y:300});
+    // Keep the pointer still while the viewport scrolls: the raw point leaves
+    // the attraction radius, so both the hint and preview must refresh.
+    await js("document.querySelector('#canvas-viewport').scrollLeft+=30");await waitFor(async()=>!(await snapLines()).some(line=>line.axis==='x'),'滚动后移出吸附范围');middle=await snapshot();assert(middle.state.point.x>410);assert.equal(middle.state.point.y,300);
+    point=await canvasPoint(397,297);await mouse('mouseMove',point);middle=await snapshot();assert.deepEqual(middle.state.point,{x:400,y:300});await placeAndUndo(point,engine.getSnapshot(),engine.revision,middle);
+  });
+  await check('master-canvas-uses-local-guides-without-project-guides',async()=>{
+    await fixture([{type:'setProjectGuides',guides:{vertical:[240],horizontal:[210]}},{type:'updateComponent',componentId:'drag-card',patch:{guides:{vertical:[200],horizontal:[180]}}}]);await snapping({snapGuides:true});await js("window.YuandaEditor.openComponent('drag-card');window.YuandaEditor.setZoom(1)");
+    let point=await begin('.library-widget[data-library-type="button"]',await canvasPoint(237,207));assert.deepEqual((await snapshot()).state.point,{x:237,y:207});assert.deepEqual(await snapLines(),[]);
+    point=await canvasPoint(197,177);await mouse('mouseMove',point);assert.deepEqual((await snapshot()).state.point,{x:200,y:180});await key('Escape');await mouse('mouseUp',point);
+  });
+  await check('active-snap-disabled-and-enabled-without-extra-pointer-motion',async()=>{
+    await fixture([{type:'setProjectGuides',guides:{vertical:[240],horizontal:[210]}}]);await snapping({snapGuides:true});const revision=engine.revision,point=await begin('.library-widget[data-library-type="button"]',await canvasPoint(237,207));assert.deepEqual((await snapshot()).state.point,{x:240,y:210});
+    await js('window.YuandaWorkspace.setPreferences({snapping:false})');assert.deepEqual((await snapshot()).state.point,{x:237,y:207});assert.deepEqual(await snapLines(),[]);
+    await js('window.YuandaWorkspace.setPreferences({snapping:true})');assert.deepEqual((await snapshot()).state.point,{x:240,y:210});await key('Escape');await mouse('mouseUp',point);assert.equal(engine.revision,revision);
+  });
+  for(const mode of ['outside','escape','revision','context'])await check(`active-snap-${mode}-cancels-without-hints-or-insert`,async()=>{
+    await fixture([{type:'setProjectGuides',guides:{vertical:[240],horizontal:[210]}}]);await snapping({snapGuides:true});let point=await begin('.library-widget[data-library-type="button"]',await canvasPoint(237,207));assert.equal((await snapLines()).length,2);
+    if(mode==='outside'){point={x:1450,y:100};await mouse('mouseMove',point);assert.equal((await snapshot()).state.valid,false);assert.deepEqual(await snapLines(),[]);}
+    else if(mode==='escape')await key('Escape');
+    else if(mode==='revision'){engine.apply([{type:'renameProject',name:'吸附途中外部更新'}]);emit();await waitFor(()=>js('window.YuandaDragPreview.getState()===null'),'版本更新取消吸附');}
+    else{await js("window.YuandaEditor.openComponent('drag-card')");await waitFor(()=>js('window.YuandaDragPreview.getState()===null'),'画布切换取消吸附');}
+    const revision=engine.revision;await mouse('mouseUp',point);assert.equal(engine.revision,revision);assert.deepEqual(await snapLines(),[]);assert.equal(engine.getSnapshot().pages[0].nodes.length,0);
+  });
   await check('all-gestures-used-trusted-browser-input',async()=>{for(const [name,events]of Object.entries(traces)){assert(events.some(event=>event.type==='pointerdown'&&event.trusted),name);assert(events.filter(event=>['pointerdown','pointermove','pointerup'].includes(event.type)).every(event=>event.trusted),name);}assert.deepEqual(await js('window.__dragErrors'),[]);});
-  const result={ok:checks.every(check=>check.ok)&&errors.length===0,checks,errors,evidence,traces,commandLog,scope:'Real Chromium input and middle-drag DOM/pixel evidence in isolated Electron. No user documents or Axure run.'};
-  await writeFile(path.join(runtime,output),JSON.stringify(result,null,2));win.destroy();app.exit(result.ok?0:1);
+  const result={ok:checks.every(check=>check.ok)&&errors.length===0,checks,errors,evidence,traces,commandLog,runDirectory,scope:'Real Chromium input and middle-drag DOM/pixel evidence in isolated Electron. No user documents or Axure run.'};
+  await writeFile(path.join(runDirectory,'result.json'),JSON.stringify(result,null,2));await writeFile(path.join(runtime,output),JSON.stringify(result,null,2));win.destroy();app.exit(result.ok?0:1);
 }

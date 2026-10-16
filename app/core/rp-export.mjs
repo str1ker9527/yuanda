@@ -302,6 +302,7 @@ export function getRpExportStatus(project) {
   if (project?.styles?.length) unsupported.push('项目: 共享样式库及关联');
   if (project?.components?.length) unsupported.push('项目: 母版定义及实例关联');
   if (project?.variables?.length) unsupported.push('项目: 变量');
+  if (project?.globalGuides?.horizontal?.length || project?.globalGuides?.vertical?.length) unsupported.push('项目: 全局参考线（尚无 RP 对应语义）');
   if (project?.viewSets?.length) unsupported.push('项目: 共享自适应视图集');
   if (project?.defaultStyleSets?.length || project?.defaultStyleSetId) unsupported.push('项目: 默认样式集及关联');
   for(const page of project?.pages ?? []) {

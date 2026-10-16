@@ -56,6 +56,11 @@
 .canvas-guide.is-selected::after,.canvas-guide:focus::after { background:var(--text,#191919); }
 .canvas-guide.will-remove::after { background:#D64040; }
 .canvas-guide.preview { pointer-events:none; }
+.canvas-guide.is-inactive-scope { pointer-events:none; opacity:.6; }
+.canvas-guide.is-global.horizontal::after { background:repeating-linear-gradient(to right,var(--guide-color,#249CA8) 0,var(--guide-color,#249CA8) 5px,transparent 5px,transparent 9px); }
+.canvas-guide.is-global.vertical::after { background:repeating-linear-gradient(to bottom,var(--guide-color,#249CA8) 0,var(--guide-color,#249CA8) 5px,transparent 5px,transparent 9px); }
+.guide-scope-section { border-top:1px solid var(--border,#ddd); padding-top:8px; margin-top:12px; }
+.guide-scope-section h3 { font-size:13px; font-weight:600; margin:4px 0 8px; }
 .guide-coordinate { position:absolute; background:#191919; color:#fff; padding:3px 6px; font:12px 'Segoe UI',sans-serif; white-space:nowrap; }
 .canvas-guide.horizontal .guide-coordinate { right:4px; top:5px; }
 .canvas-guide.vertical .guide-coordinate { top:4px; left:5px; }

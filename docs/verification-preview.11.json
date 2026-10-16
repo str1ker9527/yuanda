@@ -1,0 +1,861 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.0-preview.11",
+  "agentSchemaRevision": 13,
+  "platform": "Windows",
+  "checkedAt": "2026-10-16T01:13:39.913096+00:00",
+  "verificationMethod": {
+    "kind": "targeted-integration-on-fixed-application-source",
+    "fullTestAllEntrypointRun": false,
+    "targetedGroups": 12,
+    "allTargetedGroupsPassed": true,
+    "applicationAndPackageFilesUnchanged": true,
+    "sourceFileCount": 64,
+    "startedAt": "2026-10-16T01:07:44.241Z",
+    "finishedAt": "2026-10-16T01:09:56.184Z",
+    "note": "Twelve selected integration groups passed in one fixed-source run; portable checks were separate. This is not a rerun of every test-all group or proof of complete Axure compatibility. Counts from distinct layers are not summed.",
+    "earlierAttempts": [
+      {
+        "id": "earlier-model-sandbox-failure",
+        "acceptedAsPass": false,
+        "tests": 424,
+        "pass": 404,
+        "fail": 20,
+        "reason": "The sandbox denied local loopback connections. These failures were retained and were not counted as passing tests."
+      },
+      {
+        "id": "earlier-model-allowed-loopback",
+        "acceptedAsFinalReleaseRun": false,
+        "tests": 424,
+        "pass": 424,
+        "fail": 0,
+        "reason": "Preliminary rerun with local loopback allowed. The final model count above comes from the later fixed-source targeted run."
+      }
+    ]
+  },
+  "groups": [
+    {
+      "name": "model-and-http",
+      "ok": true,
+      "exitCode": 0,
+      "checks": {
+        "tests": 424,
+        "pass": 424,
+        "fail": 0
+      }
+    },
+    {
+      "name": "mcp-production-desktop",
+      "ok": true,
+      "exitCode": 0,
+      "checkNames": [
+        "standard-stdio-mcp-initialize-and-tools-list",
+        "mcp-preflight-does-not-mutate-production-engine",
+        "mcp-batch-add-and-edit-reaches-real-renderer",
+        "stale-agent-revision-rejected-without-mutation",
+        "mcp-selection-reaches-production-state-and-renderer",
+        "mcp-undo-redo-uses-same-history",
+        "mcp-save-real-files-without-dialog-or-overwrite",
+        "mcp-html-and-native-rp-export-real-files",
+        "exported-html-runs-and-navigates-offline",
+        "unsupported-rp-content-blocked-before-file-write",
+        "pending-user-draft-flushes-then-stale-export-is-rejected",
+        "concurrent-file-operations-are-excluded-during-renderer-flush",
+        "save-io-failure-preserves-project-path-revision-and-dirty-state",
+        "mcp-folders-create-organize-and-reject-folder-canvas-selection",
+        "mcp-folder-save-html-landing-and-rp-no-silent-flattening",
+        "mcp-folder-recursive-delete-references-selection-and-undo-redo",
+        "mcp-global-guides-cross-page-rendering-and-conflict-protection",
+        "mcp-global-guides-single-transaction-undo-redo",
+        "mcp-global-guides-save-html-and-rp-rejection-before-writing",
+        "mcp-global-guides-reopen-through-production-file-reader"
+      ],
+      "checksPassed": 20
+    },
+    {
+      "name": "project-global-guides",
+      "ok": true,
+      "exitCode": 0,
+      "checkNames": [
+        "view-menu-adds-project-guides-with-explicit-scope",
+        "overlapping-local-and-project-lines-delete-only-selected-scope-and-undo",
+        "context-menu-edits-project-line-without-changing-coincident-page-line",
+        "project-ruler-drag-move-delete-back-and-lock-are-real-engine-operations",
+        "other-real-page-inherits-global-but-not-local-and-ruler-creates-in-scope",
+        "inherited-project-line-snaps-real-node-drag-even-when-hidden",
+        "adaptive-view-guide-edit-stays-project-scoped-and-undoes-atomically",
+        "base-and-two-adaptive-views-display-shared-lines-and-snap-with-view-isolation",
+        "master-canvas-and-master-view-never-display-or-snap-project-guides",
+        "agent-project-guide-command-broadcasts-and-stale-dialog-cannot-overwrite",
+        "agent-change-mid-guide-drag-cancels-stale-coordinate-write",
+        "settings-clear-scopes-independently-and-global-clear-undo-is-single-step",
+        "save-open-preserves-global-guides-and-html-renders-no-helper-lines"
+      ],
+      "checksPassed": 13
+    },
+    {
+      "name": "library-drag-preview",
+      "ok": true,
+      "exitCode": 0,
+      "checkNames": [
+        "button-real-appearance-follows-pointer-drop-one-undo",
+        "half-zoom-preserves-size-and-logical-drop-coordinate",
+        "active-zoom-and-scroll-refresh-preview-position",
+        "component-multiple-nodes-png-visible-before-drop",
+        "library-modal-closes-with-pointer-capture-real-png-master-preview",
+        "escape-cancels-active-preview-without-writing",
+        "outside-canvas-release-cancels-without-writing",
+        "external-revision-cancels-stale-drag",
+        "context-switch-cancels-stale-drag",
+        "component-self-reference-rejected-atomically",
+        "all-eleven-basic-widget-previews-render-before-cancel",
+        "grid-snap-basic-preview-and-drop-one-undo",
+        "hidden-page-and-global-guides-snap-two-axes",
+        "existing-widget-edge-and-midpoint-snap",
+        "component-visible-rotated-offset-bounds-ignore-hidden-content",
+        "library-visible-bounds-ignore-hidden-normalization-origin",
+        "snap-tolerance-scales-and-scroll-refreshes-exact-preview",
+        "master-canvas-uses-local-guides-without-project-guides",
+        "active-snap-disabled-and-enabled-without-extra-pointer-motion",
+        "active-snap-outside-cancels-without-hints-or-insert",
+        "active-snap-escape-cancels-without-hints-or-insert",
+        "active-snap-revision-cancels-without-hints-or-insert",
+        "active-snap-context-cancels-without-hints-or-insert",
+        "all-gestures-used-trusted-browser-input"
+      ],
+      "checksPassed": 24
+    },
+    {
+      "name": "grid-and-guides",
+      "ok": true,
+      "exitCode": 0,
+      "checkNames": [
+        "grid-controls-display-color-style-and-independent-snapping",
+        "ruler-drags-create-precise-page-guides-at-scaled-coordinates",
+        "guide-double-click-edits-and-delete-is-undoable",
+        "guide-lock-blocks-drag-delete-and-clear",
+        "drag-back-to-ruler-deletes-but-outside-drop-cancels",
+        "guides-follow-zoom-scroll-and-cancel-on-page-change",
+        "snapping-toggles-and-screen-threshold-math-have-boundary-coverage",
+        "guide-snapping-is-independent-from-guide-visibility-and-resize-keeps-fixed-edge",
+        "inactive-panel-state-widgets-do-not-attract-snapping",
+        "preferences-persist-and-guide-clear-is-an-engine-command"
+      ],
+      "checksPassed": 10
+    },
+    {
+      "name": "desktop-menus",
+      "ok": true,
+      "exitCode": 0,
+      "checkNames": [
+        "quick-file-tools-upper-left-and-real-IPC",
+        "file-menu-save-as-export-and-keyboard-access",
+        "right-click-unselected-widget-selects-and-duplicate-is-one-undo",
+        "right-click-preserves-multi-select-and-first-selected-alignment",
+        "group-lock-unlock-from-context-and-undo",
+        "layer-one-step-preserves-block-order",
+        "cut-paste-roundtrip-and-undo",
+        "view-grid-menu-checkmarks-and-independent-snap",
+        "menus-dismiss-on-engine-change-and-do-not-nudge",
+        "toolbar-context-opens-workspace-preferences",
+        "small-window-menu-clamps-and-content-fits"
+      ],
+      "checksPassed": 11
+    },
+    {
+      "name": "panel-docking",
+      "ok": true,
+      "exitCode": 0,
+      "checkNames": [
+        "tab-reorder-preview-and-activation",
+        "cross-rail-hot-zone-preview-does-not-mutate-until-drop",
+        "top-and-bottom-split-are-explicit-and-preserve-other-tabs",
+        "float-grab-offset-and-resize-match-the-preview",
+        "floating-group-merge-and-whole-group-redock",
+        "floating-tabs-reorder-and-detach-independently",
+        "floating-group-hide-reopen-and-reload-preserve-members",
+        "escape-cancels-drag-and-committed-drag-keeps-draft-focus-selection",
+        "rail-split-float-size-persist-and-reset",
+        "escape-resize-restores-layout-and-persisted-size"
+      ],
+      "checksPassed": 10
+    },
+    {
+      "name": "view-editor",
+      "ok": true,
+      "exitCode": 0,
+      "checkNames": [
+        "current-view-drag-arrow-and-inspector-use-resolved-values",
+        "all-view-move-preserves-layout-differences-and-leaf-inheritance-restores",
+        "delete-unplaces-and-outline-restores-current-view",
+        "inline-text-is-shared-and-copy-retains-view-appearance",
+        "shared-view-manager-adds-and-reparents-definition",
+        "component-canvas-view-edit-and-fixed-auto-instance-choice",
+        "queued-command-stays-on-original-page-and-view",
+        "one-step-undo-redo-keeps-view-command-atomic",
+        "instance-origin-and-placement-restore-inherited-view",
+        "legacy-detach-add-and-convert-preserve-appearance-in-small-window"
+      ],
+      "checksPassed": 10
+    },
+    {
+      "name": "page-folders",
+      "ok": true,
+      "exitCode": 0,
+      "checkNames": [
+        "mouse-creates-folder-without-changing-canvas-or-tabs",
+        "context-creates-real-child-page-and-renames-it-with-keyboard-input",
+        "nested-folder-rename-and-persistent-collapse-preserve-current-page",
+        "pointer-and-keyboard-reparent-and-reorder-real-tree-items",
+        "cycle-drop-keeps-document-and-visible-tree-unchanged",
+        "page-tools-parent-dropdown-displays-folder-and-accepts-real-page-or-folder",
+        "folder-tools-identify-target-and-exclude-self-and-all-descendants",
+        "page-tools-up-down-reorder-only-mixed-siblings-and-preserve-parentage",
+        "header-add-page-remains-real-and-gallery-excludes-folders",
+        "recursive-delete-cancel-confirm-and-single-undo-restore-entire-branch",
+        "agent-change-cancels-in-progress-drag-without-stale-reparent",
+        "agent-change-closes-stale-page-tree-context-menu",
+        "stale-rename-dialog-does-not-overwrite-agent-change",
+        "stale-recursive-delete-confirm-does-not-remove-agent-edits",
+        "production-agent-schema-and-revision-guard-update-the-same-visible-tree",
+        "save-open-restores-folder-names-parentage-collapse-and-mixed-order",
+        "exported-html-only-offers-real-pages-and-defaults-to-tree-first-page"
+      ],
+      "checksPassed": 17
+    },
+    {
+      "name": "html-runtime",
+      "ok": true,
+      "exitCode": 0,
+      "checkNames": [
+        "native-input-variable-binding",
+        "checkbox-radio-select-table",
+        "conditions-variables-state-styles-disabled",
+        "panel-states-events-child-coordinates",
+        "repeater-bind-sort-filter-add-update-delete",
+        "connector-reflows-path-richtext-safe",
+        "adaptive-width-and-manual-base",
+        "navigation-cancels-wait-restart-resets-variables",
+        "nested-repeater-panel-local-targets-and-retained-rows",
+        "else-if-chain-and-independent-if",
+        "binding-dependencies-ignore-layer-order",
+        "deleted-row-cancels-pending-actions",
+        "page-click-and-keyboard-events",
+        "disabled-container-propagates-and-restores"
+      ],
+      "checksPassed": 14
+    },
+    {
+      "name": "desktop-ipc-and-files",
+      "ok": true,
+      "exitCode": 0,
+      "checkNames": [
+        "editor-loaded",
+        "renderer-sandbox",
+        "hidden-layer-selection",
+        "insert",
+        "undo",
+        "redo",
+        "ui-agent-batch",
+        "agent-schema-current",
+        "preflight-validates-dependent-commands-without-mutation",
+        "preflight-rejects-missing-variable",
+        "authenticated-agent-live-edit",
+        "authenticated-agent-inherited-and-local-style",
+        "save-open-disk-roundtrip",
+        "flush-before-save",
+        "export-file",
+        "offline-html-modal",
+        "ordered-wait-text",
+        "hide",
+        "navigate"
+      ],
+      "checksPassed": 19
+    },
+    {
+      "name": "cross-feature-project",
+      "ok": true,
+      "exitCode": 0,
+      "checkNames": [
+        "agent-builds-component-panel-repeater-view-graph",
+        "snapshot-paste-preserves-old-data-while-master-stays-linked",
+        "production-save-reopen-undo-redo-and-reference-roundtrip",
+        "html-component-in-repeater-keeps-row-local-panel-state-and-shared-variables",
+        "adaptive-resize-preserves-live-panel-state-and-copy-data-isolation",
+        "navigation-retains-variables-and-reentry-resets-runtime-only-list-changes"
+      ],
+      "checksPassed": 6
+    }
+  ],
+  "newUiEvidence": {
+    "projectGlobalGuides": {
+      "checksPassed": 13,
+      "trustedInputEvents": 280,
+      "actualAdaptiveAndMasterViewsExercised": true,
+      "nativeOperatingSystemFilePickersExercised": false
+    },
+    "libraryDragPreview": {
+      "checksPassed": 24,
+      "scope": "Built-in widgets, masters and local library entries; shared drop snapping, scale and scroll, cancellation, reference-line scopes and one-step undo."
+    },
+    "pageFolders": {
+      "checksPassed": 17,
+      "trustedInputEvents": 256
+    }
+  },
+  "portable": {
+    "desktop": {
+      "ok": true,
+      "checksPassed": 19,
+      "checkNames": [
+        "editor-loaded",
+        "renderer-sandbox",
+        "hidden-layer-selection",
+        "insert",
+        "undo",
+        "redo",
+        "ui-agent-batch",
+        "agent-schema-current",
+        "preflight-validates-dependent-commands-without-mutation",
+        "preflight-rejects-missing-variable",
+        "authenticated-agent-live-edit",
+        "authenticated-agent-inherited-and-local-style",
+        "save-open-disk-roundtrip",
+        "flush-before-save",
+        "export-file",
+        "offline-html-modal",
+        "ordered-wait-text",
+        "hide",
+        "navigate"
+      ]
+    },
+    "mcp": {
+      "ok": true,
+      "checksPassed": 20,
+      "serverVersion": "0.2.0-preview.11",
+      "checkNames": [
+        "standard-stdio-mcp-initialize-and-tools-list",
+        "mcp-preflight-does-not-mutate-production-engine",
+        "mcp-batch-add-and-edit-reaches-real-renderer",
+        "stale-agent-revision-rejected-without-mutation",
+        "mcp-selection-reaches-production-state-and-renderer",
+        "mcp-undo-redo-uses-same-history",
+        "mcp-save-real-files-without-dialog-or-overwrite",
+        "mcp-html-and-native-rp-export-real-files",
+        "exported-html-runs-and-navigates-offline",
+        "unsupported-rp-content-blocked-before-file-write",
+        "pending-user-draft-flushes-then-stale-export-is-rejected",
+        "concurrent-file-operations-are-excluded-during-renderer-flush",
+        "save-io-failure-preserves-project-path-revision-and-dirty-state",
+        "mcp-folders-create-organize-and-reject-folder-canvas-selection",
+        "mcp-folder-save-html-landing-and-rp-no-silent-flattening",
+        "mcp-folder-recursive-delete-references-selection-and-undo-redo",
+        "mcp-global-guides-cross-page-rendering-and-conflict-protection",
+        "mcp-global-guides-single-transaction-undo-redo",
+        "mcp-global-guides-save-html-and-rp-rejection-before-writing",
+        "mcp-global-guides-reopen-through-production-file-reader"
+      ]
+    },
+    "fileComparison": {
+      "ok": true,
+      "filesMatched": 897,
+      "executableMatchesBundledRuntime": true,
+      "executableSha256": "1f41127064012c5e74422b2e0dfc35ff0b0fe8d7908b97d01503becd1b7fa9e1",
+      "codeSignatureVerified": null
+    }
+  },
+  "currentMaintenanceClient": {
+    "stateReadSucceeded": true,
+    "schemaReadSucceeded": true,
+    "applicationVersion": "0.2.0-preview.11",
+    "agentSchemaRevision": 13,
+    "revision": 0,
+    "dirty": false,
+    "pages": 2,
+    "userProjectMutationTested": false,
+    "earlierAppNotRunningSuperseded": true,
+    "note": "The maintenance session read the actual preview.11 window after its earlier old-bridge failure. Writes were independently tested by the isolated production stdio MCP checks; the connection check did not mutate the user project."
+  },
+  "limitations": [
+    "Targeted Windows regression only; not all test-all groups were rerun.",
+    "macOS native GUI, signing and notarization were not tested.",
+    "Guide and folder UI checks use production renderer/preload/core with isolated IPC adapters and fixed file locations; native operating-system file pickers are not exercised there.",
+    "Production desktop IPC/MCP/file tests use isolated documents; some interaction checks use DOM calls or simulated focus. Real input checks and production-main checks prove different layers.",
+    "HTML runtime manual view selection uses a DOM change check; actual adaptive-view keyboard and drag/resize interactions are covered separately by editor checks.",
+    "RP export remains a limited subset. Page folders and nonempty project guides explicitly reject export; there is no general RP importer or new Axure-native acceptance in this release.",
+    "No independent system floating windows, edge auto-scrolling, or RPLIB compatibility was added.",
+    "No remote CI conclusion is inferred from local results."
+  ],
+  "sourceFiles": [
+    {
+      "path": "app/agent-files.mjs",
+      "sha256": "58ac510644f2daf5497de1abfdab3a5cd141755c29a8f4a1beeae1e3d7c68051"
+    },
+    {
+      "path": "app/agent-mcp.mjs",
+      "sha256": "5d552a067c20af5df4a9d6a675ab38aeff608979bccc97a5d0160048a99ce130"
+    },
+    {
+      "path": "app/agent-schema.mjs",
+      "sha256": "e52947dc9b0db57bf4baebfe75d5192666c36cecdcea3e1a0951b7cf91deaf48"
+    },
+    {
+      "path": "app/agent-server.mjs",
+      "sha256": "84b2c25007e64e83559aa5bf52498e7c9f65b0734f0897f5ef9e481a932e618e"
+    },
+    {
+      "path": "app/core/component-view-model.mjs",
+      "sha256": "630e152acd04b09a4094b12199db69d7a75dc1a8cf177181c9aad456e95581a6"
+    },
+    {
+      "path": "app/core/design-model.mjs",
+      "sha256": "243faa01dddf7540cf75b9cf0124bde15ddf7d2530727bb262d7283538ff080b"
+    },
+    {
+      "path": "app/core/document.mjs",
+      "sha256": "e96e752a8a1d6715ab8f9747160a5f203e837c1e753aa2b478adee150d74aabd"
+    },
+    {
+      "path": "app/core/editor-arrangement.mjs",
+      "sha256": "330704a25016e16aaab7b3b17604fef25978c776e2f2a778494720f25e7517d8"
+    },
+    {
+      "path": "app/core/guide-model.mjs",
+      "sha256": "d7d6544690aafb8e36b070f44263b5761fe1e2fb4e22ab7531564311a529da76"
+    },
+    {
+      "path": "app/core/hierarchy-model.mjs",
+      "sha256": "00ad55e4a6471731ce8ad30c951fd8c47a472ea59868ee6b36489615425953b9"
+    },
+    {
+      "path": "app/core/html-export.mjs",
+      "sha256": "06292efbae1df96008faf82240654950245f0cf4abbf3112f0f734ffb02af1c0"
+    },
+    {
+      "path": "app/core/html-runtime.mjs",
+      "sha256": "3162dcf72bd6a95dfe59286fb4165ed642355e61399a6351e0b0eba60837b478"
+    },
+    {
+      "path": "app/core/image-format.mjs",
+      "sha256": "c7ce6ca4108b45d1401ad16ac076213d4cb69d626c7a577373cf8f9a271600be"
+    },
+    {
+      "path": "app/core/image-model.mjs",
+      "sha256": "5b3de1b56c40f233f91cbb3ff0562222c920f4a3e4c88bb5901f4da39355844c"
+    },
+    {
+      "path": "app/core/image-renderer.mjs",
+      "sha256": "e53fdb65799ace2f34726e3d7af102c21e5c4141cb8d40f0284be23a6ba5311c"
+    },
+    {
+      "path": "app/core/interaction-model.mjs",
+      "sha256": "25380eac4e50e7c7c7149937850b90e16acf4665715728e51c843c04656c6236"
+    },
+    {
+      "path": "app/core/library-model.mjs",
+      "sha256": "aad6895a3c655f2da310fbe7589428df66c7f54beb12ebd365af99dbc87e75e1"
+    },
+    {
+      "path": "app/core/page-tree-model.mjs",
+      "sha256": "736a1f555f84044a848da083250493537289a166bbfc35c2747e884c6d76ac8f"
+    },
+    {
+      "path": "app/core/repeater-import.mjs",
+      "sha256": "94836c11e8ad97e5e39534a366e34adaec2ed2a6a72ab817a55cf376096395c9"
+    },
+    {
+      "path": "app/core/rp-export.mjs",
+      "sha256": "7fc4445dcd349cd34ba2963ab94dc2d52bc96b1c65351f8b4c018652e957ff28"
+    },
+    {
+      "path": "app/core/rp-html-config.mjs",
+      "sha256": "46f221fe9a58663e69be46875d2134beefd3f57e469a35fe43209a2b5b14f03f"
+    },
+    {
+      "path": "app/core/style-model.mjs",
+      "sha256": "4517efe478982e874b6e2787a3ba0e07f498a5111d7cce3086779f0959e35736"
+    },
+    {
+      "path": "app/core/style-renderer.mjs",
+      "sha256": "18ffcc59e28a8b8d24bed53526c4dd3c8f27f874a4aa256514f9e7fb25a3f831"
+    },
+    {
+      "path": "app/core/vector-model.mjs",
+      "sha256": "6337cf8ebe8e9a92f6bd55a4228d01044d267ea21df8fdd766317230484cd843"
+    },
+    {
+      "path": "app/core/view-commands.mjs",
+      "sha256": "12328770b4508ced7ee5defd88c0179e44cf0a5d8b81d434be1c9cf861001fe9"
+    },
+    {
+      "path": "app/core/view-model.mjs",
+      "sha256": "d182e38e6eed977b5bd2a3faee7b8424440f8ae6f0bd9621397893cf4cfe2ad9"
+    },
+    {
+      "path": "app/core/widget-geometry.mjs",
+      "sha256": "227f66ed9a3f21b43832dd65334a455e0c141e2c2f9d886bc758c6e7b3a9a458"
+    },
+    {
+      "path": "app/image-decoder.mjs",
+      "sha256": "e1c4f0dcd2f70fd1185adbe0b38d589897f60c342f44cf8c1c8afee01434e89b"
+    },
+    {
+      "path": "app/image-input.mjs",
+      "sha256": "5ae0550a471c6abb19c672d0838c5854c17c5f5b738c3762bfb169b4d9fb7fe4"
+    },
+    {
+      "path": "app/library-store.mjs",
+      "sha256": "87c6aac1bcb912cc1e94cb8537851c994c6fd251a97f440e57a22ebff76f6dd6"
+    },
+    {
+      "path": "app/main.mjs",
+      "sha256": "87b4bc6a4821422430282e93e75d6b5aebb336a1669499aa3a0310672a4c7c0c"
+    },
+    {
+      "path": "app/platform-paths.mjs",
+      "sha256": "0be7ed661a7e9fc8f05044de229aa811637dbe7355909727e629f4ddcd2a4c4f"
+    },
+    {
+      "path": "app/preload.cjs",
+      "sha256": "61c986c2b02b5219bc1784b2b6e20927fd0f70c3cec76a22e177efda696e9b15"
+    },
+    {
+      "path": "app/renderer/advanced-tools.css",
+      "sha256": "634ad87d04908a50f9133e0abc6569232ef7198ab7ac18b788836a5f4731bc64"
+    },
+    {
+      "path": "app/renderer/advanced-tools.js",
+      "sha256": "e758c672507f4d60cb604b29422a2c860d44fa20b85ce435741b8aa20028666d"
+    },
+    {
+      "path": "app/renderer/docking-enhancements.css",
+      "sha256": "7db134dba46931a88c6d420245763edba91770b82bacd11bd014da8cfec97afe"
+    },
+    {
+      "path": "app/renderer/docking.js",
+      "sha256": "f6fa13a2bd476d570608ff768c36712c873bd749c6f3f3f343a9d3d2f80bf20a"
+    },
+    {
+      "path": "app/renderer/drag-preview.css",
+      "sha256": "4d4fb0fb9be2f62e561f2b3559a2bd099e0aa6abed30c65bd1ae3208c130ca40"
+    },
+    {
+      "path": "app/renderer/drag-preview.js",
+      "sha256": "4eb8ed0b2cab4b61567c606b6fd432976b59c08220d5d0258686087ca8bd91f1"
+    },
+    {
+      "path": "app/renderer/editor-shell.css",
+      "sha256": "5e39e028373ded45874f4eb627627d48e413eaf84d227a359e41d3a08f9e9c49"
+    },
+    {
+      "path": "app/renderer/editor-shell.js",
+      "sha256": "f606bbeba83825a380ba8889f12712739926f4ecbe925f9577f40c425b16fb1a"
+    },
+    {
+      "path": "app/renderer/image-tools.css",
+      "sha256": "3bc67e8b533f13adb1e677540ebe42f489a9bcaecc21be13cdfbfe4114d56431"
+    },
+    {
+      "path": "app/renderer/image-tools.js",
+      "sha256": "2b4247091e34655d5d66bf6ff49df6dedde51beba4f7c7ce5e4c122d6fdc835a"
+    },
+    {
+      "path": "app/renderer/index.html",
+      "sha256": "00fcc73f10a97b8352f5ea57a9efb42808db75c93f86d78afaf1e94b29c3907f"
+    },
+    {
+      "path": "app/renderer/library-tools.css",
+      "sha256": "2bcf63b5a35a1d0b9926316561b7ced25ec6ccd389f5b2ba7f427eafbe9683ee"
+    },
+    {
+      "path": "app/renderer/library-tools.js",
+      "sha256": "da5b007b9e20d9fca5ad19ddfa7138514df881667a8e31c6f34f78d2f2508d5f"
+    },
+    {
+      "path": "app/renderer/movement-model.js",
+      "sha256": "b5320a3cf7ab871481e9ff122a6a1946ae61b0226e4a1f4eed4619ea23b3d240"
+    },
+    {
+      "path": "app/renderer/navigation-model.mjs",
+      "sha256": "adbc39f2d13b35f241ad1b830f6dc471f25e6cadd61c965f02d272331c5b5ddc"
+    },
+    {
+      "path": "app/renderer/navigation-tools.css",
+      "sha256": "38856c1e49169a3e55c354bbec7f41e3fd11e267e8442de2e23d04e9ef5a5f9e"
+    },
+    {
+      "path": "app/renderer/navigation-tools.js",
+      "sha256": "3d232b725998bb6d99af6d4e45d2fac0ac74b8ddbdc7f54514467879cb06ea59"
+    },
+    {
+      "path": "app/renderer/outline-tools.css",
+      "sha256": "e19923ec7e6ec2e18781838c7a9251acebddd0115be8d2155eee17e75f548a79"
+    },
+    {
+      "path": "app/renderer/outline-tools.js",
+      "sha256": "ac3abe385acef4e92a718f993d400eb649505b39a64e4685a3b3d11eb1e6aba0"
+    },
+    {
+      "path": "app/renderer/preview-node-renderer.mjs",
+      "sha256": "bf152115ccf5e18b1c79d229b9b0458ac3bd5ce23041adf85a54f3de256072bf"
+    },
+    {
+      "path": "app/renderer/renderer.js",
+      "sha256": "d2152d5f9b28ac7ec1e337de5395a33a40c61b1f5b352a992802e616339f9dc0"
+    },
+    {
+      "path": "app/renderer/style-tools.css",
+      "sha256": "96897f3e78271b2f4a1cb881e5d8ec25ffd5fb7a0e964b4c30a3017e29a5c3d6"
+    },
+    {
+      "path": "app/renderer/style-tools.js",
+      "sha256": "8b28ada332ccb810c205829c45c0962d7e4c96891e6742be152f0bcc4d85b709"
+    },
+    {
+      "path": "app/renderer/styles.css",
+      "sha256": "69d9efb867e2310f865eb997bb475e68a33a4fcd3f9a5b9b8beda9ee52e16a66"
+    },
+    {
+      "path": "app/renderer/vector-tools.css",
+      "sha256": "74400c062edbd9b5eb8e0d202cb56a99473c317139ff3b3baf1dc960a91cf3c1"
+    },
+    {
+      "path": "app/renderer/vector-tools.js",
+      "sha256": "8c3f653af72cbf9e265e226017c905384c096e46ac72d9ab6e35a374179ceffb"
+    },
+    {
+      "path": "app/renderer/view-tools.js",
+      "sha256": "b57816915daf044bb94b93ec3ca5ae5902dc7da6c0431fe7132becca11b94171"
+    },
+    {
+      "path": "app/renderer/workspace-tools.css",
+      "sha256": "169e1e809f311636987d575d30dc9861f6a93ff5f42c5c7a03be4b10d77abacf"
+    },
+    {
+      "path": "app/renderer/workspace-tools.js",
+      "sha256": "2b9f415011bfde1d27472e0d22423143c9e5c6214a47fcc3e2d1110f08cbb73f"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "26a1a898797c9b50e23742ad5018ef89bbe4b12d60018085b8dd9837e088a866"
+    },
+    {
+      "path": "package.json",
+      "sha256": "3399575da79ee978f54a2961f55baa195a68784b4456cb1e8d0731173c28409a"
+    }
+  ],
+  "verificationScriptHashes": [
+    {
+      "path": "scripts/test-agent-mcp-desktop.mjs",
+      "sha256": "5abfcb886236e4044d7dcc905da3404c916aac006fac586e11775849921691d7"
+    },
+    {
+      "path": "scripts/test-global-guides-ui.mjs",
+      "sha256": "b5431d24453b64f8ab14264648a20ac10b1d2b19e916097775f002115ef74145"
+    },
+    {
+      "path": "scripts/test-drag-preview.mjs",
+      "sha256": "a770500ce657349fbc8f73bc4ebf3a6618f71508475774e023e15ea8a106660e"
+    },
+    {
+      "path": "scripts/drag-preview-regression.mjs",
+      "sha256": "e28f0a6c3145b930b3fbe10e8761c6bce3bfd328775b1d5f4833b1a09a488751"
+    },
+    {
+      "path": "scripts/test-grid-guides-ui.mjs",
+      "sha256": "9bd9b9a31a2d735ff9bdb701c4b3095393f246b1d13a59e108250e4b9fc4af0e"
+    },
+    {
+      "path": "scripts/test-editor-shell.mjs",
+      "sha256": "07951311861d1279a7abc789c098181c8ddb734b0cffc97d7493117c6934538b"
+    },
+    {
+      "path": "scripts/test-docking-ui.mjs",
+      "sha256": "1a3d89b9015a9e259f0efc2b6965caebc7e6140819248093d3209a286df2018c"
+    },
+    {
+      "path": "scripts/test-view-editor.mjs",
+      "sha256": "e715e86d504cb02f479ad2c1e90c48e9b295ce8f4c73c1c939e4b052bec10f09"
+    },
+    {
+      "path": "scripts/test-page-folders-ui.mjs",
+      "sha256": "fcd133e35257efe0374dff476e723493cf414ec8815a5a73b579ffdb8e0e2d43"
+    },
+    {
+      "path": "scripts/test-export-regression.mjs",
+      "sha256": "815fa79d5b82dbdcc55f694fda6a47e46501eeb7748501f1caf0cfa908f0bc63"
+    },
+    {
+      "path": "scripts/export-regression.mjs",
+      "sha256": "d38f7c1e707967feef603bef88c24d7b2d0bc2ca588d127305dabbdab7f5e352"
+    },
+    {
+      "path": "scripts/test-desktop.mjs",
+      "sha256": "e430464d274663687abf5da5c90abe3b1562902b73669104c9013ba08ba576ff"
+    },
+    {
+      "path": "scripts/smoke-desktop.mjs",
+      "sha256": "41400fd99405b2f44ca9d6bf168ccb801b8938af90708e2f6dda21298f972ab8"
+    },
+    {
+      "path": "scripts/test-complex-project-integration.mjs",
+      "sha256": "5cc9d2671cd5d1eb3b2f12ae4346a117e6fc093bad1727040be56612828d2c9f"
+    },
+    {
+      "path": "scripts/verify-release.mjs",
+      "sha256": "08a101f3660c944b11fbef51c47fd0647d85bd3c98bf83299a1ae25c450f00b0"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "targeted-integration",
+      "sha256": "dfd127e742769fb7470d2a4cf3d7f15b276a065c9aa595f22d2938157cde43b7",
+      "bytes": 2249
+    },
+    {
+      "id": "source-freeze",
+      "sha256": "827ec821b5a028de3a0d29ef26d4566176a249e213ca3557b3a6e2cef74bf34d",
+      "bytes": 6620
+    },
+    {
+      "id": "release-byte-check",
+      "sha256": "6dae44effdf6a506406eb4c1799bb25761fe5407f72556eabe57e3af77871fdb",
+      "bytes": 185090
+    },
+    {
+      "id": "client-connection",
+      "sha256": "58009942311e250d68e7764e180cca025f821b84783cd73dfee2c43491547cc2",
+      "bytes": 971
+    },
+    {
+      "id": "earlier-model-sandbox-failure",
+      "sha256": "b9292e6b0e1f944e20276c931aa19f2f2e81caa483be80f3ca33bb3685393984",
+      "bytes": 53627
+    },
+    {
+      "id": "earlier-model-allowed-loopback",
+      "sha256": "abcfae951909b3edd4ade1c00cae4e955fdc97f137dd5cc5c1ed2b36cc30c0ba",
+      "bytes": 102382
+    },
+    {
+      "id": "portable-desktop-log",
+      "sha256": "6386294edac2edab25a09249e5123f7f5131818e4b8c3dd90523081a05d94b09",
+      "bytes": 798
+    },
+    {
+      "id": "portable-mcp-log",
+      "sha256": "48dab9cfb1631ec0973f25cc2564485b45ce80544a9ba55994eaa6f24242650b",
+      "bytes": 4048
+    },
+    {
+      "id": "group-model-and-http",
+      "sha256": "3346f3e7cae4a4b95868ebc0febd7e29db121b8bf3da9b7bdeb5e5f52116784f",
+      "bytes": 102380
+    },
+    {
+      "id": "group-mcp-production-desktop",
+      "sha256": "26878ba35ef8958ad6e530b254e31f3f44409e52ac6cb015b0ec6e3af0be3253",
+      "bytes": 3918
+    },
+    {
+      "id": "result-mcp-production-desktop",
+      "sha256": "e724040418c65bd9613aea2eda531132c4ee1ba4f4994a0e8d44767f17cfad90",
+      "bytes": 4162
+    },
+    {
+      "id": "group-project-global-guides",
+      "sha256": "4302b9f9e9edae84dfad60694a3cfb65d4fd5a35a9bd7b3a4adb897b0f12b7c0",
+      "bytes": 13817
+    },
+    {
+      "id": "result-project-global-guides",
+      "sha256": "f5d5e0b5023d49ecaf626a33210740e100ebd1f26b46493593924f797df933ef",
+      "bytes": 13719
+    },
+    {
+      "id": "group-library-drag-preview",
+      "sha256": "edd707fee1248d1aab869face22f563f0edf79c6a66187f810b307fb3884d0fb",
+      "bytes": 3755
+    },
+    {
+      "id": "result-library-drag-preview",
+      "sha256": "f9b54bc7dac5066fd9a426e1e29d67613960f36d55ce757655ac0821ada8bdb3",
+      "bytes": 87368
+    },
+    {
+      "id": "group-grid-and-guides",
+      "sha256": "1c2d97178b751ad91fc24722e2acd9b7e260c2494eb03aa4a07b1ae444217866",
+      "bytes": 1113
+    },
+    {
+      "id": "result-grid-and-guides",
+      "sha256": "586d81bb208fda8d52edae46141daeb948dc8c9442c883c4365f39c760a38e03",
+      "bytes": 1017
+    },
+    {
+      "id": "group-desktop-menus",
+      "sha256": "b8c8dec1364088b85fc01ea0474340283a6ec6ca9bc8ae1b9f8516af491ca8d6",
+      "bytes": 1126
+    },
+    {
+      "id": "result-desktop-menus",
+      "sha256": "54f765fdc1f65db47f8591304a1355e160a22b50f5008b605e9dd27b7629d79f",
+      "bytes": 1029
+    },
+    {
+      "id": "group-panel-docking",
+      "sha256": "ca02397ae60a4b46fe604e3d0801f34d3c6188d8d0033c30c02e4b322e09caa4",
+      "bytes": 4726
+    },
+    {
+      "id": "result-panel-docking",
+      "sha256": "eae33070f943ea532460cb11674852ad2f8e6c05312e8ef52164a06c839c5902",
+      "bytes": 4723
+    },
+    {
+      "id": "group-view-editor",
+      "sha256": "07b34c16bbdd974b3c38b8c1c503d541619513f7c7bb79dc9d4bdc6dd73fe2d9",
+      "bytes": 1262
+    },
+    {
+      "id": "result-view-editor",
+      "sha256": "5fc1898911a56059b1fee717275b1279e2b041df26b650521ab7e559c951b14c",
+      "bytes": 105563
+    },
+    {
+      "id": "group-page-folders",
+      "sha256": "abf90d45e616a0288b45c5b546ed76663cfce235060e8a184e400d9411ff479d",
+      "bytes": 3574
+    },
+    {
+      "id": "result-page-folders",
+      "sha256": "63e755113e77b8490378ac8f8019f458553bab781f1bfef27bdfe5bc31cd2838",
+      "bytes": 31034
+    },
+    {
+      "id": "group-html-runtime",
+      "sha256": "48de0e1f877ceef04538130000377ec5f2e1d36bc589af0bfef283f3094ee245",
+      "bytes": 1380
+    },
+    {
+      "id": "group-desktop-ipc-and-files",
+      "sha256": "6386294edac2edab25a09249e5123f7f5131818e4b8c3dd90523081a05d94b09",
+      "bytes": 798
+    },
+    {
+      "id": "group-cross-feature-project",
+      "sha256": "18d982fa59290d411c701d97de460c1478b80a8dc8ece1670abaacee44eaf92a",
+      "bytes": 882
+    },
+    {
+      "id": "portable-desktop",
+      "sha256": "0385b3b5fd2cfc3aac355dd1166530d12d204c977069a5eabaf16237f0008368",
+      "bytes": 795
+    },
+    {
+      "id": "portable-mcp",
+      "sha256": "ffb1a932fab5102de616f3d327483f4c6d6d7b881052dc58bf6fb2eceab372f2",
+      "bytes": 4279
+    }
+  ]
+}

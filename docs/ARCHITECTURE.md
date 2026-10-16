@@ -25,6 +25,7 @@ flowchart LR
 | [`app/core/document.mjs`](../app/core/document.mjs) | 项目校验、命令分派、原子批次、revision 与撤销重做 |
 | [`app/core/design-model.mjs`](../app/core/design-model.mjs) | 元件、页面、母版/实例关系与规范化 |
 | [`app/core/page-tree-model.mjs`](../app/core/page-tree-model.mjs) | 独立页面目录、混合顺序、父级约束、递归删除与真实页面遍历 |
+| [`app/core/guide-model.mjs`](../app/core/guide-model.mjs) | 本地/项目参考线校验，以及普通页面与母版实际使用的参考线集合 |
 | [`app/core/hierarchy-model.mjs`](../app/core/hierarchy-model.mjs) | 组、容器归属、重排及锁定约束 |
 | [`app/core/interaction-model.mjs`](../app/core/interaction-model.mjs) | 事件、分支、动作、表达式、面板与数据列表契约 |
 | [`app/core/view-model.mjs`](../app/core/view-model.mjs)、[`view-commands.mjs`](../app/core/view-commands.mjs) | 自适应继承、覆盖与编辑范围 |
@@ -58,6 +59,14 @@ Agent 走不同入口，但最终进入相同模型。MCP 先读取 state/schema
 `pages` 只保存真实页面，`pageFolders` 只保存目录；两类对象的 `parentId` 可组成混合树，`pageTreeOrder` 决定同层顺序。目录没有元件、尺寸和交互。选择目录只是编辑器树选中状态，不会替换当前画布或新增标签；文件夹折叠写入工程，普通页面的树折叠是本机工作区偏好。
 
 HTML 使用混合树深度优先遍历得到真实页面列表，第一张真实页面作为首页。折叠只影响编辑器显示，不隐藏导出页面。目录不能作为交互跳页或 Agent 画布选择目标。删除目录递归清理后代与失效引用，删除页面则提升其直接子项；两者均经过同一事务和最后一页保护。当前 RP 写入器拒绝含目录的工程，不把目录转换为空白页。
+
+## 参考线与吸附
+
+项目根对象的 `globalGuides` 保存跨页坐标，页面和母版的 `guides` 保存各自坐标。`canvasGuideSets` 为真实页面返回本页和项目两组，为母版只返回本地一组，避免把编辑器的当前选择当成持久化归属。自适应视图沿用同一页面坐标，不对项目线建立独立覆盖；项目级修改不包进视图命令。
+
+界面通过普通文档命令提交参考线，Agent 通过 schemaRevision 13 发现同一契约。临时拖动带上开始时的项目、编辑目标和 revision；外部修改或目标切换会取消旧手势。显示、锁定、吸附与当前操作范围是工作区偏好，坐标是工程数据。
+
+元件拖入预览使用可见整体边界和现有吸附计算；基础元件、母版、本地库条目的预览和最终命令共享落点。画布移动/未旋转自由缩放也使用本页与项目线。HTML 运行器不绘制编辑辅助线，RP 支持检查明确拒绝非空项目线；不能为了格式兼容静默清空它们。
 
 ## 编辑器与运行器
 

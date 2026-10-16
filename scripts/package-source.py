@@ -50,13 +50,13 @@ files += ['scripts/yuanda-mcp.mjs', 'scripts/test-agent-mcp-desktop.mjs',
           'samples/rp-agent-demo-20261015-v2/原搭-图片与跳转演示.yuanda',
           'samples/rp-agent-demo-20261015-v2/原搭-图片与跳转演示.rp']
 files += ['scripts/test-editor-shell.mjs', 'scripts/test-drag-preview.mjs', 'scripts/drag-preview-regression.mjs',
-          'scripts/test-grid-guides-ui.mjs', 'scripts/test-docking-ui.mjs']
+          'scripts/test-grid-guides-ui.mjs', 'scripts/test-global-guides-ui.mjs', 'scripts/test-docking-ui.mjs']
 files += ['scripts/platform-runtime.mjs', 'scripts/start-desktop.mjs', 'scripts/audit-public-source.py', 'scripts/package-transfer.py',
           'scripts/test-interaction-events.mjs', 'scripts/test-interaction-authoring.mjs',
           'docs/PROJECT_OVERVIEW.md', 'docs/CONTRIBUTING.md', 'docs/SECURITY.md',
           'docs/ARCHITECTURE.md', 'docs/ROADMAP.md', 'docs/FEATURE_MATRIX.md',
           'docs/MAC_DEVELOPMENT.md', 'docs/CONTINUE_DEVELOPMENT.md',
-          'docs/RELEASE_NOTES.md', 'docs/verification-preview.9.json', 'docs/verification-preview.10.json', '.github/workflows/verify.yml',
+          'docs/RELEASE_NOTES.md', 'docs/verification-preview.9.json', 'docs/verification-preview.10.json', 'docs/verification-preview.11.json', '.github/workflows/verify.yml',
           '.github/ISSUE_TEMPLATE/bug_report.md', '.github/ISSUE_TEMPLATE/feature_request.md',
           '.github/pull_request_template.md']
 files += [p.relative_to(root).as_posix() for p in (root / 'app').rglob('*') if p.is_file()]

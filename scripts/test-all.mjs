@@ -33,6 +33,7 @@ let tasks=[
  ['desktop-menus',node,['scripts/test-editor-shell.mjs']],
  ['library-drag-preview',node,['scripts/test-drag-preview.mjs']],
  ['grid-and-guides',node,['scripts/test-grid-guides-ui.mjs']],
+ ['project-global-guides',node,['scripts/test-global-guides-ui.mjs']],
  ['panel-docking',node,['scripts/test-docking-ui.mjs']],
  ['workspace-input',node,['scripts/test-ui-regression.mjs','--output=release-source.json']],
  ['advanced-authoring',node,['scripts/run-advanced-ui-regression.mjs']],

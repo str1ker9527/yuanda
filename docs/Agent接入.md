@@ -1,4 +1,4 @@
-# 本地 Agent 接入（0.2.0-preview.10）
+# 本地 Agent 接入（0.2.0-preview.11）
 
 原搭 0.2 的人工操作和 Agent 指令进入同一个文档引擎。Agent 可以创建、修改、删除页面、页面文件夹和元件，配置样式、母版、变量、动态面板、数据列表、自适应视图和交互；修改会出现在对应界面，并进入同一份撤销记录。
 
@@ -10,7 +10,7 @@ MCP 是可调用的工具接口；Skill 可以补充工作习惯和设计方法�
 
 图片可通过 `setImageOptions` 调色、翻转、设置角部或叠字，也可用 `cropImage`、`sliceImage`、`replaceImage`、`fitImage`、`clearImage`。先从 schema 读取限制和真实元件 ID，再携带 expectedRevision 提交。图片内容在全部视图共享；外框尺寸才按 viewCommands 的范围处理。图片 src 是内嵌数据，不是电脑文件路径；HTTP 不提供任意文件读取。
 
-样式契约以运行窗口返回的 schemaRevision 为准，preview.10 源码为 12；连接旧版时以实际返回值为准：Agent 可以修改字体/行距/字距、渐变或图片填充、独立边框/圆角、阴影、模糊、过渡和旋转原点。先查询 schema；复合字段整体替换，例如提交完整 padding 四边，不能只给一个 top。状态字段省略表示跟随基础值；修改局部样式保留命名样式关联，并记录局部覆盖；清除覆盖可恢复继承。
+样式契约以运行窗口返回的 schemaRevision 为准，preview.11 源码为 13；连接旧版时以实际返回值为准：Agent 可以修改字体/行距/字距、渐变或图片填充、独立边框/圆角、阴影、模糊、过渡和旋转原点。先查询 schema；复合字段整体替换，例如提交完整 padding 四边，不能只给一个 top。状态字段省略表示跟随基础值；修改局部样式保留命名样式关联，并记录局部覆盖；清除覆盖可恢复继承。
 
 视图编辑需要明确范围。例如让 Agent “只调整手机布局”，应读取视图 ID，再使用 `viewCommands`，指定 `viewId` 与 `scope:"current"`；不要根据编辑器当前选中的视图猜测。指定 `scope:"all"` 才表示全部视图。文字和交互共享，改变它们会作用于所有布局。实例平移使用 `moveNodes`，而非分别修改每个关联元件。
 
@@ -27,6 +27,20 @@ MCP 是可调用的工具接口；Skill 可以补充工作习惯和设计方法�
 schemaRevision 12 中，`pageFolders` 保存目录，`pageTreeOrder` 保存混合顺序；命令为 `addPageFolder`、`updatePageFolder`、`reparentPageFolder`、`reorderPageTreeItem`、`removePageFolder`。真实页面改父级仍用 `reparentPage`。混排索引按移除源项后的全量数组计算，不是当前层级的序号。完整语义见[接口约定](开发接口约定.md)。
 
 目录不能传给 `yuanda_select` 当作画布，也不能作为交互跳页目标。删除目录会递归删除全部后代；Agent 应先报告影响范围，不能把“删除文件夹”理解成只清除外层。当前含目录的 RP 导出会明确拒绝，包括空目录；不要擅自删掉目录换取导出成功。
+
+## 直接调整整个项目的参考线
+
+**窗口：原搭主窗口。**打开工程并保持运行。项目线在普通页面上显示为虚线；母版使用自己的参考线。
+
+**窗口：已连接原搭 MCP 的 Agent 聊天窗口。**可以直接说明：
+
+> 读取当前项目和 schema，在整个项目添加一条 X=200 的垂直参考线，保留其他项目线和所有本页线。先预检，再携带读到的 expectedRevision 提交。不要修改元件位置，也不要为了 RP 导出删除参考线。
+
+schemaRevision 13 增加 `globalGuides:{horizontal:number[],vertical:number[]}` 和顶层命令 `setProjectGuides {guides}`。该命令**整体替换两个方向的数组**：先读现有值、合并并去重，再提交完整的 `horizontal` 和 `vertical`，不能把“新增一条”误写成清空其他线。每个方向最多 500 个不重复的有限数值，范围为 -100000 至 100000 像素。
+
+项目参考线作用于所有真实页面及其自适应视图；不包在 `viewCommands` 或 `componentCommands` 中。本页线仍由 `setPageGuides {pageId,guides}` 修改，母版局部线通过 `componentCommands` 包装本地命令。两个范围中相同坐标的线彼此独立。普通版本冲突、预检、撤销、重做和保存规则都适用。
+
+HTML 不绘制编辑参考线；非空 `globalGuides` 当前会明确拒绝 RP 导出。连接返回 schemaRevision 12 或更旧的窗口时，不要发送新增命令，也不要假称已支持。
 
 ## 不懂代码时怎么使用
 
@@ -94,7 +108,7 @@ Agent 应读取实际页面和元件 ID，不要凭名称猜 ID。你可以在�
 | 启动方式 | 连接文件 | CLI 文件 |
 | --- | --- | --- |
 | 源码启动 | `.local/yuanda-agent/connection.json` | `scripts/yuanda-agent.mjs` |
-| preview.10 Windows 便携版 | `dist/原搭-0.2.0-preview.10/data/connection.json` | `dist/原搭-0.2.0-preview.10/resources/app/scripts/yuanda-agent.mjs` |
+| preview.11 Windows 便携版 | `dist/原搭-0.2.0-preview.11/data/connection.json` | `dist/原搭-0.2.0-preview.11/resources/app/scripts/yuanda-agent.mjs` |
 
 原搭启动后创建连接文件，正常退出时清理。文件包含 `{version,url,token,pid}`。端口和临时令牌可能每次变化，因此每次连接都应重新读取。不要提交连接文件、恢复数据或令牌到 GitHub。
 
@@ -108,7 +122,7 @@ Agent 应读取实际页面和元件 ID，不要凭名称猜 ID。你可以在�
 
 ```powershell
 $yuandaCli = Join-Path (Get-Location) 'scripts/yuanda-agent.mjs'
-$yuandaConnection = Join-Path (Get-Location) 'dist/原搭-0.2.0-preview.10/data/connection.json'
+$yuandaConnection = Join-Path (Get-Location) 'dist/原搭-0.2.0-preview.11/data/connection.json'
 node $yuandaCli state --connection $yuandaConnection
 node $yuandaCli schema --connection $yuandaConnection
 ```

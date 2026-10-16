@@ -1,7 +1,7 @@
 {
   "name": "yuanda-prototype",
   "productName": "原搭",
-  "version": "0.2.0-preview.10",
+  "version": "0.2.0-preview.11",
   "description": "An original desktop prototype editor with a shared human and local-agent command model.",
   "main": "app/main.mjs",
   "type": "module",

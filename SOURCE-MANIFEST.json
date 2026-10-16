@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0-preview.10",
+  "version": "0.2.0-preview.11",
   "files": [
     {
       "path": ".gitattributes",
@@ -33,8 +33,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6388,
-      "sha256": "a9665045b604429a1b9cb23f301082b2c759c93cf1bb3ab273ddbabee3a24bbb"
+      "bytes": 6665,
+      "sha256": "a5da237bef9fde7b579be54e6661c6b42e232ec175ccd3201848d909c30fa8da"
     },
     {
       "path": "app/agent-files.mjs",
@@ -48,8 +48,8 @@
     },
     {
       "path": "app/agent-schema.mjs",
-      "bytes": 30546,
-      "sha256": "68d6d65ca2ece284895a20f5f376eb2de14dd255ed8a7576e827f51d6efc6e04"
+      "bytes": 31209,
+      "sha256": "e52947dc9b0db57bf4baebfe75d5192666c36cecdcea3e1a0951b7cf91deaf48"
     },
     {
       "path": "app/agent-server.mjs",
@@ -63,8 +63,8 @@
     },
     {
       "path": "app/core/design-model.mjs",
-      "bytes": 57592,
-      "sha256": "b8283ede6920ddbfe33c60ebc0283ae832f702a86024e6f50330d6222110b553"
+      "bytes": 57519,
+      "sha256": "243faa01dddf7540cf75b9cf0124bde15ddf7d2530727bb262d7283538ff080b"
     },
     {
       "path": "app/core/document.mjs",
@@ -75,6 +75,11 @@
       "path": "app/core/editor-arrangement.mjs",
       "bytes": 10415,
       "sha256": "330704a25016e16aaab7b3b17604fef25978c776e2f2a778494720f25e7517d8"
+    },
+    {
+      "path": "app/core/guide-model.mjs",
+      "bytes": 1028,
+      "sha256": "d7d6544690aafb8e36b070f44263b5761fe1e2fb4e22ab7531564311a529da76"
     },
     {
       "path": "app/core/hierarchy-model.mjs",
@@ -128,8 +133,8 @@
     },
     {
       "path": "app/core/rp-export.mjs",
-      "bytes": 29394,
-      "sha256": "ed919ccdfd540ac28879988d04ab46c11dc22b55b09a7e1c54445eb0f4e58951"
+      "bytes": 29559,
+      "sha256": "7fc4445dcd349cd34ba2963ab94dc2d52bc96b1c65351f8b4c018652e957ff28"
     },
     {
       "path": "app/core/rp-html-config.mjs",
@@ -223,8 +228,8 @@
     },
     {
       "path": "app/renderer/drag-preview.js",
-      "bytes": 11194,
-      "sha256": "f4dc7bc47ea09d43f558b7e6b1b7101d13a67de43f9edd3dceb496200928513e"
+      "bytes": 11881,
+      "sha256": "4eb8ed0b2cab4b61567c606b6fd432976b59c08220d5d0258686087ca8bd91f1"
     },
     {
       "path": "app/renderer/editor-shell.css",
@@ -233,8 +238,8 @@
     },
     {
       "path": "app/renderer/editor-shell.js",
-      "bytes": 21076,
-      "sha256": "9b3e7e86655705d7ab118c50187a2d9e49552ba384e21869a4e332f3c65f4459"
+      "bytes": 21785,
+      "sha256": "f606bbeba83825a380ba8889f12712739926f4ecbe925f9577f40c425b16fb1a"
     },
     {
       "path": "app/renderer/image-tools.css",
@@ -333,28 +338,28 @@
     },
     {
       "path": "app/renderer/workspace-tools.css",
-      "bytes": 7223,
-      "sha256": "89dd979dede54424bd5f627bca469f076956be326f39dc04f32ab695800a0ec8"
+      "bytes": 7842,
+      "sha256": "169e1e809f311636987d575d30dc9861f6a93ff5f42c5c7a03be4b10d77abacf"
     },
     {
       "path": "app/renderer/workspace-tools.js",
-      "bytes": 53602,
-      "sha256": "52d4ac984fd20ea076ab5229caadba17ce94300f90c7c45e918534be7a5f4320"
+      "bytes": 57617,
+      "sha256": "2b9f415011bfde1d27472e0d22423143c9e5c6214a47fcc3e2d1110f08cbb73f"
     },
     {
       "path": "docs/ARCHITECTURE.md",
-      "bytes": 6601,
-      "sha256": "ca34847efeaabec6f8d0d8d6ce86468f8c8c6b18ff3b2e14d3cafdf6b2112508"
+      "bytes": 7800,
+      "sha256": "473142df05068deef95df70f14d7bb372b0d46eed10c7296ccef83512dea8ce5"
     },
     {
       "path": "docs/Agent接入.md",
-      "bytes": 20124,
-      "sha256": "a283456016e61ae45c938b00b7b174d1fcfeb8a8f56dcaf346d48478ec1c71e5"
+      "bytes": 21629,
+      "sha256": "9a2c564c2f7caffb16a8b06e8ef6a94dcc9ed0692698ea6b33e45ac7d0958acb"
     },
     {
       "path": "docs/CONTINUE_DEVELOPMENT.md",
-      "bytes": 6927,
-      "sha256": "fcc615dbdfd9a22cdb0933cbd09b0821077e81128269f480c7ff12c2101c0f40"
+      "bytes": 7895,
+      "sha256": "e229a896b79f252630a1bed8c0bca6073074cee83c05b4f48a27b14e945f6b7e"
     },
     {
       "path": "docs/CONTRIBUTING.md",
@@ -363,8 +368,8 @@
     },
     {
       "path": "docs/FEATURE_MATRIX.md",
-      "bytes": 48126,
-      "sha256": "22c00448f68dc9f90075c874e6e726075dd59662021156bb3421a97da48e8360"
+      "bytes": 49450,
+      "sha256": "051a2df669a1ba66a39afe791ce7806315261962ac0d6ba7ccac3b6d826ba154"
     },
     {
       "path": "docs/MAC_DEVELOPMENT.md",
@@ -373,18 +378,18 @@
     },
     {
       "path": "docs/PROJECT_OVERVIEW.md",
-      "bytes": 4281,
-      "sha256": "2750f32e07c225d9cd92a368e7ec1d4bb57acddbcbcdda6a411dc79ae0d610a5"
+      "bytes": 4372,
+      "sha256": "0610e1b22adb3a5e752e00589005eb4093adad1ecfb6dca3627a4c2740a5eb17"
     },
     {
       "path": "docs/RELEASE_NOTES.md",
-      "bytes": 6924,
-      "sha256": "d2f8b82579322c8828904b335567b0ae226d1027cd54d9c0c25a409df1239cc1"
+      "bytes": 10292,
+      "sha256": "837a481e42a43bbd284bd289bd9baaf20d55ee22e52f541d20059620508fd2ff"
     },
     {
       "path": "docs/ROADMAP.md",
-      "bytes": 4836,
-      "sha256": "51a18749f616d4e08265d84e816408cf6c43d734e4a4ea2c50d7cfaf004cde43"
+      "bytes": 4987,
+      "sha256": "ad843e167234dd2b735f1db9886021c5e93b9cd40c95c4783ac34e34def6525c"
     },
     {
       "path": "docs/SECURITY.md",
@@ -397,24 +402,29 @@
       "sha256": "83b4b648b619615385e7a7181364b4ad56a6f63bbe63fd2c25f309e0fc73e300"
     },
     {
+      "path": "docs/verification-preview.11.json",
+      "bytes": 32829,
+      "sha256": "dc67cde31053b0a65ee8bd50b1b21cbacb4193e016008b5976668ead81ee749a"
+    },
+    {
       "path": "docs/verification-preview.9.json",
       "bytes": 17922,
       "sha256": "949a80cfc0cdba205d0038e8474f925579214e4611667545b2c8bd661c0bec93"
     },
     {
       "path": "docs/开发接口约定.md",
-      "bytes": 43150,
-      "sha256": "3bebaea44ece54c7cd21d73f1e97605702f8b81341886926c703c28d624e8f1c"
+      "bytes": 44957,
+      "sha256": "93217586e99dc686ac7577afc7175cf9220409c4ce9259f377fe85803b0b42b3"
     },
     {
       "path": "docs/文件说明.md",
-      "bytes": 31214,
-      "sha256": "d07d9d855b8938cbc96c5938136c78aa9d4139882f8113a68af8c383005a2e32"
+      "bytes": 32953,
+      "sha256": "b275b0bf1a52f4092f2a69dbd832df93e68ceaf7278df3d13a6a29420cddf42d"
     },
     {
       "path": "docs/试玩指南.md",
-      "bytes": 31524,
-      "sha256": "43ae224de0f1ee18ef66c6183d05548754ee0831a83b00ec6b9ea40978f52621"
+      "bytes": 34052,
+      "sha256": "9e9122a4ec6e373d9bc70f4376429a0d3a18f978c3034f497564629602b9df8b"
     },
     {
       "path": "exports/共享样式与格式刷体验.html",
@@ -459,12 +469,12 @@
     {
       "path": "package-lock.json",
       "bytes": 7446,
-      "sha256": "0dbd01621c169f6c39a0f48b11f7ada7ac9cde74a18aef379f9b65d5f42ca336"
+      "sha256": "26a1a898797c9b50e23742ad5018ef89bbe4b12d60018085b8dd9837e088a866"
     },
     {
       "path": "package.json",
       "bytes": 1096,
-      "sha256": "cfa7c1d24f1299c3483af4c5af4fec68f3bc7176cc1a69cce3a1b4273ed0e0f2"
+      "sha256": "3399575da79ee978f54a2961f55baa195a68784b4456cb1e8d0731173c28409a"
     },
     {
       "path": "samples/libraries/交互卡片.yuandalib",
@@ -558,8 +568,8 @@
     },
     {
       "path": "scripts/drag-preview-regression.mjs",
-      "bytes": 17929,
-      "sha256": "f36b2dfdf593aeb95eaedb491cfb3f4d617dc9c714df592b16cd34cf959ebf1d"
+      "bytes": 29337,
+      "sha256": "e28f0a6c3145b930b3fbe10e8761c6bce3bfd328775b1d5f4833b1a09a488751"
     },
     {
       "path": "scripts/export-regression.mjs",
@@ -623,8 +633,8 @@
     },
     {
       "path": "scripts/package-source.py",
-      "bytes": 7814,
-      "sha256": "97e4fca1718b716c6d3c6386c09cddf16e3ba23b9e2e464204222a89c7202084"
+      "bytes": 7888,
+      "sha256": "15e8a748008f0835e0bc127eab609b353549c71a82dfcb577de5a1f1b8f56390"
     },
     {
       "path": "scripts/package-transfer.py",
@@ -663,13 +673,13 @@
     },
     {
       "path": "scripts/test-agent-mcp-desktop.mjs",
-      "bytes": 25177,
-      "sha256": "08048f56898ff626f46018ce1d3146e9f82d0f2042a441b92da33bea7f2224a8"
+      "bytes": 30250,
+      "sha256": "5abfcb886236e4044d7dcc905da3404c916aac006fac586e11775849921691d7"
     },
     {
       "path": "scripts/test-all.mjs",
-      "bytes": 5649,
-      "sha256": "1dbc48531b59c8c2f8b30062608e9f438596e5b8c8fca814802084eaf65774dd"
+      "bytes": 5721,
+      "sha256": "9a1f9029278b514a467ad89f7aa413717fe07d9ba3b48010d1accedfe61ee4a1"
     },
     {
       "path": "scripts/test-close-regression.mjs",
@@ -693,8 +703,8 @@
     },
     {
       "path": "scripts/test-drag-preview.mjs",
-      "bytes": 1426,
-      "sha256": "ceb18e5deea754802f4d02b7476032f9b4067077d47da3ad8d2b20c71cc58f63"
+      "bytes": 1535,
+      "sha256": "a770500ce657349fbc8f73bc4ebf3a6618f71508475774e023e15ea8a106660e"
     },
     {
       "path": "scripts/test-edit-safety-ui.mjs",
@@ -717,9 +727,14 @@
       "sha256": "b3aca1cd0ab54dcc52d32d250eac68889b2afd714c07b17f180aa807edd375a1"
     },
     {
+      "path": "scripts/test-global-guides-ui.mjs",
+      "bytes": 25969,
+      "sha256": "b5431d24453b64f8ab14264648a20ac10b1d2b19e916097775f002115ef74145"
+    },
+    {
       "path": "scripts/test-grid-guides-ui.mjs",
-      "bytes": 15975,
-      "sha256": "d95a2791cf8fbf021a7774cee0daaceab5b344cf9cde217e53d1fcb8e3405b3d"
+      "bytes": 16023,
+      "sha256": "9bd9b9a31a2d735ff9bdb701c4b3095393f246b1d13a59e108250e4b9fc4af0e"
     },
     {
       "path": "scripts/test-hierarchy-ui.mjs",
@@ -884,7 +899,7 @@
     {
       "path": "tests/agent-server.test.mjs",
       "bytes": 20704,
-      "sha256": "ed3402b5564e184503b7ce7085ba76398100e1156678ac607d733debd4b02b08"
+      "sha256": "34c3b0c707c9e9e9a0c3e062904de658507d555a8e9d8ffcee9a7f2f149e5168"
     },
     {
       "path": "tests/clipboard-snapshot.test.mjs",
@@ -935,6 +950,11 @@
       "path": "tests/forms.test.mjs",
       "bytes": 6339,
       "sha256": "da2c19b25e36d3ec93156c7799a2d76f9dc45377d4bc69d881fad5b48c4499dc"
+    },
+    {
+      "path": "tests/global-guides.test.mjs",
+      "bytes": 23311,
+      "sha256": "778a9075405687b629dbfba775e0dd955dc055fb0ffcf3262aa6ea7421d1594b"
     },
     {
       "path": "tests/hierarchy-regression.test.mjs",
@@ -1044,7 +1064,7 @@
     {
       "path": "tests/style-model.test.mjs",
       "bytes": 17470,
-      "sha256": "6ba6a0f7bce671ea2fd0b446963372d39363a2c503c20ab85ff23114990c87c8"
+      "sha256": "9aced713963fe1ebde70a9013e9a1df185190b3b1b394d6e530425c4afab209d"
     },
     {
       "path": "tests/vector.test.mjs",

@@ -41,8 +41,16 @@ function update(session,event=session.last){
   const viewport=document.querySelector('#canvas-viewport'),rect=viewport?.getBoundingClientRect(),board=document.querySelector('#board');
   const hit=document.elementFromPoint(event.clientX,event.clientY);
   const inside=!!rect&&event.clientX>=rect.left&&event.clientX<=rect.right&&event.clientY>=rect.top&&event.clientY<=rect.bottom&&viewport.contains(hit);
-  const zoom=E.getZoom(),point=E.point(event),x=round(point.x),y=round(point.y),box=session.preview.bounds;
-  const valid=inside&&Number.isFinite(x)&&Number.isFinite(y)&&Math.abs(x)<=100000&&Math.abs(y)<=100000&&!!board;
+  const zoom=E.getZoom(),point=E.point(event),box=session.preview.bounds;
+  let x=round(point.x),y=round(point.y),valid=inside&&Number.isFinite(x)&&Number.isFinite(y)&&Math.abs(x)<=100000&&Math.abs(y)<=100000&&!!board;
+  if(valid&&window.YuandaWorkspace){
+    // The inserted objects do not exist on this canvas yet. Snap their visible
+    // combined bounds without excluding any existing canvas object by ID.
+    const bounds={x:box.left,y:box.top,width:box.width,height:box.height,rotation:0};
+    const delta=window.YuandaWorkspace.snapMove([bounds],x,y,zoom);x=delta.dx;y=delta.dy;
+    valid=Number.isFinite(x)&&Number.isFinite(y)&&Math.abs(x)<=100000&&Math.abs(y)<=100000;
+  }
+  if(!valid)window.YuandaWorkspace?.clearSnap();
   session.point={x,y};session.valid=valid;session.overlay.dataset.dropValid=String(valid);session.overlay.dataset.zoom=String(zoom);
   const anchor=valid?{x:board.getBoundingClientRect().left+x*zoom,y:board.getBoundingClientRect().top+y*zoom}:{x:event.clientX+14,y:event.clientY+14};
   Object.assign(session.scene.style,{left:`${anchor.x}px`,top:`${anchor.y}px`,transform:`scale(${zoom})`});
@@ -69,9 +77,10 @@ function activate(session){
 }
 function cleanup(session){
   session.ended=true;if(current===session)current=null;
+  window.YuandaWorkspace?.clearSnap();
   session.overlay?.remove();document.body.classList.remove('yuanda-library-dragging');
   document.removeEventListener('pointermove',session.move,true);document.removeEventListener('pointerup',session.up,true);document.removeEventListener('pointercancel',session.abort,true);document.removeEventListener('lostpointercapture',session.lost,true);
-  document.removeEventListener('keydown',session.key,true);document.removeEventListener('yuanda:editorchange',session.change);window.removeEventListener('blur',session.abort);window.removeEventListener('pagehide',session.abort);window.removeEventListener('resize',session.scroll);document.removeEventListener('scroll',session.scroll,true);
+  document.removeEventListener('keydown',session.key,true);document.removeEventListener('yuanda:editorchange',session.change);document.removeEventListener('yuanda:workspacechange',session.scroll);window.removeEventListener('blur',session.abort);window.removeEventListener('pagehide',session.abort);window.removeEventListener('resize',session.scroll);document.removeEventListener('scroll',session.scroll,true);
   if(document.documentElement.hasPointerCapture(session.pointerId))document.documentElement.releasePointerCapture(session.pointerId);
 }
 function cancel(message){const session=current;if(!session)return;const moved=!!session.overlay;cleanup(session);if(moved)suppressClickUntil=performance.now()+250;if(message)E.toast(message,'warning');}
@@ -98,7 +107,7 @@ function start(event,item){
   session.key=next=>{if(next.key==='Escape'){next.preventDefault();next.stopImmediatePropagation();cancel();}};
   session.change=()=>{if(session.ready&&!unchanged(session))cancel('画布内容已更新，已取消本次拖入。');else update(session);};
   session.scroll=()=>update(session);
-  document.addEventListener('pointermove',session.move,true);document.addEventListener('pointerup',session.up,true);document.addEventListener('pointercancel',session.abort,true);document.addEventListener('lostpointercapture',session.lost,true);document.addEventListener('keydown',session.key,true);document.addEventListener('yuanda:editorchange',session.change);document.addEventListener('scroll',session.scroll,true);window.addEventListener('blur',session.abort);window.addEventListener('pagehide',session.abort);window.addEventListener('resize',session.scroll);
+  document.addEventListener('pointermove',session.move,true);document.addEventListener('pointerup',session.up,true);document.addEventListener('pointercancel',session.abort,true);document.addEventListener('lostpointercapture',session.lost,true);document.addEventListener('keydown',session.key,true);document.addEventListener('yuanda:editorchange',session.change);document.addEventListener('yuanda:workspacechange',session.scroll);document.addEventListener('scroll',session.scroll,true);window.addEventListener('blur',session.abort);window.addEventListener('pagehide',session.abort);window.addEventListener('resize',session.scroll);
   void E.flushPendingEdits().then(ok=>{if(!live(session))return;if(!ok||contextKey(E.captureContext())!==session.contextKey){cancel();return;}session.revision=E.getState().revision;session.ready=true;activate(session);update(session);}).catch(error=>{cancel();E.toast(error.message,'error');});
   return true;
 }

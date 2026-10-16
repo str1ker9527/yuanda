@@ -13,7 +13,9 @@
   const editing = root => root?.contains(document.activeElement) && document.activeElement?.matches('input,select,textarea,[contenteditable]');
   const command = (commands, label, context) => E.command(commands, label, context);
   let renderPending = false, activeComponent = null, masterNodeId = null, rulerDrag = null, selectedGuide = null;
-  const defaults = { grid: false, guides: true, lockGuides: false, gridSize: 10, gridStyle:'dots', gridColor:'#C8CDD3', guideColor:'#249CA8', snapColor:'#D64040', snapGrid:true, snapGuides:true, snapWidgets:true, snapping:true, rulers:true };
+  const defaults = { grid: false, guides: true, lockGuides: false, guideScope:'page', gridSize: 10, gridStyle:'dots', gridColor:'#C8CDD3', guideColor:'#249CA8', snapColor:'#D64040', snapGrid:true, snapGuides:true, snapWidgets:true, snapping:true, rulers:true };
+  let guideModel = null;
+  import('../core/guide-model.mjs').then(module => { guideModel = module; scheduleRender(); });
   let view = {...defaults};
   function validPreferences(patch) {
     const result={}; if(!patch||typeof patch!=='object')return result;
@@ -21,6 +23,7 @@
       const value=patch[key];if(typeof fallback==='boolean'&&typeof value==='boolean')result[key]=value;
       else if(key==='gridSize'&&typeof value==='number'&&Number.isFinite(value))result[key]=clamp(Math.round(value),1,200);
       else if(key==='gridStyle'&&['dots','lines'].includes(value))result[key]=value;
+      else if(key==='guideScope'&&['page','project'].includes(value))result[key]=value;
       else if(key.endsWith('Color')&&typeof value==='string'&&/^#[0-9a-f]{6}$/i.test(value))result[key]=value;
     }return result;
   }
@@ -30,7 +33,7 @@
     try{localStorage.setItem('yuanda.view', JSON.stringify(view));}catch{E.toast('当前窗口不能保存视图偏好，本次设置仍然有效。');}
     renderGuides();drawRulers();syncViewControls();document.dispatchEvent(new CustomEvent('yuanda:workspacechange',{detail:preferences()}));
   }
-  function setPreferences(patch){view={...view,...validPreferences(patch)};if(view.lockGuides&&rulerDrag)rulerDrag.cancel?.();storeView();return preferences();}
+  function setPreferences(patch){const oldScope=view.guideScope;view={...view,...validPreferences(patch)};if((view.lockGuides||oldScope!==view.guideScope)&&rulerDrag)rulerDrag.cancel?.();storeView();return preferences();}
   function togglePreference(key){if(typeof view[key]!=='boolean')return preferences();return setPreferences({[key]:!view[key]});}
   function field(label, value, onChange, options = {}) {
     const wrapper = node('label', 'workspace-field'); wrapper.append(node('span', '', label));
@@ -290,6 +293,7 @@
     const host = $('.canvas-breadcrumb'); const details = node('details', 'view-menu'); details.append(node('summary', '', '视图设置'));
     const content = node('div', 'view-menu-content');
     for(const[key,label]of [['rulers','显示标尺'],['grid','显示网格'],['guides','显示参考线'],['lockGuides','锁定参考线'],['snapGrid','吸附到网格'],['snapGuides','吸附到参考线'],['snapWidgets','吸附到元件']])content.append(preferenceCheck(key,label));
+    content.append(guideScopeField());
     content.append(btn('网格设置…',()=>workspaceDialog('grid')),btn('参考线设置…',()=>workspaceDialog('guides')),btn('吸附设置…',()=>workspaceDialog('snap')));
     details.append(content); host.append(details);
     for (const [selector, axis] of [['#ruler-x','horizontal'],['#ruler-y','vertical']]) { const ruler = $(selector); ruler.title = '拖到画布创建参考线'; ruler.addEventListener('pointerdown', event => beginGuide(event, axis, null)); }
@@ -300,8 +304,8 @@
     document.addEventListener('keydown',event=>{
       if(event.key==='Escape'&&rulerDrag){event.preventDefault();event.stopImmediatePropagation();rulerDrag.cancel();return;}
       if(!selectedGuide||event.target.closest('input,textarea,select,[contenteditable]')||document.querySelector('dialog[open]'))return;
-      if(event.key==='Delete'||event.key==='Backspace'){event.preventDefault();event.stopImmediatePropagation();deleteGuide(selectedGuide.axis,selectedGuide.position);}
-      else if(event.key==='Enter'){event.preventDefault();event.stopImmediatePropagation();editGuide(selectedGuide.axis,selectedGuide.position);}
+      if(event.key==='Delete'||event.key==='Backspace'){event.preventDefault();event.stopImmediatePropagation();deleteGuide(selectedGuide.axis,selectedGuide.position,selectedGuide.scope);}
+      else if(event.key==='Enter'){event.preventDefault();event.stopImmediatePropagation();editGuide(selectedGuide.axis,selectedGuide.position,selectedGuide.scope);}
     },true);
     window.addEventListener('blur',()=>rulerDrag?.cancel());
   }
@@ -309,46 +313,70 @@
   function syncViewControls(){for(const input of document.querySelectorAll('[data-workspace-preference]')){const key=input.dataset.workspacePreference;if(input.type==='checkbox')input.checked=view[key];else if(document.activeElement!==input)input.value=view[key];}}
   function preferenceField(key,label,options={}){const wrapper=field(label,view[key],value=>setPreferences({[key]:value}),options);wrapper.querySelector('input,select').dataset.workspacePreference=key;return wrapper;}
   function colorPreference(key,label){const wrapper=preferenceField(key,label);wrapper.querySelector('input').type='color';return wrapper;}
+  const isPageCanvas = () => E.getState()?.project.pages.some(item => item.id === E.getEditingTarget()?.id);
+  const activeGuideScope = () => isPageCanvas() ? view.guideScope : 'page';
+  const guideScopeLabel = scope => scope === 'project' ? '整个项目' : isPageCanvas() ? '本页' : '本母版';
+  const guideSets = () => guideModel?.canvasGuideSets(E.getState().project, E.getEditingTarget().id) || [];
+  const guidesFor = scope => guideSets().find(item => item.scope === scope)?.guides;
+  function guideScopeField() {
+    const fieldNode = field('参考线操作范围', activeGuideScope(), value => setPreferences({ guideScope:value }), { options:[['page','本页 / 本母版'],['project','整个项目（仅页面）']] });
+    const select = fieldNode.querySelector('select'); select.dataset.guideScopePicker = '';
+    select.querySelector('option[value="project"]').disabled=!isPageCanvas();
+    return fieldNode;
+  }
   function workspaceDialog(kind='grid'){
     return openModal(kind==='guides'?'参考线设置':kind==='snap'?'吸附设置':'网格设置',(body)=>{
       body.dataset.workspaceDialog=kind;
       if(kind==='grid')body.append(preferenceCheck('grid','显示网格'),preferenceCheck('snapGrid','吸附到网格'),preferenceField('gridSize','网格间距（像素）',{number:true,min:1,max:200}),preferenceField('gridStyle','网格样式',{options:[['dots','点'],['lines','线']]}),colorPreference('gridColor','网格颜色'),note('网格显示与吸附独立。网格属于编辑辅助，不会出现在导出的演示中。'));
       else if(kind==='snap')body.append(preferenceCheck('snapping','启用吸附'),preferenceCheck('snapGrid','吸附到网格'),preferenceCheck('snapGuides','吸附到参考线'),preferenceCheck('snapWidgets','吸附到元件'),colorPreference('snapColor','对齐提示线颜色'),note('元件边缘与中点在屏幕 6 像素内吸附。移动与未旋转的自由缩放支持参考线和元件吸附；等比或旋转缩放优先保持几何关系。'));
       else{
-        body.append(preferenceCheck('guides','显示参考线'),preferenceCheck('lockGuides','锁定参考线'),preferenceCheck('snapGuides','吸附到参考线'),colorPreference('guideColor','参考线颜色'),row(btn('添加参考线…',()=>guideDialog()),btn('清除本页参考线',async()=>{if(await clearGuides())list.replaceChildren();})),note('从上方标尺拖出水平线，从左侧标尺拖出垂直线。双击精确编辑；拖回对应标尺，或选中后按 Delete 删除。'));
-        const list=node('div','guide-list');for(const axis of ['horizontal','vertical'])for(const position of E.getPage()?.guides?.[axis]||[]){const entry=row(node('span','',`${axis==='horizontal'?'Y':'X'} = ${position}`),btn('编辑',()=>editGuide(axis,position)),btn('删除',()=>deleteGuide(axis,position).then(ok=>{if(ok)entry.remove();})));list.append(entry);}body.append(list);
+        body.append(preferenceCheck('guides','显示参考线'),preferenceCheck('lockGuides','锁定参考线'),preferenceCheck('snapGuides','吸附到参考线'),colorPreference('guideColor','参考线颜色'),guideScopeField(),note('标尺新建、画布拖动与 Delete 使用所选范围。全局线为虚线，在所有真实页面显示和吸附；母版只使用自己的线。重合时切换操作范围，或在下方明确选择。'));
+        const list=node('div','guide-list');
+        const drawList = () => { list.replaceChildren(); for(const {scope,guides} of guideSets()) {
+          const section=node('section','guide-scope-section'),origin=guideContext(scope); section.dataset.guideScopeSection=scope;
+          const guarded=action=>()=>{if(!sameGuideContext(origin)||origin.revision!==E.getState().revision){E.toast('参考线已变化，请按刷新后的列表重新操作。');drawList();return;}return action();};
+          section.append(node('h3','',guideScopeLabel(scope)),row(btn(`添加${guideScopeLabel(scope)}参考线…`,guarded(()=>guideDialog({scope}))),btn(`清除${guideScopeLabel(scope)}参考线`,guarded(async()=>{if(await clearGuides(scope))drawList();}))));
+          for(const axis of ['horizontal','vertical'])for(const position of guides[axis]) { const entry=row(node('span','',`${axis==='horizontal'?'Y':'X'} = ${position}`),btn('编辑',guarded(()=>guideDialog({axis,position,scope,editing:true,onSaved:()=>workspaceDialog('guides')}))),btn('删除',guarded(async()=>{if(await deleteGuide(axis,position,scope))drawList();})));entry.dataset.guideScope=scope;entry.dataset.guideAxis=axis;entry.dataset.position=position;section.append(entry); }
+          list.append(section);
+        }};drawList();body.append(list);
       }
     });
   }
-  function guideContext(){return {projectId:E.getState()?.project.id,targetId:E.getEditingTarget?.().id??E.getPage()?.id,context:E.getEditingContext?.(),revision:E.getState()?.revision};}
+  function guideContext(scope=activeGuideScope()){return {scope,projectId:E.getState()?.project.id,targetId:E.getEditingTarget?.().id??E.getPage()?.id,context:E.getEditingContext?.(),revision:E.getState()?.revision};}
   function sameGuideContext(origin){return origin.projectId===E.getState()?.project.id&&origin.targetId===(E.getEditingTarget?.().id??E.getPage()?.id);}
   async function commitGuides(guides,label,origin=guideContext()){
     if(view.lockGuides){E.toast('参考线已锁定，请先解锁。');return false;}
     if(!sameGuideContext(origin)||origin.revision!==E.getState()?.revision){E.toast('页面或项目已变化，请重新操作参考线。');return false;}
-    const ok=await command([{type:'setPageGuides',pageId:origin.targetId,guides}],label,origin.context);if(ok)renderGuides();return ok;
+    if(!guidesFor(origin.scope)){E.toast('此画布不使用项目全局参考线。');return false;}
+    const operation=origin.scope==='project'?{type:'setProjectGuides',guides}:{type:'setPageGuides',pageId:origin.targetId,guides};
+    const ok=await E.command([operation],`${guideScopeLabel(origin.scope)} · ${label}`,origin.context,{expectedRevision:origin.revision});if(ok)renderGuides();return ok;
   }
-  async function deleteGuide(axis,position){
-    if(!['horizontal','vertical'].includes(axis)||!E.getPage()?.guides?.[axis]?.includes(position))return false;
-    const guides=structuredClone(E.getPage().guides);guides[axis]=guides[axis].filter(value=>value!==position);const ok=await commitGuides(guides,'删除参考线');if(ok)selectedGuide=null;return ok;
+  async function deleteGuide(axis,position,scope=activeGuideScope()){
+    if(!['horizontal','vertical'].includes(axis)||!guidesFor(scope)?.[axis]?.includes(position))return false;
+    const origin=guideContext(scope),guides=structuredClone(guidesFor(scope));guides[axis]=guides[axis].filter(value=>value!==position);const ok=await commitGuides(guides,'删除参考线',origin);if(ok)selectedGuide=null;return ok;
   }
-  async function clearGuides(){if(!E.getPage())return false;const ok=await commitGuides({horizontal:[],vertical:[]},'清除参考线');if(ok)selectedGuide=null;return ok;}
-  function editGuide(axis,position){return guideDialog({axis,position,editing:true});}
+  async function clearGuides(scope='page'){if(!guidesFor(scope))return false;const ok=await commitGuides({horizontal:[],vertical:[]},'清除参考线',guideContext(scope));if(ok)selectedGuide=null;return ok;}
+  function editGuide(axis,position,scope=activeGuideScope()){return guideDialog({axis,position,scope,editing:true});}
   function guideDialog(options={}) {
     if(view.lockGuides){E.toast('参考线已锁定，请先解锁。');return null;}
-    const origin=guideContext(),oldAxis=options.axis,oldPosition=options.position,editing=!!options.editing;
-    return openModal(editing?'编辑参考线':'添加参考线', (body, dialog) => {
+    const initialScope=options.scope||activeGuideScope(),origin=guideContext(initialScope),oldAxis=options.axis,oldPosition=options.position,editing=!!options.editing;
+    if(!guidesFor(initialScope)){E.toast('母版只使用自己的参考线，请在页面画布操作项目全局参考线。');return null;}
+    return openModal(`${editing?'编辑':'添加'}${guideScopeLabel(initialScope)}参考线`, (body, dialog) => {
       let axis=['horizontal','vertical'].includes(options.axis)?options.axis:'vertical',position=Number.isFinite(options.position)?options.position:100;
+      body.dataset.guideEditorScope=initialScope;
+      body.append(note(initialScope==='project'?'范围：整个项目的真实页面；不影响母版。':`范围：仅${guideScopeLabel(initialScope)}；不影响其他页面或全局线。`));
       body.append(field('方向',axis,value=>axis=value,{options:[['vertical','垂直（X）'],['horizontal','水平（Y）']]}),field('位置（像素）',position,value=>position=value,{number:true,min:-100000,max:100000}),btn(editing?'保存位置':'添加',async()=>{
         if(!sameGuideContext(origin)){E.toast('页面已切换，请重新打开参考线设置。');return;}
-        const guides=structuredClone(E.getPage().guides);if(editing)guides[oldAxis]=guides[oldAxis].filter(value=>value!==oldPosition);guides[axis]=[...new Set([...guides[axis],round(position)])].sort((a,b)=>a-b);
-        if(await commitGuides(guides,editing?'精确调整参考线':'添加参考线',origin)){selectedGuide={axis,position:round(position),...guideContext()};dialog.close();}
+        const guides=structuredClone(guidesFor(origin.scope));if(editing)guides[oldAxis]=guides[oldAxis].filter(value=>value!==oldPosition);guides[axis]=[...new Set([...guides[axis],round(position)])].sort((a,b)=>a-b);
+        if(await commitGuides(guides,editing?'精确调整参考线':'添加参考线',origin)){setPreferences({guideScope:origin.scope});selectedGuide={axis,position:round(position),...guideContext(origin.scope)};dialog.close();options.onSaved?.();}
       }));
     });
   }
-  function beginGuide(event, axis, oldPosition) {
+  function beginGuide(event, axis, oldPosition, scope=activeGuideScope()) {
     if (event.button !== 0 || !E.getPage()) return;
     event.preventDefault(); event.stopPropagation();if(view.lockGuides){E.toast('参考线已锁定。');return;}
-    const origin=guideContext();selectedGuide=oldPosition===null?null:{axis,position:oldPosition,...origin};E.select([]);event.currentTarget.focus?.({preventScroll:true});
+    if(!guidesFor(scope)||scope!==activeGuideScope())return;
+    const origin=guideContext(scope);selectedGuide=oldPosition===null?null:{axis,position:oldPosition,...origin};E.select([]);event.currentTarget.focus?.({preventScroll:true});
     rulerDrag = { axis, oldPosition, ...origin, position: oldPosition ?? 0, changed:false };
     const target = event.currentTarget;
     const inside=(event,element)=>{const r=element.getBoundingClientRect();return event.clientX>=r.left&&event.clientX<=r.right&&event.clientY>=r.top&&event.clientY<=r.bottom;};
@@ -367,9 +395,9 @@
       if(!sameGuideContext(drag)||E.getState().revision!==drag.revision){E.toast('项目已变化，请重新拖动参考线。');renderGuides();return;}
       const dropping=inside(next,$('#canvas-viewport')),removing=oldPosition!==null&&inside(next,$(axis==='horizontal'?'#ruler-x':'#ruler-y'));
       if(!dropping&&!removing){renderGuides();return;}
-      const guides = structuredClone(E.getPage().guides); if (oldPosition !== null) guides[axis] = guides[axis].filter(value => value !== oldPosition);
+      const guides = structuredClone(guidesFor(drag.scope)); if (oldPosition !== null) guides[axis] = guides[axis].filter(value => value !== oldPosition);
       if(dropping)guides[axis].push(drag.position);
-      guides[axis]=[...new Set(guides[axis])].sort((a,b)=>a-b);const ok=await commitGuides(guides,removing?'拖回标尺删除参考线':oldPosition===null?'添加参考线':'移动参考线',drag);selectedGuide=!ok||removing?null:{axis,position:drag.position,...guideContext()};renderGuides();
+      guides[axis]=[...new Set(guides[axis])].sort((a,b)=>a-b);const ok=await commitGuides(guides,removing?'拖回标尺删除参考线':oldPosition===null?'添加参考线':'移动参考线',drag);selectedGuide=!ok||removing?null:{axis,position:drag.position,...guideContext(drag.scope)};renderGuides();
     };
     const cancel = () => { cleanup();rulerDrag=null;renderGuides(); };rulerDrag.cancel=cancel;
     // Document listeners retain the drag if a render/resize releases pointer capture.
@@ -377,23 +405,24 @@
   }
   function renderGuides() {
     const page = E.getPage(); if (!page) return; let layer = $('#guide-layer'); if (!layer) { layer = node('div'); layer.id = 'guide-layer'; $('#board').append(layer); }
-    if(selectedGuide&&(!sameGuideContext(selectedGuide)||!page.guides?.[selectedGuide.axis]?.includes(selectedGuide.position)))selectedGuide=null;
+    if(selectedGuide&&(!sameGuideContext(selectedGuide)||selectedGuide.scope!==activeGuideScope()||!guidesFor(selectedGuide.scope)?.[selectedGuide.axis]?.includes(selectedGuide.position)))selectedGuide=null;
+    for(const picker of document.querySelectorAll('[data-guide-scope-picker]')){picker.value=activeGuideScope();picker.querySelector('option[value="project"]').disabled=!isPageCanvas();}
     // Keep the captured guide node attached until pointerup.
     if (!rulerDrag || !layer.querySelector('[data-dragging]')) layer.replaceChildren();
     else for (const child of [...layer.children]) if (!child.hasAttribute('data-dragging')) child.remove();
     const board=$('#board'),zoom=E.getZoom();board.classList.toggle('show-grid',view.grid);board.dataset.gridStyle=view.gridStyle;
     for(const[key,value]of Object.entries({'--grid-size':`${view.gridSize}px`,'--grid-color':view.gridColor,'--guide-color':view.guideColor,'--snap-color':view.snapColor,'--guide-hit':`${7/zoom}px`,'--guide-half-hit':`${3/zoom}px`,'--guide-line':`${1/zoom}px`}))board.style.setProperty(key,value);
     $('.canvas-frame')?.classList.toggle('workspace-no-rulers',!view.rulers);
-    for (const axis of ['horizontal','vertical']) {
-      const positions = view.guides ? page.guides?.[axis] || [] : [];
+    for (const {scope,guides} of guideSets()) for (const axis of ['horizontal','vertical']) {
+      const positions = view.guides ? guides?.[axis] || [] : [];
       for (const position of positions) {
-        if (rulerDrag?.axis === axis && rulerDrag.oldPosition === position) continue;
-        const guide = node('div', `canvas-guide ${axis}${view.lockGuides ? ' is-locked' : ''}`); guide.style[axis === 'horizontal' ? 'top' : 'left'] = `${position}px`; guide.title = `${axis === 'horizontal' ? 'Y' : 'X'} = ${position} · 双击编辑 · Delete 删除`; guide.dataset.position = position;guide.dataset.guideAxis=axis;guide.tabIndex=0;guide.setAttribute('role','separator');guide.setAttribute('aria-label',`${axis==='horizontal'?'水平':'垂直'}参考线 ${position}`);guide.setAttribute('aria-orientation',axis);guide.classList.toggle('is-selected',selectedGuide?.axis===axis&&selectedGuide.position===position);
-        guide.addEventListener('pointerdown',event=>beginGuide(event,axis,position));
-        guide.addEventListener('dblclick',event=>{event.stopPropagation();editGuide(axis,position);});layer.append(guide);
+        if (rulerDrag?.scope===scope && rulerDrag.axis === axis && rulerDrag.oldPosition === position) continue;
+        const guide = node('div', `canvas-guide ${axis}${scope==='project'?' is-global':''}${scope!==activeGuideScope()?' is-inactive-scope':''}${view.lockGuides ? ' is-locked' : ''}`); guide.style[axis === 'horizontal' ? 'top' : 'left'] = `${position}px`; guide.title = `${guideScopeLabel(scope)} ${axis === 'horizontal' ? 'Y' : 'X'} = ${position} · 双击编辑 · Delete 删除`; guide.dataset.position = position;guide.dataset.guideAxis=axis;guide.dataset.guideScope=scope;guide.tabIndex=scope===activeGuideScope()?0:-1;guide.setAttribute('role','separator');guide.setAttribute('aria-label',`${guideScopeLabel(scope)}${axis==='horizontal'?'水平':'垂直'}参考线 ${position}`);guide.setAttribute('aria-orientation',axis);guide.classList.toggle('is-selected',selectedGuide?.scope===scope&&selectedGuide?.axis===axis&&selectedGuide.position===position);
+        guide.addEventListener('pointerdown',event=>beginGuide(event,axis,position,scope));
+        guide.addEventListener('dblclick',event=>{event.stopPropagation();editGuide(axis,position,scope);});layer.append(guide);
       }
     }
-    if (rulerDrag) { const line = node('div', `canvas-guide preview ${rulerDrag.axis}${rulerDrag.removing?' will-remove':''}`); line.style[rulerDrag.axis === 'horizontal' ? 'top' : 'left'] = `${rulerDrag.position}px`; line.append(node('span', 'guide-coordinate',rulerDrag.removing?'松开删除':`${rulerDrag.axis === 'horizontal' ? 'Y' : 'X'} ${rulerDrag.position}`)); layer.append(line); }
+    if (rulerDrag) { const line = node('div', `canvas-guide preview ${rulerDrag.axis}${rulerDrag.scope==='project'?' is-global':''}${rulerDrag.removing?' will-remove':''}`); line.style[rulerDrag.axis === 'horizontal' ? 'top' : 'left'] = `${rulerDrag.position}px`; line.append(node('span', 'guide-coordinate',`${guideScopeLabel(rulerDrag.scope)} · ${rulerDrag.removing?'松开删除':`${rulerDrag.axis === 'horizontal' ? 'Y' : 'X'} ${rulerDrag.position}`}`)); layer.append(line); }
   }
   let rulerPending = false;
   function scheduleRulers() { if (rulerPending) return; rulerPending = true; requestAnimationFrame(() => { rulerPending = false; drawRulers(); }); }
@@ -424,7 +453,7 @@
   }
   function snapTargets(page,ids){
     const targets={x:[],y:[]};
-    if(view.snapGuides){targets.x.push(...(page.guides?.vertical||[]));targets.y.push(...(page.guides?.horizontal||[]));}
+    if(view.snapGuides)for(const {guides} of guideSets()){targets.x.push(...(guides.vertical||[]));targets.y.push(...(guides.horizontal||[]));}
     if(view.snapWidgets){
       targets.x.push(0,page.width/2,page.width);targets.y.push(0,page.height/2,page.height);
       for(const item of window.YuandaAdvanced?.designNodes(page)||page.nodes||[])if(!ids.has(item.id)&&item.visible&&item.effectivePlaced!==false&&!item.editorHidden){const b=paintedBounds(item);targets.x.push(b.x,(b.x+b.right)/2,b.right);targets.y.push(b.y,(b.y+b.bottom)/2,b.bottom);}
@@ -473,8 +502,8 @@
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'g') { event.preventDefault(); event.shiftKey ? ungroupSelection() : groupSelection(); }
   });
   window.YuandaTools = { snapMove, clearSnap, moveCommands, editTable, editComponent, groupSelection, ungroupSelection, distribute, openModal, field, check, row, btn, note, node, command, scheduleRender, getView:()=>({...view,smartSnap:view.snapWidgets}) };
-  window.YuandaWorkspace={preferences,setPreferences,toggle:togglePreference,dialog:workspaceDialog,guideDialog,editGuide,deleteGuide,clearGuides,snapValue,snapMove,snapResize,clearSnap,
-    guideAtElement(target){const guide=target?.closest?.('.canvas-guide[data-guide-axis]');return guide?{axis:guide.dataset.guideAxis,position:Number(guide.dataset.position)}:null;},
+  window.YuandaWorkspace={preferences,setPreferences,toggle:togglePreference,dialog:workspaceDialog,guideDialog,editGuide,deleteGuide,clearGuides,guideSets,activeGuideScope,snapValue,snapMove,snapResize,clearSnap,
+    guideAtElement(target){const guide=target?.closest?.('.canvas-guide[data-guide-axis]');return guide?{scope:guide.dataset.guideScope,axis:guide.dataset.guideAxis,position:Number(guide.dataset.position)}:null;},
     math:Object.freeze({paintedBounds,nearestSnap})};
   scheduleRender();
 })();

@@ -247,6 +247,57 @@ export async function runAgentMcpSmoke({ window, runtime, getState }) {
     await mcp.call('yuanda_undo', { expectedRevision: getState().revision });
     assert.deepEqual(getState().project, edited);
     check('mcp-folder-recursive-delete-references-selection-and-undo-redo');
+    assert.equal(schema.schemaRevision, 13);
+    assert.ok(schema.projectFields.includes('globalGuides'));
+    assert.ok(schema.commands.some(value => value.startsWith('setProjectGuides ')));
+    const guideRevision = getState().revision;
+    const globalGuides = { horizontal: [200], vertical: [320] };
+    await mcp.call('yuanda_apply_commands', { expectedRevision: guideRevision, commands: [{ type: 'setProjectGuides', guides: globalGuides }] });
+    const guidedProject = structuredClone(getState().project);
+    const globalLineVisible = "document.querySelector('#guide-layer .canvas-guide[data-guide-scope=\"project\"][data-guide-axis=\"vertical\"][data-position=\"320\"]') !== null";
+    await waitUntil(() => inspect(globalLineVisible), 'MCP project guide visible on first page');
+    await mcp.call('yuanda_select', { expectedRevision: getState().revision, pageId: targetPageId, nodeIds: [] });
+    await waitUntil(() => inspect("window.YuandaEditor.getSelection().pageId === " + JSON.stringify(targetPageId)), 'second page selected for project guide');
+    await waitUntil(() => inspect(globalLineVisible), 'MCP project guide inherited by second page');
+    const guideConflict = await mcp.call('yuanda_apply_commands', { expectedRevision: guideRevision, commands: [{ type: 'setProjectGuides', guides: { horizontal: [], vertical: [] } }] }, true);
+    assert.equal(guideConflict.code, 'REVISION_CONFLICT'); assert.deepEqual(getState().project, guidedProject);
+    check('mcp-global-guides-cross-page-rendering-and-conflict-protection');
+    await mcp.call('yuanda_undo', { expectedRevision: getState().revision });
+    assert.deepEqual(getState().project, edited);
+    await waitUntil(async () => !(await inspect(globalLineVisible)), 'undo removes global guides from renderer');
+    await mcp.call('yuanda_redo', { expectedRevision: getState().revision });
+    assert.deepEqual(getState().project, guidedProject);
+    await waitUntil(() => inspect(globalLineVisible), 'redo restores global guides');
+    check('mcp-global-guides-single-transaction-undo-redo');
+    const guideSaved = await mcp.call('yuanda_save', { expectedRevision: getState().revision, name: 'Agent全局参考线工程' });
+    assert.deepEqual(JSON.parse((await recordFile('global-guides-project', guideSaved.path)).toString('utf8')), guidedProject);
+    const guideHtml = await mcp.call('yuanda_export', { expectedRevision: getState().revision, format: 'html', name: 'Agent全局参考线演示' });
+    await recordFile('global-guides-html', guideHtml.path);
+    preview = new BrowserWindow({ show: false, webPreferences: { sandbox: true, contextIsolation: true, nodeIntegration: false, offscreen: true, backgroundThrottling: false } });
+    await preview.loadFile(guideHtml.path);
+    await waitUntil(() => preview.webContents.executeJavaScript("Boolean(document.querySelector('[data-node-id=\"mcp-title\"]'))"), 'global-guide HTML renders actual content');
+    assert.equal(await preview.webContents.executeJavaScript("document.querySelectorAll('.canvas-guide,#guide-layer,.smart-snap-line').length"), 0);
+    preview.destroy(); preview = null;
+    const beforeGuideRp = await readdir(path.dirname(rp.path));
+    const rejectedGuideRp = await mcp.call('yuanda_export', { expectedRevision: getState().revision, format: 'rp', name: '不得丢弃全局参考线' }, true);
+    assert.match(JSON.stringify(rejectedGuideRp), /全局参考线/);
+    assert.deepEqual(await readdir(path.dirname(rp.path)), beforeGuideRp);
+    check('mcp-global-guides-save-html-and-rp-rejection-before-writing');
+    await mcp.call('yuanda_apply_commands', { expectedRevision: getState().revision, commands: [{ type: 'setProjectGuides', guides: { horizontal: [], vertical: [] } }] });
+    const { dialog } = await import('electron');
+    const originalOpenDialog = dialog.showOpenDialog, originalMessageBox = dialog.showMessageBox;
+    // Only replace native pickers in this hidden test process; production open,
+    // validation, normalization, state broadcast, and file reading all run.
+    dialog.showOpenDialog = async () => ({ canceled: false, filePaths: [guideSaved.path] });
+    dialog.showMessageBox = async () => ({ response: 1 });
+    try { await inspect('window.yuanda.openProject().then(() => true)'); }
+    finally { dialog.showOpenDialog = originalOpenDialog; dialog.showMessageBox = originalMessageBox; }
+    assert.deepEqual(getState().project, guidedProject); assert.equal(getState().filePath, guideSaved.path); assert.equal(getState().dirty, false);
+    await waitUntil(() => inspect(globalLineVisible), 'production reopen restores global guides');
+    check('mcp-global-guides-reopen-through-production-file-reader');
+    await mcp.call('yuanda_apply_commands', { expectedRevision: getState().revision, commands: [{ type: 'setProjectGuides', guides: { horizontal: [], vertical: [] } }] });
+    assert.deepEqual(getState().project, edited);
+    await mcp.call('yuanda_select', { expectedRevision: getState().revision, pageId, nodeIds: [] });
     await waitUntil(() => inspect("Boolean(document.querySelector('.design-node[data-node-id=\"mcp-title\"]'))"), 'editor final state');
     await writeFile(path.join(runtime, 'mcp-editor.png'), (await window.webContents.capturePage()).toPNG());
     assert.deepEqual(rendererErrors, []);

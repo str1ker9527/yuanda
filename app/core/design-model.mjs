@@ -7,10 +7,11 @@ import { resolveCanvasView, getCanvasViews } from './view-model.mjs';
 import { normalizeImageProject, imageDataBytes, resetImageSource, prepareImageNodePatch } from './image-model.mjs';
 import { normalizeStyleProject, styleValueEqual, STYLE_KEYS, STYLE_STATES, resolveNodeBaseStyle, resolveNodeStateStyles, validateStyleInheritance, applyStyleInheritanceCommand } from './style-model.mjs';
 import { PAGE_TREE_PROJECT_KEYS, normalizePageTreeProject, validatePageTree, syncLegacyPageOrder } from './page-tree-model.mjs';
+import { validateGuides } from './guide-model.mjs';
 export const DESIGN_NODE_KEYS = ['annotation', 'styleId', 'styleOverrideKeys', 'defaultStyleSetId', 'checked', 'options', 'value', 'radioGroup', 'rows', 'inputType', 'readOnly', 'maxLength'];
 export const INPUT_TYPES = ['text', 'password', 'number', 'email', 'date', 'tel', 'url', 'search'];
 export const DESIGN_PAGE_KEYS = ['parentId', 'guides', 'groups'];
-export const DESIGN_PROJECT_KEYS = ['styles', 'components', 'styleInheritanceVersion', 'defaultStyleSets', 'defaultStyleSetId', ...PAGE_TREE_PROJECT_KEYS];
+export const DESIGN_PROJECT_KEYS = ['styles', 'components', 'globalGuides', 'styleInheritanceVersion', 'defaultStyleSets', 'defaultStyleSetId', ...PAGE_TREE_PROJECT_KEYS];
 export const DESIGN_TYPES = ['ellipse', 'line', 'textarea', 'checkbox', 'radio', 'select', 'table'];
 export const GROUP_KEYS = ['id', 'name', 'nodeIds', 'locked', 'parentGroupId', 'componentId', 'x', 'y', 'sourceIds', 'internalIds', 'overrides', 'viewMode', 'viewId', 'placed', 'viewOverrides'];
 export const COMPONENT_KEYS = ['id', 'name', 'width', 'height', 'nodes', 'background', 'annotation', 'guides', 'groups', 'views', 'viewOverrides'];
@@ -29,7 +30,7 @@ export function nodeDesignDefaults(type) {
 /** v1 旧文件的无损迁移：只补原先缺少的字段，显式无效值不会被悄悄修正。 */
 export function normalizeDesignProject(input) {
   const project = normalizePageTreeProject(copy(input));
-  defaults(project, { styles: [], components: [] });
+  defaults(project, { styles: [], components: [], globalGuides: { horizontal: [], vertical: [] } });
   if (Array.isArray(project?.pages)) for (const page of project.pages) {
     defaults(page, { parentId: null, guides: { horizontal: [], vertical: [] }, groups: [] });
     if (Array.isArray(page?.groups)) for (const group of page.groups) defaults(group, groupDefaults());
@@ -45,6 +46,7 @@ export function normalizeDesignProject(input) {
 
 export function validateDesignProject(project, h) {
   const { keys, string, number, bool, array, id, unique, fail, validateStyle, color } = h;
+  validateGuides(project.globalGuides, '项目参考线', h);
   array(project.styles, '复用样式', 1000); array(project.components, '组件主定义', 500);
   validateStyleInheritance(project,h);
   for(const set of project.defaultStyleSets)unique(set.id,'默认样式集 ID');
@@ -63,11 +65,7 @@ export function validateDesignProject(project, h) {
   validatePageTree(project, h);
   componentOrder(project, h);
   for (const page of [...project.pages, ...project.components]) {
-    keys(page.guides, ['horizontal', 'vertical'], '页面参考线');
-    for (const axis of ['horizontal', 'vertical']) {
-      array(page.guides[axis], '参考线', 500); const distinct = new Set();
-      for (const position of page.guides[axis]) { number(position, '参考线位置', -100000, 100000); if (distinct.has(position)) fail('同方向的参考线不能重复'); distinct.add(position); }
-    }
+    validateGuides(page.guides, '页面参考线', h);
     array(page.groups, '元件组', 2500); const nodes = new Map(page.nodes.map(node => [node?.id, node]));
     for (const group of page.groups) {
       keys(group, GROUP_KEYS, '元件组'); unique(group.id, '元件组 ID'); string(group.name, '元件组名称', 200, 1); bool(group.locked, '元件组锁定');
@@ -461,6 +459,7 @@ export function applyDesignCommand(project, command, h) {
     }
     case 'reparentPage': ck(['pageId', 'parentId']); pageFor(project, command.pageId).parentId = command.parentId; return true;
     case 'setPageGuides': ck(['pageId', 'guides']); pageFor(project, command.pageId).guides = copy(command.guides); return true;
+    case 'setProjectGuides': ck(['guides']); project.globalGuides = copy(command.guides); return true;
     case 'groupNodes': {
       ck(['pageId', 'nodeIds'], ['groupId', 'name']); const page = pageFor(project, command.pageId); const selected = editableNodes(page, command.nodeIds);
       if (selected.length < 2 || new Set(command.nodeIds).size !== selected.length) fail('请选择至少两个不同的元件', 'COMMAND_ERROR');
