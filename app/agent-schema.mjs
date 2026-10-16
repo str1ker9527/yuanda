@@ -6,7 +6,7 @@ import { IMAGE_NODE_KEYS } from './core/image-model.mjs';
 
 /** Discoverable command contract for local coding agents; no private connection information. */
 export const schema = {
-  version: 1, schemaRevision: 11,
+  version: 1, schemaRevision: 12,
   description: '原搭本地编辑接口。GET state 获取完整项目和 revision；POST commands 携带 expectedRevision。整批成功或整批回滚；修改、撤销、重做使用同一引擎。',
   libraries: {list:'GET /v1/libraries -> {libraries:[{id,revision,name,description,folders,items:[{id,folderId,name,description,warnings}]}],errors}',read:'GET /v1/libraries/:id -> {library,revision}',revision:'库 revision 为 SHA-256 字符串，与文档整数 revision 不同；两个 GET 均要求本机认证。HTTP 库接口只读，插入使用 insertLibraryItem。'},
   commands: [
@@ -30,6 +30,8 @@ export const schema = {
     'pasteFragment {pageId,fragment:{projectId,sourceId,nodes,groups,views,nodeIds,viewState?,appearance?},dx?,dy?,idMap?}',
     'addNode {pageId,node}', 'updateNode {pageId,nodeId,patch}', 'removeNodes {pageId,nodeIds}', 'reorderNode {pageId,nodeId,index}', 'duplicateNodes {pageId,nodeIds,targetPageId?,dx?,dy?,idMap?}',
     'addPage {page}', 'updatePage {pageId,patch}', 'removePage {pageId}', 'reorderPage {pageId,index}', 'reparentPage {pageId,parentId:null|string}', 'renameProject {name}', 'setPageGuides {pageId,guides:{horizontal:number[],vertical:number[]}}',
+    'addPageFolder {folder:{id?,name?,parentId?:null|string,collapsed?:boolean}}', 'updatePageFolder {folderId,patch:{name?,collapsed?}}',
+    'reparentPageFolder {folderId,parentId:null|string}', 'reorderPageTreeItem {itemId,index}', 'removePageFolder {folderId}',
     'groupNodes {pageId,nodeIds,groupId?,name?}', 'ungroup {pageId,groupId}', 'moveGroup {pageId,groupId,dx,dy}', 'lockGroup {pageId,groupId,locked}',
     'reparentItems {pageId,items:[{kind:"node"|"group",id}],parent:{kind:"root"}|{kind:"group",groupId}|{kind:"panelState",panelId,stateId}|{kind:"repeater",nodeId},index?}', 'groupItems {pageId,items:[{kind:"node"|"group",id}],groupId?,name?}', 'resizeGroup {pageId,groupId,x,y,width,height}',
     'addDefaultStyleSet {defaultStyleSet:{id?,name,byType?:{nodeType:{style:partialStyle,stateStyles:sparseStateMap}}}}',
@@ -54,6 +56,13 @@ export const schema = {
   nodeTypes: ['rectangle','text','button','input','image',...DESIGN_TYPES,...INTERACTION_TYPES,...VECTOR_TYPES],
   projectFields: ['format','version','id','name','pages',...DESIGN_PROJECT_KEYS,...INTERACTION_PROJECT_KEYS],
   pageFields: ['id','name','width','height','background','nodes',...DESIGN_PAGE_KEYS,...INTERACTION_PAGE_KEYS],
+  pageTree: {
+    folders:'pageFolders:[{id,name,parentId:null|string,collapsed:boolean}]. Folders organize pages; they are never canvases or navigation destinations.',
+    order:'pageTreeOrder:null|string[]. null retains legacy pages order, followed by folders. An explicit array contains every page/folder ID exactly once. reorderPageTreeItem index is in this full mixed order after removing the source.',
+    parents:'Page and folder parentId may reference a real page or a folder. Cycles and nonexistent parents are rejected.',
+    deletion:'removePageFolder deletes its entire descendant subtree, including pages and nested folders, and cleans references. The last real page cannot be deleted. removePage preserves its children by promoting them to the removed page parent.',
+    landingPage:'The first real page in depth-first tree order is the HTML landing page. Folders are excluded from page selectors, canvas selection and page navigation. Folder organization currently rejects RP export rather than flattening it silently.'
+  },
   nodeFields: ['id','type','name','x','y','width','height','rotation','visible','locked','text','src','style','interactions',...DESIGN_NODE_KEYS,...INTERACTION_NODE_KEYS,...VECTOR_NODE_KEYS,...IMAGE_NODE_KEYS],
   styleFields: [...STYLE_KEYS],
   events: INTERACTION_EVENTS,

@@ -20,6 +20,10 @@ for(const name of files.sort()){
   checks.push({path:name,bytes:copy.length,sha256:sha(copy),matchesSource:sha(source)===sha(copy)});
 }
 const packagedInfo=JSON.parse(await readFile(path.join(packaged,'package.json'),'utf8'));
+for(const [sourceName,releaseName] of [['samples/yuanda/页面目录体验.yuanda','projects/页面目录体验.yuanda'],['exports/页面目录体验.html','exports/页面目录体验.html']]){
+  const source=await readFile(path.join(root,sourceName)),copy=await readFile(path.join(release,releaseName));
+  checks.push({path:sourceName,releasePath:releaseName,bytes:copy.length,sha256:sha(copy),matchesSource:sha(source)===sha(copy)});
+}
 const executable=await readFile(releaseLayout(release).executable),electron=await readFile(electronExecutable(root));
 let signatureVerified=null;
 if(process.platform==='darwin')await promisify(execFile)('/usr/bin/codesign',['--verify','--deep','--strict',releaseLayout(release).bundle]).then(()=>signatureVerified=true);

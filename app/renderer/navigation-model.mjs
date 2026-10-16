@@ -1,4 +1,34 @@
+import { getPageTreeItems, getPageTreeOrder } from '../core/page-tree-model.mjs';
+
 /** Original navigation algorithms, independent of the desktop shell. */
+export function navigationTreeItems(project, collapsedPageIds = new Set(), visibleOnly = false) {
+  const items = getPageTreeItems(project), hidden = new Set();
+  return items.filter(entry => {
+    const invisible = hidden.has(entry.parentId);
+    if (invisible || (entry.kind === 'folder' ? entry.item.collapsed : collapsedPageIds.has(entry.id))) hidden.add(entry.id);
+    return !visibleOnly || !invisible;
+  });
+}
+export function pageTreeMoveCommands(project, sourceId, targetId, position) {
+  const items = getPageTreeItems(project), source = items.find(item => item.id === sourceId), target = items.find(item => item.id === targetId);
+  if (!source || !target || sourceId === targetId) return [];
+  if (!['before', 'after', 'inside'].includes(position)) throw new Error('请选择有效的页面树放置位置。');
+  const parentId = position === 'inside' ? targetId : target.parentId || null;
+  const byId = new Map(items.map(item => [item.id, item])), visited = new Set();
+  for (let ancestor = parentId; ancestor; ancestor = byId.get(ancestor)?.parentId) {
+    if (ancestor === sourceId || visited.has(ancestor)) throw new Error('不能把页面或文件夹放进自己或自己的子项里。');
+    visited.add(ancestor);
+  }
+  const order = getPageTreeOrder(project).filter(id => id !== sourceId);
+  const index = order.indexOf(targetId) + Number(position !== 'before');
+  const commands = [source.kind === 'folder' ? { type: 'reparentPageFolder', folderId: sourceId, parentId } : { type: 'reparentPage', pageId: sourceId, parentId }, { type: 'reorderPageTreeItem', itemId: sourceId, index }];
+  if (position === 'inside' && target.kind === 'folder' && target.item.collapsed) commands.push({ type: 'updatePageFolder', folderId: targetId, patch: { collapsed: false } });
+  return commands;
+}
+export function pageTreeDescendants(project, id) {
+  const items = getPageTreeItems(project), included = new Set([id]);
+  return items.filter(entry => { if (!included.has(entry.parentId)) return false; included.add(entry.id); return true; });
+}
 export function treePages(pages, parentId = null, depth = 0, visited = new Set()) {
   const result = [];
   for (const page of pages.filter(item => (item.parentId || null) === parentId)) {

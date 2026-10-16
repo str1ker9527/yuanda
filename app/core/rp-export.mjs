@@ -8,6 +8,7 @@ import { validateProject, normalizeProject } from './document.mjs';
 import { makeRpHtmlPrototypeConfiguration } from './rp-html-config.mjs';
 import { newStyleDefaults, styleValueEqual, resolveNodeBaseStyle } from './style-model.mjs';
 import { inspectImageDataUrl } from './image-format.mjs';
+import { getOrderedPages } from './page-tree-model.mjs';
 
 const ZERO = '00000000-0000-0000-0000-000000000000';
 const DEFAULT_STYLE = '627587b6-038d-43cc-a051-c114ac41ad32';
@@ -297,6 +298,7 @@ function modelPackages(project) {
 
 export function getRpExportStatus(project) {
   const unsupported=[];
+  if (project?.pageFolders?.length) unsupported.push('项目: 页面文件夹组织（包含空文件夹）');
   if (project?.styles?.length) unsupported.push('项目: 共享样式库及关联');
   if (project?.components?.length) unsupported.push('项目: 母版定义及实例关联');
   if (project?.variables?.length) unsupported.push('项目: 变量');
@@ -354,5 +356,6 @@ export function exportRp(project,options={}) {
   const status=getRpExportStatus(project);
   // Legacy research options do not override the loss-prevention gate.
   if(status.unsupported.length) throw new Error(`RP 尚不支持以下内容，已停止导出避免丢失：\n${status.unsupported.join('\n')}`);
+  project.pages = getOrderedPages(project);
   return {data:encodeRpContainer(modelPackages(project)),warnings:[],status};
 }

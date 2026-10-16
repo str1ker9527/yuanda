@@ -1,0 +1,792 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.0-preview.10",
+  "checkedAt": "2026-10-16T00:48:52.904358+00:00",
+  "platform": "Windows",
+  "verificationMethod": {
+    "kind": "fixed-application-source-two-batches-after-fixes",
+    "singleUninterruptedRun": false,
+    "applicationAndPackageFilesUnchanged": true,
+    "sourceFileCount": 63,
+    "coveredGroups": 48,
+    "allCoveredGroupsPassed": true,
+    "note": "The accepted first four groups and the remaining 44 groups ran against the same 63 application/package files. This is a two-batch result, not one uninterrupted all-green run. Groups include automated checks and demo generation; counts are not summed as individual assertions.",
+    "batches": [
+      {
+        "id": "initial-full-attempt",
+        "recordedOk": false,
+        "acceptedPassedGroups": 4,
+        "stoppedAt": "style-inheritance-editor"
+      },
+      {
+        "id": "continued-from-style-inheritance",
+        "recordedOk": true,
+        "acceptedPassedGroups": 44
+      }
+    ],
+    "testSynchronizationCorrection": "The style-inheritance editor check was corrected to wait for the intended controls. Application/package hashes stayed unchanged; the failed group and remaining groups were rerun.",
+    "earlierAttempts": [
+      {
+        "id": "earlier-maintainer-interruption",
+        "accepted": false,
+        "reason": "A maintainer stopped an incomplete run after visual review found legacy page-parent controls omitted folders and mixed ordering. Controls and select-focus continuity were fixed."
+      },
+      {
+        "id": "earlier-view-focus-failure",
+        "accepted": false,
+        "stoppedAt": "view-editor",
+        "reason": "A deferred page-tree focus stole keyboard input from the adaptive-view picker. Tree focus is now synchronous and asynchronous commands respect later user focus intent. Verification restarted from the first group after the product fix."
+      }
+    ]
+  },
+  "groups": [
+    {
+      "name": "model-and-http",
+      "ok": true,
+      "batch": 1
+    },
+    {
+      "name": "mcp-desktop-and-files",
+      "ok": true,
+      "batch": 1
+    },
+    {
+      "name": "interaction-authoring",
+      "ok": true,
+      "batch": 1
+    },
+    {
+      "name": "interaction-events-runtime",
+      "ok": true,
+      "batch": 1
+    },
+    {
+      "name": "style-inheritance-editor",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "style-inheritance-runtime",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "style-inheritance-demo-generate",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "style-inheritance-demo",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "style-editor",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "style-runtime",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "style-demo-generate",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "style-demo",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "image-input-desktop",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "image-editor",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "image-runtime",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "image-demo-generate",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "image-demo",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "view-editor",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "adaptive-runtime",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "view-demo-generate",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "view-demo",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "desktop-menus",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "library-drag-preview",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "grid-and-guides",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "panel-docking",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "workspace-input",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "advanced-authoring",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "hierarchy",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "repeater-pages-and-import",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "dynamic-panel-editor-and-runtime",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "dynamic-panel-boundaries",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "dynamic-panel-demo-generate",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "dynamic-panel-demo",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "library-demo-generate",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "local-library-editor-and-html",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "local-library-desktop-files",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "navigation",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "page-folders",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "vectors",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "forms",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "editing-safety",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "close-with-drafts",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "html-runtime",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "demo",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "structure-demo-generate",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "structure-demo",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "desktop-ipc-and-files",
+      "ok": true,
+      "batch": 2
+    },
+    {
+      "name": "cross-feature-project",
+      "ok": true,
+      "batch": 2
+    }
+  ],
+  "modelAndHttp": {
+    "sourceGroup": "model-and-http",
+    "tests": 407,
+    "passed": 407,
+    "failed": 0
+  },
+  "pageFoldersUi": {
+    "ok": true,
+    "checkCount": 17,
+    "checks": [
+      {
+        "name": "mouse-creates-folder-without-changing-canvas-or-tabs",
+        "ok": true
+      },
+      {
+        "name": "context-creates-real-child-page-and-renames-it-with-keyboard-input",
+        "ok": true
+      },
+      {
+        "name": "nested-folder-rename-and-persistent-collapse-preserve-current-page",
+        "ok": true
+      },
+      {
+        "name": "pointer-and-keyboard-reparent-and-reorder-real-tree-items",
+        "ok": true
+      },
+      {
+        "name": "cycle-drop-keeps-document-and-visible-tree-unchanged",
+        "ok": true
+      },
+      {
+        "name": "page-tools-parent-dropdown-displays-folder-and-accepts-real-page-or-folder",
+        "ok": true
+      },
+      {
+        "name": "folder-tools-identify-target-and-exclude-self-and-all-descendants",
+        "ok": true
+      },
+      {
+        "name": "page-tools-up-down-reorder-only-mixed-siblings-and-preserve-parentage",
+        "ok": true
+      },
+      {
+        "name": "header-add-page-remains-real-and-gallery-excludes-folders",
+        "ok": true
+      },
+      {
+        "name": "recursive-delete-cancel-confirm-and-single-undo-restore-entire-branch",
+        "ok": true
+      },
+      {
+        "name": "agent-change-cancels-in-progress-drag-without-stale-reparent",
+        "ok": true
+      },
+      {
+        "name": "agent-change-closes-stale-page-tree-context-menu",
+        "ok": true
+      },
+      {
+        "name": "stale-rename-dialog-does-not-overwrite-agent-change",
+        "ok": true
+      },
+      {
+        "name": "stale-recursive-delete-confirm-does-not-remove-agent-edits",
+        "ok": true
+      },
+      {
+        "name": "production-agent-schema-and-revision-guard-update-the-same-visible-tree",
+        "ok": true
+      },
+      {
+        "name": "save-open-restores-folder-names-parentage-collapse-and-mixed-order",
+        "ok": true
+      },
+      {
+        "name": "exported-html-only-offers-real-pages-and-defaults-to-tree-first-page",
+        "ok": true
+      }
+    ],
+    "trustedInputEventCount": 256,
+    "inputDiagnosticStepCount": 33,
+    "rendererErrorCount": 0
+  },
+  "adaptiveViewEditor": {
+    "ok": true,
+    "checkCount": 10,
+    "checks": [
+      {
+        "name": "current-view-drag-arrow-and-inspector-use-resolved-values",
+        "ok": true
+      },
+      {
+        "name": "all-view-move-preserves-layout-differences-and-leaf-inheritance-restores",
+        "ok": true
+      },
+      {
+        "name": "delete-unplaces-and-outline-restores-current-view",
+        "ok": true
+      },
+      {
+        "name": "inline-text-is-shared-and-copy-retains-view-appearance",
+        "ok": true
+      },
+      {
+        "name": "shared-view-manager-adds-and-reparents-definition",
+        "ok": true
+      },
+      {
+        "name": "component-canvas-view-edit-and-fixed-auto-instance-choice",
+        "ok": true
+      },
+      {
+        "name": "queued-command-stays-on-original-page-and-view",
+        "ok": true
+      },
+      {
+        "name": "one-step-undo-redo-keeps-view-command-atomic",
+        "ok": true
+      },
+      {
+        "name": "instance-origin-and-placement-restore-inherited-view",
+        "ok": true
+      },
+      {
+        "name": "legacy-detach-add-and-convert-preserve-appearance-in-small-window",
+        "ok": true
+      }
+    ],
+    "rendererErrorCount": 0
+  },
+  "portable": {
+    "desktop": {
+      "ok": true,
+      "checkCount": 19,
+      "checks": [
+        "editor-loaded",
+        "renderer-sandbox",
+        "hidden-layer-selection",
+        "insert",
+        "undo",
+        "redo",
+        "ui-agent-batch",
+        "agent-schema-current",
+        "preflight-validates-dependent-commands-without-mutation",
+        "preflight-rejects-missing-variable",
+        "authenticated-agent-live-edit",
+        "authenticated-agent-inherited-and-local-style",
+        "save-open-disk-roundtrip",
+        "flush-before-save",
+        "export-file",
+        "offline-html-modal",
+        "ordered-wait-text",
+        "hide",
+        "navigate"
+      ],
+      "rendererErrorCount": 0
+    },
+    "mcp": {
+      "ok": true,
+      "checkCount": 16,
+      "checks": [
+        "standard-stdio-mcp-initialize-and-tools-list",
+        "mcp-preflight-does-not-mutate-production-engine",
+        "mcp-batch-add-and-edit-reaches-real-renderer",
+        "stale-agent-revision-rejected-without-mutation",
+        "mcp-selection-reaches-production-state-and-renderer",
+        "mcp-undo-redo-uses-same-history",
+        "mcp-save-real-files-without-dialog-or-overwrite",
+        "mcp-html-and-native-rp-export-real-files",
+        "exported-html-runs-and-navigates-offline",
+        "unsupported-rp-content-blocked-before-file-write",
+        "pending-user-draft-flushes-then-stale-export-is-rejected",
+        "concurrent-file-operations-are-excluded-during-renderer-flush",
+        "save-io-failure-preserves-project-path-revision-and-dirty-state",
+        "mcp-folders-create-organize-and-reject-folder-canvas-selection",
+        "mcp-folder-save-html-landing-and-rp-no-silent-flattening",
+        "mcp-folder-recursive-delete-references-selection-and-undo-redo"
+      ],
+      "serverVersion": "0.2.0-preview.10",
+      "rendererErrorCount": 0
+    },
+    "packagedFiles": {
+      "ok": true,
+      "fileCount": 896,
+      "matchedSourceCount": 896
+    }
+  },
+  "clientDiscovery": {
+    "currentChatGetStateSucceeded": true,
+    "schemaRevision": 12,
+    "applicationVersion": "0.2.0-preview.10",
+    "currentChatMutationPerformed": false,
+    "note": "The current client discovered and read the live desktop service. Actual writes were verified separately by the isolated portable MCP checks; the user project was not changed for this discovery check."
+  },
+  "sourceHashes": [
+    {
+      "path": "app/agent-files.mjs",
+      "sha256": "58ac510644f2daf5497de1abfdab3a5cd141755c29a8f4a1beeae1e3d7c68051"
+    },
+    {
+      "path": "app/agent-mcp.mjs",
+      "sha256": "5d552a067c20af5df4a9d6a675ab38aeff608979bccc97a5d0160048a99ce130"
+    },
+    {
+      "path": "app/agent-schema.mjs",
+      "sha256": "68d6d65ca2ece284895a20f5f376eb2de14dd255ed8a7576e827f51d6efc6e04"
+    },
+    {
+      "path": "app/agent-server.mjs",
+      "sha256": "84b2c25007e64e83559aa5bf52498e7c9f65b0734f0897f5ef9e481a932e618e"
+    },
+    {
+      "path": "app/core/component-view-model.mjs",
+      "sha256": "630e152acd04b09a4094b12199db69d7a75dc1a8cf177181c9aad456e95581a6"
+    },
+    {
+      "path": "app/core/design-model.mjs",
+      "sha256": "b8283ede6920ddbfe33c60ebc0283ae832f702a86024e6f50330d6222110b553"
+    },
+    {
+      "path": "app/core/document.mjs",
+      "sha256": "e96e752a8a1d6715ab8f9747160a5f203e837c1e753aa2b478adee150d74aabd"
+    },
+    {
+      "path": "app/core/editor-arrangement.mjs",
+      "sha256": "330704a25016e16aaab7b3b17604fef25978c776e2f2a778494720f25e7517d8"
+    },
+    {
+      "path": "app/core/hierarchy-model.mjs",
+      "sha256": "00ad55e4a6471731ce8ad30c951fd8c47a472ea59868ee6b36489615425953b9"
+    },
+    {
+      "path": "app/core/html-export.mjs",
+      "sha256": "06292efbae1df96008faf82240654950245f0cf4abbf3112f0f734ffb02af1c0"
+    },
+    {
+      "path": "app/core/html-runtime.mjs",
+      "sha256": "3162dcf72bd6a95dfe59286fb4165ed642355e61399a6351e0b0eba60837b478"
+    },
+    {
+      "path": "app/core/image-format.mjs",
+      "sha256": "c7ce6ca4108b45d1401ad16ac076213d4cb69d626c7a577373cf8f9a271600be"
+    },
+    {
+      "path": "app/core/image-model.mjs",
+      "sha256": "5b3de1b56c40f233f91cbb3ff0562222c920f4a3e4c88bb5901f4da39355844c"
+    },
+    {
+      "path": "app/core/image-renderer.mjs",
+      "sha256": "e53fdb65799ace2f34726e3d7af102c21e5c4141cb8d40f0284be23a6ba5311c"
+    },
+    {
+      "path": "app/core/interaction-model.mjs",
+      "sha256": "25380eac4e50e7c7c7149937850b90e16acf4665715728e51c843c04656c6236"
+    },
+    {
+      "path": "app/core/library-model.mjs",
+      "sha256": "aad6895a3c655f2da310fbe7589428df66c7f54beb12ebd365af99dbc87e75e1"
+    },
+    {
+      "path": "app/core/page-tree-model.mjs",
+      "sha256": "736a1f555f84044a848da083250493537289a166bbfc35c2747e884c6d76ac8f"
+    },
+    {
+      "path": "app/core/repeater-import.mjs",
+      "sha256": "94836c11e8ad97e5e39534a366e34adaec2ed2a6a72ab817a55cf376096395c9"
+    },
+    {
+      "path": "app/core/rp-export.mjs",
+      "sha256": "ed919ccdfd540ac28879988d04ab46c11dc22b55b09a7e1c54445eb0f4e58951"
+    },
+    {
+      "path": "app/core/rp-html-config.mjs",
+      "sha256": "46f221fe9a58663e69be46875d2134beefd3f57e469a35fe43209a2b5b14f03f"
+    },
+    {
+      "path": "app/core/style-model.mjs",
+      "sha256": "4517efe478982e874b6e2787a3ba0e07f498a5111d7cce3086779f0959e35736"
+    },
+    {
+      "path": "app/core/style-renderer.mjs",
+      "sha256": "18ffcc59e28a8b8d24bed53526c4dd3c8f27f874a4aa256514f9e7fb25a3f831"
+    },
+    {
+      "path": "app/core/vector-model.mjs",
+      "sha256": "6337cf8ebe8e9a92f6bd55a4228d01044d267ea21df8fdd766317230484cd843"
+    },
+    {
+      "path": "app/core/view-commands.mjs",
+      "sha256": "12328770b4508ced7ee5defd88c0179e44cf0a5d8b81d434be1c9cf861001fe9"
+    },
+    {
+      "path": "app/core/view-model.mjs",
+      "sha256": "d182e38e6eed977b5bd2a3faee7b8424440f8ae6f0bd9621397893cf4cfe2ad9"
+    },
+    {
+      "path": "app/core/widget-geometry.mjs",
+      "sha256": "227f66ed9a3f21b43832dd65334a455e0c141e2c2f9d886bc758c6e7b3a9a458"
+    },
+    {
+      "path": "app/image-decoder.mjs",
+      "sha256": "e1c4f0dcd2f70fd1185adbe0b38d589897f60c342f44cf8c1c8afee01434e89b"
+    },
+    {
+      "path": "app/image-input.mjs",
+      "sha256": "5ae0550a471c6abb19c672d0838c5854c17c5f5b738c3762bfb169b4d9fb7fe4"
+    },
+    {
+      "path": "app/library-store.mjs",
+      "sha256": "87c6aac1bcb912cc1e94cb8537851c994c6fd251a97f440e57a22ebff76f6dd6"
+    },
+    {
+      "path": "app/main.mjs",
+      "sha256": "87b4bc6a4821422430282e93e75d6b5aebb336a1669499aa3a0310672a4c7c0c"
+    },
+    {
+      "path": "app/platform-paths.mjs",
+      "sha256": "0be7ed661a7e9fc8f05044de229aa811637dbe7355909727e629f4ddcd2a4c4f"
+    },
+    {
+      "path": "app/preload.cjs",
+      "sha256": "61c986c2b02b5219bc1784b2b6e20927fd0f70c3cec76a22e177efda696e9b15"
+    },
+    {
+      "path": "app/renderer/advanced-tools.css",
+      "sha256": "634ad87d04908a50f9133e0abc6569232ef7198ab7ac18b788836a5f4731bc64"
+    },
+    {
+      "path": "app/renderer/advanced-tools.js",
+      "sha256": "e758c672507f4d60cb604b29422a2c860d44fa20b85ce435741b8aa20028666d"
+    },
+    {
+      "path": "app/renderer/docking-enhancements.css",
+      "sha256": "7db134dba46931a88c6d420245763edba91770b82bacd11bd014da8cfec97afe"
+    },
+    {
+      "path": "app/renderer/docking.js",
+      "sha256": "f6fa13a2bd476d570608ff768c36712c873bd749c6f3f3f343a9d3d2f80bf20a"
+    },
+    {
+      "path": "app/renderer/drag-preview.css",
+      "sha256": "4d4fb0fb9be2f62e561f2b3559a2bd099e0aa6abed30c65bd1ae3208c130ca40"
+    },
+    {
+      "path": "app/renderer/drag-preview.js",
+      "sha256": "f4dc7bc47ea09d43f558b7e6b1b7101d13a67de43f9edd3dceb496200928513e"
+    },
+    {
+      "path": "app/renderer/editor-shell.css",
+      "sha256": "5e39e028373ded45874f4eb627627d48e413eaf84d227a359e41d3a08f9e9c49"
+    },
+    {
+      "path": "app/renderer/editor-shell.js",
+      "sha256": "9b3e7e86655705d7ab118c50187a2d9e49552ba384e21869a4e332f3c65f4459"
+    },
+    {
+      "path": "app/renderer/image-tools.css",
+      "sha256": "3bc67e8b533f13adb1e677540ebe42f489a9bcaecc21be13cdfbfe4114d56431"
+    },
+    {
+      "path": "app/renderer/image-tools.js",
+      "sha256": "2b4247091e34655d5d66bf6ff49df6dedde51beba4f7c7ce5e4c122d6fdc835a"
+    },
+    {
+      "path": "app/renderer/index.html",
+      "sha256": "00fcc73f10a97b8352f5ea57a9efb42808db75c93f86d78afaf1e94b29c3907f"
+    },
+    {
+      "path": "app/renderer/library-tools.css",
+      "sha256": "2bcf63b5a35a1d0b9926316561b7ced25ec6ccd389f5b2ba7f427eafbe9683ee"
+    },
+    {
+      "path": "app/renderer/library-tools.js",
+      "sha256": "da5b007b9e20d9fca5ad19ddfa7138514df881667a8e31c6f34f78d2f2508d5f"
+    },
+    {
+      "path": "app/renderer/movement-model.js",
+      "sha256": "b5320a3cf7ab871481e9ff122a6a1946ae61b0226e4a1f4eed4619ea23b3d240"
+    },
+    {
+      "path": "app/renderer/navigation-model.mjs",
+      "sha256": "adbc39f2d13b35f241ad1b830f6dc471f25e6cadd61c965f02d272331c5b5ddc"
+    },
+    {
+      "path": "app/renderer/navigation-tools.css",
+      "sha256": "38856c1e49169a3e55c354bbec7f41e3fd11e267e8442de2e23d04e9ef5a5f9e"
+    },
+    {
+      "path": "app/renderer/navigation-tools.js",
+      "sha256": "3d232b725998bb6d99af6d4e45d2fac0ac74b8ddbdc7f54514467879cb06ea59"
+    },
+    {
+      "path": "app/renderer/outline-tools.css",
+      "sha256": "e19923ec7e6ec2e18781838c7a9251acebddd0115be8d2155eee17e75f548a79"
+    },
+    {
+      "path": "app/renderer/outline-tools.js",
+      "sha256": "ac3abe385acef4e92a718f993d400eb649505b39a64e4685a3b3d11eb1e6aba0"
+    },
+    {
+      "path": "app/renderer/preview-node-renderer.mjs",
+      "sha256": "bf152115ccf5e18b1c79d229b9b0458ac3bd5ce23041adf85a54f3de256072bf"
+    },
+    {
+      "path": "app/renderer/renderer.js",
+      "sha256": "d2152d5f9b28ac7ec1e337de5395a33a40c61b1f5b352a992802e616339f9dc0"
+    },
+    {
+      "path": "app/renderer/style-tools.css",
+      "sha256": "96897f3e78271b2f4a1cb881e5d8ec25ffd5fb7a0e964b4c30a3017e29a5c3d6"
+    },
+    {
+      "path": "app/renderer/style-tools.js",
+      "sha256": "8b28ada332ccb810c205829c45c0962d7e4c96891e6742be152f0bcc4d85b709"
+    },
+    {
+      "path": "app/renderer/styles.css",
+      "sha256": "69d9efb867e2310f865eb997bb475e68a33a4fcd3f9a5b9b8beda9ee52e16a66"
+    },
+    {
+      "path": "app/renderer/vector-tools.css",
+      "sha256": "74400c062edbd9b5eb8e0d202cb56a99473c317139ff3b3baf1dc960a91cf3c1"
+    },
+    {
+      "path": "app/renderer/vector-tools.js",
+      "sha256": "8c3f653af72cbf9e265e226017c905384c096e46ac72d9ab6e35a374179ceffb"
+    },
+    {
+      "path": "app/renderer/view-tools.js",
+      "sha256": "b57816915daf044bb94b93ec3ca5ae5902dc7da6c0431fe7132becca11b94171"
+    },
+    {
+      "path": "app/renderer/workspace-tools.css",
+      "sha256": "89dd979dede54424bd5f627bca469f076956be326f39dc04f32ab695800a0ec8"
+    },
+    {
+      "path": "app/renderer/workspace-tools.js",
+      "sha256": "52d4ac984fd20ea076ab5229caadba17ce94300f90c7c45e918534be7a5f4320"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "0dbd01621c169f6c39a0f48b11f7ada7ac9cde74a18aef379f9b65d5f42ca336"
+    },
+    {
+      "path": "package.json",
+      "sha256": "cfa7c1d24f1299c3483af4c5af4fec68f3bc7176cc1a69cce3a1b4273ed0e0f2"
+    }
+  ],
+  "evidenceDigests": [
+    {
+      "id": "initial-full-attempt",
+      "sha256": "170924a4d5eec2879ab9f4d05f8bcca92a6087362c4a5040674127aca276300a",
+      "bytes": 51589
+    },
+    {
+      "id": "continued-from-style-inheritance",
+      "sha256": "69de0624dc41c992735421afb77f179725ebffd46b737e8a04f374ebf3654516",
+      "bytes": 71090
+    },
+    {
+      "id": "portable-desktop",
+      "sha256": "0385b3b5fd2cfc3aac355dd1166530d12d204c977069a5eabaf16237f0008368",
+      "bytes": 795
+    },
+    {
+      "id": "portable-mcp",
+      "sha256": "99a0909bdff6e7fff366809520c0a2922a35d36234264ed21aa4f91240c04858",
+      "bytes": 3406
+    },
+    {
+      "id": "release-byte-check",
+      "sha256": "c1f90d82bb9adb2ba1aef1dc78588a87fa5497ffdacd037d9114abdd137f7006",
+      "bytes": 184902
+    },
+    {
+      "id": "source-freeze",
+      "sha256": "1cce38826966637d2cac57403a4562f6b31b0242de21f2f9b5452d2742d573ee",
+      "bytes": 8572
+    },
+    {
+      "id": "client-discovery",
+      "sha256": "e64c9a46099341279a6a2500cd4acffce266f207e49afb756ff9c895cf904730",
+      "bytes": 354
+    },
+    {
+      "id": "page-folders-ui",
+      "sha256": "73b78759aa90d87dc7f19bf474310c922c9bec4db04376e35c2d9d88f39c64ee",
+      "bytes": 31034
+    },
+    {
+      "id": "earlier-maintainer-interruption",
+      "sha256": "8fd91ac71a7c6e94c94d4f93c67a4e6532dc3b8da43f676699abbdc50cf54e96",
+      "bytes": 305
+    },
+    {
+      "id": "earlier-view-focus-failure",
+      "sha256": "404691a99ab60a69affefb062f00c857cc4503b36e31590d835f59f50c4a3ef4",
+      "bytes": 74183
+    }
+  ],
+  "limitations": [
+    "Automated Windows checks do not establish complete Axure compatibility or the absence of bugs.",
+    "macOS GUI, packaging and startup have not been accepted on a native Mac.",
+    "RP is a limited exporter. Page folders, including empty folders, and other unsupported content are rejected. There is no general RP importer.",
+    "This verification adds no new manual acceptance in Axure.",
+    "Page-folder UI checks use trusted pointer/keyboard input and real files with isolated IPC adapters; native operating-system file pickers are not exercised. Other groups document their own focus emulation, control-change and clipboard/file-dialog adapters.",
+    "Raw local evidence contains paths and logs and is retained privately. This summary includes only check names, counts, results and source/evidence hashes."
+  ]
+}

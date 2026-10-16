@@ -35,7 +35,9 @@ await writeFile(path.join(staging,'Agent-Codex配置.toml'),`[mcp_servers.yuanda
 await mkdir(path.join(staging,'projects'),{recursive:true});await mkdir(path.join(staging,'exports'),{recursive:true});
 await cp(path.join(root,'samples/rp-agent-demo-20261015-v2/原搭-图片与跳转演示.yuanda'),path.join(staging,'projects/原搭-图片与跳转演示.yuanda'));
 await cp(path.join(root,'samples/rp-agent-demo-20261015-v2/原搭-图片与跳转演示.rp'),path.join(staging,'exports/原搭-图片与跳转演示.rp'));
-await writeFile(path.join(staging, '先读我.txt'), `原搭 ${packageInfo.version}\n\n双击「${mac?'原搭.app':'原搭.exe'}」打开。请保留整个文件夹，包括旁边的 projects、exports 和 data。\n这是开发预览便携版，不需要安装 Node.js。首次打开自带可编辑演示。\nRP支持基础图形、文字、多页、静态PNG与单击跳页；复杂内容会提示并停止导出。保存.yuanda工程保留全部编辑数据，导出HTML保留交互。\nRP演示工程在 projects/原搭-图片与跳转演示.yuanda，已生成RP在 exports。\nAgent连接配置见 Agent-MCP配置.json / Agent-Codex配置.toml。\n个人项目放 projects，导出放 exports，恢复与Agent连接放 data；不要公开 data 里的连接令牌。\n这是单独的新版本，可通过“打开”选择旧版 .yuanda 文件。退出后可整体移动文件夹，移动后重新复制应用显示的 Agent 连接说明。\n${mac?'macOS 包仅供本机开发，使用临时签名，尚未经过 Developer ID 签名与 Apple 公证；不是面向他人分发的正式 Mac 安装包。请放在自己的可写开发目录，勿单独移动 .app 到 /Applications。\n':''}`);
+await cp(path.join(root,'samples/yuanda/页面目录体验.yuanda'),path.join(staging,'projects/页面目录体验.yuanda'));
+await cp(path.join(root,'exports/页面目录体验.html'),path.join(staging,'exports/页面目录体验.html'));
+await writeFile(path.join(staging, '先读我.txt'), `原搭 ${packageInfo.version}\n\n双击「${mac?'原搭.app':'原搭.exe'}」打开。请保留整个文件夹，包括旁边的 projects、exports 和 data。\n这是开发预览便携版，不需要安装 Node.js。首次打开自带可编辑演示。\nRP支持基础图形、文字、多页、静态PNG与单击跳页；复杂内容会提示并停止导出。保存.yuanda工程保留全部编辑数据，导出HTML保留交互。\nRP演示工程在 projects/原搭-图片与跳转演示.yuanda，已生成RP在 exports。页面目录演示在 projects/页面目录体验.yuanda，对应HTML在 exports；含目录的RP导出暂不支持。\nAgent连接配置见 Agent-MCP配置.json / Agent-Codex配置.toml。\n个人项目放 projects，导出放 exports，恢复与Agent连接放 data；不要公开 data 里的连接令牌。\n这是单独的新版本，可通过“打开”选择旧版 .yuanda 文件。退出后可整体移动文件夹，移动后重新复制应用显示的 Agent 连接说明。\n${mac?'macOS 包仅供本机开发，使用临时签名，尚未经过 Developer ID 签名与 Apple 公证；不是面向他人分发的正式 Mac 安装包。请放在自己的可写开发目录，勿单独移动 .app 到 /Applications。\n':''}`);
 if (mac) {
   const run = promisify(execFile), environment = projectEnvironment(root);
   await mkdir(environment.TMPDIR, { recursive: true });

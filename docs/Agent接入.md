@@ -1,6 +1,6 @@
-# 本地 Agent 接入（0.2.0-preview.9）
+# 本地 Agent 接入（0.2.0-preview.10）
 
-原搭 0.2 的人工操作和 Agent 指令进入同一个文档引擎。Agent 可以创建、修改、删除页面和元件，配置样式、母版、变量、动态面板、数据列表、自适应视图和交互；修改会出现在画布，并进入同一份撤销记录。
+原搭 0.2 的人工操作和 Agent 指令进入同一个文档引擎。Agent 可以创建、修改、删除页面、页面文件夹和元件，配置样式、母版、变量、动态面板、数据列表、自适应视图和交互；修改会出现在对应界面，并进入同一份撤销记录。
 
 新版增加了**标准 MCP 直接控制入口**。Codex 等支持 MCP 的 Agent 可以直接读取当前项目、创建和修改元件、切换选区、撤销重做、保存工程以及导出 HTML/RP。你不需要把命令复制到「Agent 工作台」。软件没有内置大模型账户或云端聊天服务；Agent 通过本机接口操作你正在打开的原搭窗口。
 
@@ -10,9 +10,23 @@ MCP 是可调用的工具接口；Skill 可以补充工作习惯和设计方法�
 
 图片可通过 `setImageOptions` 调色、翻转、设置角部或叠字，也可用 `cropImage`、`sliceImage`、`replaceImage`、`fitImage`、`clearImage`。先从 schema 读取限制和真实元件 ID，再携带 expectedRevision 提交。图片内容在全部视图共享；外框尺寸才按 viewCommands 的范围处理。图片 src 是内嵌数据，不是电脑文件路径；HTTP 不提供任意文件读取。
 
-样式契约以运行窗口返回的 schemaRevision 为准，preview.9 源码为 11；连接旧版时以实际返回值为准：Agent 可以修改字体/行距/字距、渐变或图片填充、独立边框/圆角、阴影、模糊、过渡和旋转原点。先查询 schema；复合字段整体替换，例如提交完整 padding 四边，不能只给一个 top。状态字段省略表示跟随基础值；修改局部样式保留命名样式关联，并记录局部覆盖；清除覆盖可恢复继承。
+样式契约以运行窗口返回的 schemaRevision 为准，preview.10 源码为 12；连接旧版时以实际返回值为准：Agent 可以修改字体/行距/字距、渐变或图片填充、独立边框/圆角、阴影、模糊、过渡和旋转原点。先查询 schema；复合字段整体替换，例如提交完整 padding 四边，不能只给一个 top。状态字段省略表示跟随基础值；修改局部样式保留命名样式关联，并记录局部覆盖；清除覆盖可恢复继承。
 
 视图编辑需要明确范围。例如让 Agent “只调整手机布局”，应读取视图 ID，再使用 `viewCommands`，指定 `viewId` 与 `scope:"current"`；不要根据编辑器当前选中的视图猜测。指定 `scope:"all"` 才表示全部视图。文字和交互共享，改变它们会作用于所有布局。实例平移使用 `moveNodes`，而非分别修改每个关联元件。
+
+## 直接整理页面目录
+
+**窗口：原搭主窗口。**打开 `samples/yuanda/页面目录体验.yuanda`；便携版也可从自身 `projects/页面目录体验.yuanda` 打开。保持窗口运行。
+
+**窗口：已连接原搭 MCP 的 Agent 聊天窗口。**可以直接说明：
+
+> 读取原搭当前项目与 schema，在“产品设计”目录中创建一个“交付准备”子目录，把“订单详情”页面移进去。保留页面内容、页面 ID 和跳转。先预检，再用读到的 expectedRevision 提交，完成后列出改动。
+
+**窗口：原搭主窗口。**页面树应显示新目录和页面归属，当前画布不会因为目录被创建而变成空白；可按 Ctrl+Z 撤销整批操作。保存工程会保留目录，HTML 仍只显示真实页面。
+
+schemaRevision 12 中，`pageFolders` 保存目录，`pageTreeOrder` 保存混合顺序；命令为 `addPageFolder`、`updatePageFolder`、`reparentPageFolder`、`reorderPageTreeItem`、`removePageFolder`。真实页面改父级仍用 `reparentPage`。混排索引按移除源项后的全量数组计算，不是当前层级的序号。完整语义见[接口约定](开发接口约定.md)。
+
+目录不能传给 `yuanda_select` 当作画布，也不能作为交互跳页目标。删除目录会递归删除全部后代；Agent 应先报告影响范围，不能把“删除文件夹”理解成只清除外层。当前含目录的 RP 导出会明确拒绝，包括空目录；不要擅自删掉目录换取导出成功。
 
 ## 不懂代码时怎么使用
 
@@ -26,7 +40,7 @@ Agent 会调用工具直接写入原搭，画布会同步变化。你仍可在**
 
 ## MCP 配置与启动
 
-以下便携路径和 EXE 示例用于 Windows；Mac 的应用包与运行数据位置见 [Mac 开发与迁移指南](MAC_DEVELOPMENT.md)。路径统一以实际应用返回的 `getAgentInfo` 为准。preview.9 的新平台联调结果需独立验证，不继承旧版结论。
+以下便携路径和 EXE 示例用于 Windows；Mac 的应用包与运行数据位置见 [Mac 开发与迁移指南](MAC_DEVELOPMENT.md)。路径统一以实际应用返回的 `getAgentInfo` 为准；Mac 真机联调仍需独立验证，不继承 Windows 结论。
 
 Codex 的项目级 MCP 配置写在受信任项目的 `.codex/config.toml`；本项目保持该范围，不修改用户级配置。依据：[OpenAI 官方 MCP 配置说明](https://learn.chatgpt.com/docs/extend/mcp?surface=cli)。新配置是否已被当前会话发现，需要查看客户端实际工具列表；配置文件存在本身不等于已连接。
 
@@ -80,7 +94,7 @@ Agent 应读取实际页面和元件 ID，不要凭名称猜 ID。你可以在�
 | 启动方式 | 连接文件 | CLI 文件 |
 | --- | --- | --- |
 | 源码启动 | `.local/yuanda-agent/connection.json` | `scripts/yuanda-agent.mjs` |
-| preview.9 Windows 便携版 | `dist/原搭-0.2.0-preview.9/data/connection.json` | `dist/原搭-0.2.0-preview.9/resources/app/scripts/yuanda-agent.mjs` |
+| preview.10 Windows 便携版 | `dist/原搭-0.2.0-preview.10/data/connection.json` | `dist/原搭-0.2.0-preview.10/resources/app/scripts/yuanda-agent.mjs` |
 
 原搭启动后创建连接文件，正常退出时清理。文件包含 `{version,url,token,pid}`。端口和临时令牌可能每次变化，因此每次连接都应重新读取。不要提交连接文件、恢复数据或令牌到 GitHub。
 
@@ -94,7 +108,7 @@ Agent 应读取实际页面和元件 ID，不要凭名称猜 ID。你可以在�
 
 ```powershell
 $yuandaCli = Join-Path (Get-Location) 'scripts/yuanda-agent.mjs'
-$yuandaConnection = Join-Path (Get-Location) 'dist/原搭-0.2.0-preview.9/data/connection.json'
+$yuandaConnection = Join-Path (Get-Location) 'dist/原搭-0.2.0-preview.10/data/connection.json'
 node $yuandaCli state --connection $yuandaConnection
 node $yuandaCli schema --connection $yuandaConnection
 ```

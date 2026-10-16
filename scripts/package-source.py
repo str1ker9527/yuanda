@@ -20,7 +20,7 @@ files = ['README.md', 'LICENSE', '.gitattributes', 'package.json', 'package-lock
          'scripts/smoke-desktop.mjs', 'scripts/yuanda-agent.mjs', 'scripts/package-source.py',
          'scripts/test-ui-regression.mjs', 'scripts/ui-regression.mjs',
          'scripts/run-advanced-ui-regression.mjs', 'scripts/advanced-ui-regression.mjs',
-         'scripts/test-navigation-ui.mjs', 'scripts/test-vector-ui.mjs',
+         'scripts/test-navigation-ui.mjs', 'scripts/test-page-folders-ui.mjs', 'scripts/generate-page-folders-demo.mjs', 'samples/yuanda/页面目录体验.yuanda', 'exports/页面目录体验.html', 'scripts/test-vector-ui.mjs',
          'scripts/test-form-ui.mjs', 'scripts/test-edit-safety-ui.mjs', 'scripts/test-close-regression.mjs', 'scripts/test-all.mjs',
          'scripts/test-repeater-ui.mjs', 'scripts/test-hierarchy-ui.mjs', 'scripts/test-complex-project-integration.mjs',
          'scripts/generate-structure-demo.mjs', 'scripts/test-structure-demo.mjs',
@@ -56,7 +56,7 @@ files += ['scripts/platform-runtime.mjs', 'scripts/start-desktop.mjs', 'scripts/
           'docs/PROJECT_OVERVIEW.md', 'docs/CONTRIBUTING.md', 'docs/SECURITY.md',
           'docs/ARCHITECTURE.md', 'docs/ROADMAP.md', 'docs/FEATURE_MATRIX.md',
           'docs/MAC_DEVELOPMENT.md', 'docs/CONTINUE_DEVELOPMENT.md',
-          'docs/RELEASE_NOTES.md', 'docs/verification-preview.9.json', '.github/workflows/verify.yml',
+          'docs/RELEASE_NOTES.md', 'docs/verification-preview.9.json', 'docs/verification-preview.10.json', '.github/workflows/verify.yml',
           '.github/ISSUE_TEMPLATE/bug_report.md', '.github/ISSUE_TEMPLATE/feature_request.md',
           '.github/pull_request_template.md']
 files += [p.relative_to(root).as_posix() for p in (root / 'app').rglob('*') if p.is_file()]

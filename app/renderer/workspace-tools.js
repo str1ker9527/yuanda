@@ -194,14 +194,29 @@
     body.append(row(btn('添加文字', () => update({ nodes: [...component.nodes, { id: uid(), type: 'text', name: '文字', x: 16, y: 16, width: 160, height: 32, text: '新文字' }] })), btn('添加矩形', () => update({ nodes: [...component.nodes, { id: uid(), type: 'rectangle', name: '矩形', x: 16, y: 64, width: 160, height: 80 }] })), btn('删除元件', () => { if (component.nodes.length < 2) { E.toast('母版至少保留一个元件'); return; } update({ nodes: component.nodes.filter(item => item.id !== current.id) }); })));
     body.append(note('每次修改立即进入撤销记录，关闭窗口即返回画布。'));
   }
-  function renderPageTools() {
-    const page = E.getPage(), root = $('#page-tools'); if (!root || editing(root)) return; root.replaceChildren();
-    if(E.getEditingTarget?.().kind==='component'){root.append(note('正在编辑母版。点击左侧页面或上方标签返回页面。'));return;}
-    root.append(field('上级页面', page.parentId || '', parentId => command([{ type: 'reparentPage', pageId: page.id, parentId: parentId || null }], '调整页面层级'), { options: [['','无（顶层）'], ...E.getState().project.pages.filter(item => item.id !== page.id).map(item => [item.id, item.name])] }));
-    const index = E.getState().project.pages.findIndex(item => item.id === page.id), count = E.getState().project.pages.length;
-    const up = btn('上移', () => command([{ type: 'reorderPage', pageId: page.id, index: index - 1 }], '页面上移')); up.disabled = index === 0;
-    const down = btn('下移', () => command([{ type: 'reorderPage', pageId: page.id, index: index + 1 }], '页面下移')); down.disabled = index === count - 1;
+  function renderPageTools(force = false) {
+    const root = $('#page-tools'); if (!root || (!force && editing(root))) return;
+    const navigation = window.YuandaNavigation;
+    if (!navigation?.getTreeItems) { root.replaceChildren(note('页面目录正在载入…')); return; }
+    const items = navigation.getTreeItems(), selection = navigation.getTreeSelection(), selected = items.find(item => item.id === selection?.id);
+    if (!selected) { root.replaceChildren(note('在页面树选择页面或文件夹，再调整它的层级和顺序。')); return; }
+    const projectId = E.getState().project.id, expectedRevision = E.getState().revision, context = E.captureContext();
+    const focusedControl = root.dataset.projectId === projectId && root.dataset.treeId === selected.id && root.contains(document.activeElement) ? document.activeElement.id : null;
+    root.replaceChildren(); root.dataset.projectId = projectId; root.dataset.treeId = selected.id;
+    const guarded = action => {
+      if (E.getState().project.id !== projectId || E.getState().revision !== expectedRevision || navigation.getTreeSelection()?.id !== selected.id) { E.toast('页面目录已变化，请按最新内容重试。', 'warning'); renderPageTools(true); return; }
+      return action();
+    };
+    const caption = note(`${selected.kind === 'folder' ? '文件夹' : '页面'} · ${selected.name}`); caption.id = 'page-tools-target'; caption.dataset.treeId = selected.id; caption.dataset.treeKind = selected.kind; root.append(caption);
+    const excluded = new Set([selected.id, ...navigation.getTreeDescendants(selected.id).map(item => item.id)]);
+    const parentOptions = [['', '无（顶层）'], ...items.filter(item => !excluded.has(item.id)).map(item => [item.id, `${'　'.repeat(item.depth)}${item.kind === 'folder' ? '文件夹' : '页面'} · ${item.name}`])];
+    const parent = field('上级页面或文件夹', selected.parentId || '', parentId => guarded(() => navigation.reparentTreeItem(selected.id, parentId || null, context, expectedRevision, { restoreTreeFocus: false })), { options: parentOptions });
+    parent.querySelector('select').id = 'page-tree-parent'; root.append(parent);
+    const siblings = items.filter(item => (item.parentId || null) === (selected.parentId || null)), index = siblings.findIndex(item => item.id === selected.id);
+    const up = btn('上移', () => guarded(() => navigation.moveTreeItem(selected.id, siblings[index - 1]?.id, 'before', context, expectedRevision, { restoreTreeFocus: false }))); up.id = 'page-tree-move-up'; up.disabled = index <= 0;
+    const down = btn('下移', () => guarded(() => navigation.moveTreeItem(selected.id, siblings[index + 1]?.id, 'after', context, expectedRevision, { restoreTreeFocus: false }))); down.id = 'page-tree-move-down'; down.disabled = index < 0 || index >= siblings.length - 1;
     root.append(row(up, down));
+    if (focusedControl) root.querySelector(`#${CSS.escape(focusedControl)}`)?.focus({ preventScroll: true });
   }
   function selectedGroups() { const selected = new Set(E.getSelection().nodeIds); return (E.getPage()?.groups || []).filter(group => group.nodeIds.every(id => selected.has(id))); }
   function groupSelection() { const ids = E.getSelection().nodeIds; if (ids.length < 2) { E.toast('至少选择两个元件才能编组'); return; } command([window.YuandaOutline?{type:'groupItems',pageId:E.getPage().id,items:window.YuandaOutline.selectedItems(),name:'元件组'}:{ type: 'groupNodes', pageId: E.getPage().id, nodeIds: ids, name: '元件组' }], '编组'); }
@@ -450,6 +465,7 @@
   installLibrary(); installOverview(); installViewTools();
   const pageTools = node('div', 'workspace-section'); pageTools.id = 'page-tools'; $('#page-list').after(pageTools);
   document.addEventListener('yuanda:editorchange', scheduleRender);
+  document.addEventListener('yuanda:pagetreechange', () => renderPageTools(true));
   document.addEventListener('yuanda:panelactivate', scheduleRender);
   document.addEventListener('focusout', event => { if (event.target.closest('.panel-body,#master-editor')) setTimeout(scheduleRender, 100); });
   document.addEventListener('keydown', event => {

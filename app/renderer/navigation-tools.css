@@ -17,6 +17,26 @@
 .navigation-menu { position:fixed; z-index:6000; padding:5px; min-width:150px; border:1px solid var(--border-strong); background:var(--surface); border-radius:5px; }
 .navigation-menu button { display:block; width:100%; text-align:left; padding:8px 12px; }
 .page-row { position:relative; touch-action:none; }
+.page-row[data-tree-id] { gap:5px; min-width:0; }
+.page-row[data-tree-id]:focus-visible { outline:2px solid var(--border-strong); outline-offset:-2px; }
+.page-row.tree-selected { background:var(--surface-active); color:var(--text); }
+.page-row .page-tree-toggle { width:18px; height:22px; flex:0 0 18px; padding:0; display:flex; align-items:center; justify-content:center; }
+.page-row .page-tree-toggle svg { width:13px; height:13px; transition:transform 120ms ease; }
+.page-row[aria-expanded=false] .page-tree-toggle svg { transform:rotate(-90deg); }
+.page-tree-toggle-spacer { width:18px; flex:0 0 18px; }
+.page-row .page-symbol { flex:0 0 16px; }
+.page-row[data-tree-kind=folder] .page-symbol { color:var(--text-secondary); }
+.page-row .page-tree-count { margin-left:auto; color:var(--text-muted); font-size:10px; }
+.page-row .small-icon:focus-visible { opacity:1; }
+.page-tree-dialog { width:min(440px,90vw); padding:20px; border:1px solid var(--border-strong); border-radius:8px; background:var(--surface); color:var(--text); }
+.page-tree-dialog h2 { margin:0 0 14px; font-size:16px; font-weight:500; }
+.page-tree-dialog p { white-space:pre-line; line-height:1.65; color:var(--text-secondary); }
+.page-tree-dialog label { display:block; }
+.page-tree-dialog input { display:block; width:100%; box-sizing:border-box; margin:8px 0; padding:8px; border:1px solid var(--border-strong); border-radius:4px; background:var(--surface); color:var(--text); }
+.page-tree-dialog-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:18px; }
+.page-tree-dialog-actions button { padding:7px 14px; border:1px solid var(--border-strong); border-radius:4px; }
+.page-tree-dialog-error { min-height:1.4em; margin:4px 0; color:var(--text-secondary); }
+.page-tree-dialog [data-page-tree-delete-confirm] { border-color:var(--text); }
 .page-row.page-drop-before::before,.page-row.page-drop-after::after { content:''; position:absolute; height:2px; left:0; right:0; background:var(--accent); }
 .page-row.page-drop-before::before { top:0; }.page-row.page-drop-after::after { bottom:0; }
 .page-row.page-drop-inside { outline:1px solid var(--accent); outline-offset:-1px; background:var(--surface-active); }

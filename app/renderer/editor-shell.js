@@ -64,7 +64,7 @@ function menuItems(name){
       item('toolbar-settings','工具栏与工作区设置…',()=>window.YuandaNavigation.settings()),item('reset-panels','恢复默认面板布局',()=>window.YuandaDock.reset())];
     case 'insert':return [...insertItems(),sep(),item('insert-image','导入图片…',()=>E.importImage()),item('local-library','管理本地元件库…',()=>window.YuandaLibrary.open())];
     case 'arrange':return arrangement();
-    case 'project':return [item('add-page','添加页面',()=>$('#add-page').click()),item('gallery','页面与母版总览',()=>window.YuandaNavigation.showGallery()),sep(),item('variables','全局变量…',()=>window.YuandaAdvanced.manageVariables()),item('views','自适应视图…',()=>window.YuandaAdvanced.manageViews()),item('shared-styles','共享样式…',()=>window.YuandaStyle.manageShared()),item('default-styles','默认元件样式…',()=>window.YuandaStyle.manageDefaults()),sep(),item('agent','Agent 工作台',()=>$('#agent-toggle').click())];
+    case 'project':return [item('add-page','添加页面',()=>$('#add-page').click()),item('add-folder','添加文件夹',()=>window.YuandaNavigation.addFolder()),item('gallery','页面与母版总览',()=>window.YuandaNavigation.showGallery()),sep(),item('variables','全局变量…',()=>window.YuandaAdvanced.manageVariables()),item('views','自适应视图…',()=>window.YuandaAdvanced.manageViews()),item('shared-styles','共享样式…',()=>window.YuandaStyle.manageShared()),item('default-styles','默认元件样式…',()=>window.YuandaStyle.manageDefaults()),sep(),item('agent','Agent 工作台',()=>$('#agent-toggle').click())];
     case 'publish':return [item('preview','预览当前项目',()=>E.exportFile('preview'),'F5'),item('export-html','导出可交互 HTML…',()=>E.exportFile('exportHtml')),item('export-rp','导出 Axure .rp…',()=>E.exportFile('exportRp'))];
     case 'help':return [item('quick-help','快速上手',()=>$('#help-button').click()),item('workspace-help','工作区操作说明',()=>E.showDialog('工作区操作','从元件库按住拖到画布，可看到实际元件轮廓。\n右键画布或元件，可复制、组合、排列、锁定。\n从标尺拖出参考线，双击参考线可精确设置位置。\n拖动面板标签，在蓝色停靠预览上松手。拖动时按 Esc 取消。\n菜单“视图”中可以设置网格、吸附及恢复默认面板布局。')),item('about','关于原搭',()=>E.showDialog('原搭',`版本 ${E.getState()?.appVersion||'开发版'}\n原创桌面原型编辑器 · 本地文件与 Agent 共用编辑能力。\nAxure 兼容功能仍在逐项扩充。`))];
     default:return [];
@@ -129,6 +129,7 @@ document.addEventListener('keydown',event=>{
   if(event.altKey&&!event.ctrlKey){const found=menuNames.find(([, ,key])=>key.toLowerCase()===event.key.toLowerCase());if(found){event.preventDefault();event.stopImmediatePropagation();openTop(found[0],true);return;}}
   if(event.key==='F5'){event.preventDefault();event.stopImmediatePropagation();void E.exportFile('preview');return;}
   if(event.target.closest('input,textarea,select,[contenteditable="true"]'))return;
+  if(event.target.closest('#page-list')&&event.key.toLowerCase()==='x')return;
   if((event.ctrlKey||event.metaKey)&&['n','x'].includes(event.key.toLowerCase())){event.preventDefault();event.stopImmediatePropagation();void(event.key.toLowerCase()==='n'?E.invoke('newProject'):editable()?E.cut():null);}
 },true);
 window.YuandaShell=Object.freeze({close:closeMenus,open:openTop});

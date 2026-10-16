@@ -36,6 +36,7 @@ export function createLibrary({name='我的元件库',description=''}={},h){text
 export function validateLibraryItem(item,h){
   sized(item);keys(item,['id','folderId','name','description','warnings','project']);id(item.id);if(item.folderId!==null)id(item.folderId);text(item.name,'条目名称',200,1);text(item.description,'条目说明',5000);list(item.warnings,100);item.warnings.forEach(value=>text(value,'条目提示',1000));
   h.validateProject(item.project);const normalized=normalizeDesignProject(item.project);if(normalized.pages.length!==1)fail('库条目只允许一个设计画布');if(!normalized.pages[0].nodes.length)fail('库条目不能是空选区');if(countNodes(normalized)>LIBRARY_LIMITS.itemNodes)fail('单个库条目连同母版依赖最多 5000 个元件');
+  if(normalized.pageFolders.length||normalized.pages[0].parentId!==null)fail('库条目不能包含页面文件夹或页面目录层级');
   if(normalized.viewSets.length||normalized.pages[0].views.length||normalized.pages[0].viewSetId!==null||Object.keys(normalized.pages[0].viewOverrides).length||normalized.pages[0].interactions.length)fail('库条目仅保存基础视图与元件交互，不包含页面事件或页面自适应视图');
   visit(normalized,value=>{if(value.type==='navigate')fail('库条目不能包含页面跳转；请先在来源项目重新保存选区，插入后再设置目标页面');if(value.type==='setAdaptiveView')fail('库条目不能包含切换页面自适应视图的动作；插入后请在目标页面重新设置');});return true;
 }

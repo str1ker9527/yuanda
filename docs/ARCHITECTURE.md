@@ -24,6 +24,7 @@ flowchart LR
 | [`app/preload.cjs`](../app/preload.cjs) | 向渲染器暴露有限桌面操作；不开放通用 Node API |
 | [`app/core/document.mjs`](../app/core/document.mjs) | 项目校验、命令分派、原子批次、revision 与撤销重做 |
 | [`app/core/design-model.mjs`](../app/core/design-model.mjs) | 元件、页面、母版/实例关系与规范化 |
+| [`app/core/page-tree-model.mjs`](../app/core/page-tree-model.mjs) | 独立页面目录、混合顺序、父级约束、递归删除与真实页面遍历 |
 | [`app/core/hierarchy-model.mjs`](../app/core/hierarchy-model.mjs) | 组、容器归属、重排及锁定约束 |
 | [`app/core/interaction-model.mjs`](../app/core/interaction-model.mjs) | 事件、分支、动作、表达式、面板与数据列表契约 |
 | [`app/core/view-model.mjs`](../app/core/view-model.mjs)、[`view-commands.mjs`](../app/core/view-commands.mjs) | 自适应继承、覆盖与编辑范围 |
@@ -51,6 +52,12 @@ Agent 走不同入口，但最终进入相同模型。MCP 先读取 state/schema
 普通工程保存使用临时文件与替换流程，另有备份和延迟恢复记录。Agent 新文件导出使用排他创建，遇到重名分配新名称。文件 I/O 与模型修改是不同副作用，不能把模型撤销理解成恢复任意磁盘状态。
 
 运行数据和恢复记录属于本机实例，不属于公开源码。平台路径由桌面启动层管理；迁移平台应验证真实可写位置、关闭行为和错误恢复，不能只改可执行文件后缀。
+
+## 页面目录与画布
+
+`pages` 只保存真实页面，`pageFolders` 只保存目录；两类对象的 `parentId` 可组成混合树，`pageTreeOrder` 决定同层顺序。目录没有元件、尺寸和交互。选择目录只是编辑器树选中状态，不会替换当前画布或新增标签；文件夹折叠写入工程，普通页面的树折叠是本机工作区偏好。
+
+HTML 使用混合树深度优先遍历得到真实页面列表，第一张真实页面作为首页。折叠只影响编辑器显示，不隐藏导出页面。目录不能作为交互跳页或 Agent 画布选择目标。删除目录递归清理后代与失效引用，删除页面则提升其直接子项；两者均经过同一事务和最后一页保护。当前 RP 写入器拒绝含目录的工程，不把目录转换为空白页。
 
 ## 编辑器与运行器
 

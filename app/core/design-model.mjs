@@ -6,10 +6,11 @@ import { applyComponentViewCommand, validateComponentViews, resolveComponentCanv
 import { resolveCanvasView, getCanvasViews } from './view-model.mjs';
 import { normalizeImageProject, imageDataBytes, resetImageSource, prepareImageNodePatch } from './image-model.mjs';
 import { normalizeStyleProject, styleValueEqual, STYLE_KEYS, STYLE_STATES, resolveNodeBaseStyle, resolveNodeStateStyles, validateStyleInheritance, applyStyleInheritanceCommand } from './style-model.mjs';
+import { PAGE_TREE_PROJECT_KEYS, normalizePageTreeProject, validatePageTree, syncLegacyPageOrder } from './page-tree-model.mjs';
 export const DESIGN_NODE_KEYS = ['annotation', 'styleId', 'styleOverrideKeys', 'defaultStyleSetId', 'checked', 'options', 'value', 'radioGroup', 'rows', 'inputType', 'readOnly', 'maxLength'];
 export const INPUT_TYPES = ['text', 'password', 'number', 'email', 'date', 'tel', 'url', 'search'];
 export const DESIGN_PAGE_KEYS = ['parentId', 'guides', 'groups'];
-export const DESIGN_PROJECT_KEYS = ['styles', 'components', 'styleInheritanceVersion', 'defaultStyleSets', 'defaultStyleSetId'];
+export const DESIGN_PROJECT_KEYS = ['styles', 'components', 'styleInheritanceVersion', 'defaultStyleSets', 'defaultStyleSetId', ...PAGE_TREE_PROJECT_KEYS];
 export const DESIGN_TYPES = ['ellipse', 'line', 'textarea', 'checkbox', 'radio', 'select', 'table'];
 export const GROUP_KEYS = ['id', 'name', 'nodeIds', 'locked', 'parentGroupId', 'componentId', 'x', 'y', 'sourceIds', 'internalIds', 'overrides', 'viewMode', 'viewId', 'placed', 'viewOverrides'];
 export const COMPONENT_KEYS = ['id', 'name', 'width', 'height', 'nodes', 'background', 'annotation', 'guides', 'groups', 'views', 'viewOverrides'];
@@ -27,7 +28,7 @@ export function nodeDesignDefaults(type) {
 }
 /** v1 旧文件的无损迁移：只补原先缺少的字段，显式无效值不会被悄悄修正。 */
 export function normalizeDesignProject(input) {
-  const project = copy(input);
+  const project = normalizePageTreeProject(copy(input));
   defaults(project, { styles: [], components: [] });
   if (Array.isArray(project?.pages)) for (const page of project.pages) {
     defaults(page, { parentId: null, guides: { horizontal: [], vertical: [] }, groups: [] });
@@ -59,12 +60,7 @@ export function validateDesignProject(project, h) {
     if (!component.nodes.length) fail('组件至少包含一个元件'); components.set(component.id, component);
     validateComponentViews(component, h);
   }
-  const pages = new Map(project.pages.map(page => [page.id, page]));
-  for (const page of project.pages) {
-    if (page.parentId !== null) { id(page.parentId, '父页面 ID'); if (!pages.has(page.parentId)) fail(`父页面不存在：${page.parentId}`); }
-    const visited = new Set([page.id]); let parent = page.parentId;
-    while (parent !== null) { if (visited.has(parent)) fail('页面层级不能形成循环'); visited.add(parent); parent = pages.get(parent)?.parentId ?? null; }
-  }
+  validatePageTree(project, h);
   componentOrder(project, h);
   for (const page of [...project.pages, ...project.components]) {
     keys(page.guides, ['horizontal', 'vertical'], '页面参考线');
@@ -461,7 +457,7 @@ export function applyDesignCommand(project, command, h) {
     case 'reorderPage': {
       ck(['pageId', 'index']); const page = pageFor(project, command.pageId);
       if (!Number.isInteger(command.index) || command.index < 0 || command.index >= project.pages.length) fail('页面排序位置超出范围', 'COMMAND_ERROR');
-      project.pages.splice(project.pages.indexOf(page), 1); project.pages.splice(command.index, 0, page); return true;
+      project.pages.splice(project.pages.indexOf(page), 1); project.pages.splice(command.index, 0, page); syncLegacyPageOrder(project); return true;
     }
     case 'reparentPage': ck(['pageId', 'parentId']); pageFor(project, command.pageId).parentId = command.parentId; return true;
     case 'setPageGuides': ck(['pageId', 'guides']); pageFor(project, command.pageId).guides = copy(command.guides); return true;

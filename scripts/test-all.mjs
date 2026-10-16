@@ -46,6 +46,7 @@ let tasks=[
  ['local-library-editor-and-html',node,['scripts/test-library-ui.mjs']],
  ['local-library-desktop-files',node,['scripts/test-library-desktop.mjs']],
  ['navigation',node,['scripts/test-navigation-ui.mjs']],
+ ['page-folders',node,['scripts/test-page-folders-ui.mjs']],
  ['vectors',electron,['scripts/test-vector-ui.mjs']],
  ['forms',node,['scripts/test-form-ui.mjs']],
  ['editing-safety',node,['scripts/test-edit-safety-ui.mjs']],

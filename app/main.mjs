@@ -12,6 +12,7 @@ import { appendFileSync, mkdirSync, unlinkSync } from 'node:fs';
 import { LibraryStore } from './library-store.mjs';
 import { ImageInputService, createChromiumImageDecoder } from './image-input.mjs';
 import { portableBase } from './platform-paths.mjs';
+import { getOrderedPages } from './core/page-tree-model.mjs';
 
 const appDir = path.dirname(fileURLToPath(import.meta.url));
 const sourceRoot = path.dirname(appDir);
@@ -74,7 +75,15 @@ else {
     if (backup) await copyFile(destination, `${destination}.bak`).catch(error => { if (error.code !== 'ENOENT') throw error; });
     await rename(temporary, destination);
   }
-  const getState = () => ({ project: engine.getSnapshot(), revision: engine.revision, canUndo: engine.canUndo, canRedo: engine.canRedo, filePath, dirty: digest(engine.getSnapshot()) !== savedDigest, selection: structuredClone(selection), agentSelectionRevision, agent: { ...agent }, appVersion: app.getVersion() });
+  const getState = () => {
+    const project = engine.getSnapshot(), selectedPage = project.pages.find(page => page.id === selection.pageId);
+    // A folder deletion may remove the selected canvas. Agents must never receive stale page/node IDs.
+    const currentSelection = selectedPage
+      ? { pageId: selectedPage.id, nodeIds: selection.nodeIds.filter(id => selectedPage.nodes.some(node => node.id === id)) }
+      : { pageId: selection.pageId === null ? null : getOrderedPages(project)[0]?.id ?? null, nodeIds: [] };
+    selection = currentSelection;
+    return { project, revision: engine.revision, canUndo: engine.canUndo, canRedo: engine.canRedo, filePath, dirty: digest(project) !== savedDigest, selection: currentSelection, agentSelectionRevision, agent: { ...agent }, appVersion: app.getVersion() };
+  };
   function persist() {
     const value = JSON.stringify({ project: engine.getSnapshot(), filePath, savedDigest });
     recoveryQueue = recoveryQueue.then(() => atomicWrite(recoveryFile, value)).catch(error => writeFile(path.join(runtime, 'save-error.txt'), error.message).catch(() => {}));

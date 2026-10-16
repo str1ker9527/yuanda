@@ -23,6 +23,8 @@ let busy = false;
 let inspectorTarget = null;
 let viewModel = null, readingContext = null, viewEditCommands = new Set();
 let styleRenderer = null, widgetGeometry = null, arrangementModel = null;
+let pageTreeModel = null;
+const pageTreeReady = import('../core/page-tree-model.mjs').then(module => { pageTreeModel = module; });
 const editingContexts = new Map();
 const viewModelReady = Promise.all([import('../core/view-model.mjs'),import('../core/view-commands.mjs')]).then(([module,commands]) => { viewModel = module;viewEditCommands=new Set(commands.VIEW_EDIT_COMMANDS); });
 const styleRendererReady = Promise.all([import('../core/style-renderer.mjs'),import('../core/widget-geometry.mjs'),import('../core/editor-arrangement.mjs')]).then(([styles,geometry,arrangement])=>{styleRenderer=styles;widgetGeometry=geometry;arrangementModel=arrangement;});
@@ -79,7 +81,7 @@ async function setEditingScope(scope) {
   cancelPointer(); rememberContext({...before,scope}); render(); changed(); return true;
 }
 function getEditingTarget() { return { kind:componentId?'component':'page',id:componentId||pageId }; }
-function openPage(id) { setSelection([], id); fitPage(); }
+function openPage(id) { if (!state?.project.pages.some(item => item.id === id)) return; setSelection([], id); fitPage(); }
 function openComponent(id) {
   if (!state?.project.components.some(item=>item.id===id)) return;
   closeInlineEditor(true); if (!componentId) lastPageId = pageId;
@@ -160,7 +162,7 @@ function receiveState(next) {
   state = next;
   if (firstState || projectChanged) {
     componentId = null; componentPageCache = null; componentSourceCache = null;
-    pageId = next.selection?.pageId || next.project.pages[0]?.id;
+    pageId = next.selection?.pageId || (pageTreeModel?.getOrderedPages(next.project) || next.project.pages)[0]?.id;
     selected = next.selection?.nodeIds || [];
     clipboard = null; clipboardToken = null; clipboardCopySequence++;
   }
@@ -169,7 +171,7 @@ function receiveState(next) {
     pageId=next.selection.pageId;selected=[...next.selection.nodeIds];
   }
   if (componentId && !next.project.components.some(item=>item.id===componentId)) { componentId=null; pageId=lastPageId; }
-  if (!componentId && !next.project.pages.some(item => item.id === pageId)) pageId = next.project.pages[0]?.id;
+  if (!componentId && !next.project.pages.some(item => item.id === pageId)) pageId = (pageTreeModel?.getOrderedPages(next.project) || next.project.pages)[0]?.id;
   selected = selected.filter(id => nodes().some(node => node.id === id));
   render();
   if (firstState) {
@@ -180,6 +182,7 @@ function receiveState(next) {
   if(displacedDraft)retainTextDraft(displacedDraft.editor,displacedDraft.value);
 }
 function setSelection(ids, nextPageId = pageId, forceInspector = true) {
+  if (!state?.project.pages.some(item => item.id === nextPageId) && !(componentId === nextPageId && state?.project.components.some(item => item.id === nextPageId))) return;
   if (inlineEditor) closeInlineEditor(true);
   const changedPage = nextPageId !== pageId;
   if (changedPage) cancelPointer();
@@ -208,6 +211,7 @@ function renderBreadcrumb() {
   $('#page-size').textContent = page() ? `${page().width} × ${page().height}` : '';
 }
 function renderPages() {
+  if (window.YuandaNavigation?.renderPages) { window.YuandaNavigation.renderPages(); return; }
   const container = $('#page-list'); container.replaceChildren();
   const ordered = [];
   const visit = (parent, depth) => { for (const item of state.project.pages.filter(item => (item.parentId || null) === parent)) { ordered.push({ item, depth }); visit(item.id, depth + 1); } };
@@ -972,5 +976,5 @@ window.YuandaEditor = {
 if (!api) showDialog('请从桌面程序打开', '这个界面需要原搭桌面程序提供本地保存和编辑能力。请双击“原搭.exe”打开。');
 else {
   api.onState(receiveState);
-  Promise.all([api.getState(),viewModelReady,styleRendererReady]).then(([next])=>{receiveState(next);try{const saved=JSON.parse(localStorage.getItem('yuanda.pendingTextDraft'));if(saved&&typeof saved.text==='string')retainTextDraft(saved,saved.text);}catch{}}).catch(error => showDialog('原搭未能打开项目', error.message));
+  Promise.all([api.getState(),viewModelReady,styleRendererReady,pageTreeReady]).then(([next])=>{receiveState(next);try{const saved=JSON.parse(localStorage.getItem('yuanda.pendingTextDraft'));if(saved&&typeof saved.text==='string')retainTextDraft(saved,saved.text);}catch{}}).catch(error => showDialog('原搭未能打开项目', error.message));
 }

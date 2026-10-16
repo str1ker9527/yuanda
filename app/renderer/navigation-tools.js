@@ -1,4 +1,4 @@
-import { treePages, pageMoveCommands, reorderKeys, boxOf, measurementLines } from './navigation-model.mjs';
+import { navigationTreeItems, pageTreeMoveCommands, pageTreeDescendants, reorderKeys, boxOf, measurementLines } from './navigation-model.mjs';
 import {createPreviewNode,previewVisibleNodes} from './preview-node-renderer.mjs';
 
 /** Editor-only navigation and appearance. Document mutations use the shared command engine. */
@@ -14,10 +14,12 @@ const persist = () => { try { localStorage.setItem(storageKey, JSON.stringify(pr
 const state = () => E.getState();
 const project = () => state()?.project;
 let projectId = null, tabs = [], previousTarget = '', galleryOpen = false, suppressOpen = false, activeMenu = null, dragging = null;
+let selectedTreeId = null, collapsedTreeIds = new Set(), renderedTreeTarget = '', lastTreeNotice = '';
 const targetKey = (kind, id) => `${kind}:${id}`;
 const target = () => { const value = E.getEditingTarget?.(); return value ? { kind: value.kind || value.type, id: value.id || value.pageId || value.componentId } : { kind: 'page', id: E.getSelection()?.pageId }; };
+const navigationSignature = () => JSON.stringify([project()?.id, state()?.revision, target().kind, target().id]);
 const itemForKey = key => { const cut = key.indexOf(':'), kind = key.slice(0, cut), id = key.slice(cut + 1); return { kind, id, item: (kind === 'component' ? project()?.components : project()?.pages)?.find(item => item.id === id) }; };
-const storeTabs = () => { if (projectId) { preferences.projects[projectId] = { tabs: [...tabs] }; const keys = Object.keys(preferences.projects); while (keys.length > 30) delete preferences.projects[keys.shift()]; persist(); } };
+const storeTabs = () => { if (projectId) { preferences.projects[projectId] = { ...preferences.projects[projectId], tabs: [...tabs], collapsedTreeIds: [...collapsedTreeIds] }; const keys = Object.keys(preferences.projects); while (keys.length > 30) delete preferences.projects[keys.shift()]; persist(); } };
 const openTarget = async (kind, id) => {
   const key = targetKey(kind, id); if (!itemForKey(key).item) return;
   suppressOpen = false; if (!tabs.includes(key)) tabs.push(key); galleryOpen = false; gallery.hidden = true;
@@ -34,11 +36,22 @@ const tabList = create('div', 'editor-tab-list'); tabList.setAttribute('role', '
 const tabMenuButton = button('标签', event => menu(event.currentTarget, [['关闭当前', () => closeTab(previousTarget)], ['关闭其他', () => closeOthers(previousTarget)], ['关闭全部', closeAll]])); tabMenuButton.id = 'tab-actions';
 tabBar.append(galleryButton, tabList, tabMenuButton); $('.canvas-column').prepend(tabBar);
 
-function menu(anchor, actions) {
+function menu(anchor, actions, options = {}) {
   activeMenu?.remove(); const root = create('div', 'navigation-menu'); root.setAttribute('role', 'menu');
-  for (const [label, fn] of actions) { const item = button(label, () => { root.remove(); activeMenu = null; fn(); }); item.setAttribute('role', 'menuitem'); root.append(item); }
+  if (options.id) root.id = options.id;
+  if (options.signature) root.navigationSignature = options.signature;
+  for (const [label, fn, action, disabled = false] of actions) { const item = button(label, () => { root.remove(); activeMenu = null; fn(); }); item.setAttribute('role', 'menuitem'); item.disabled = disabled; if (action) item.dataset.treeAction = action; root.append(item); }
   document.body.append(root); const rect = anchor.getBoundingClientRect();
-  root.style.left = `${Math.min(rect.left, innerWidth - root.offsetWidth - 8)}px`; root.style.top = `${Math.min(rect.bottom + 4, innerHeight - root.offsetHeight - 8)}px`; activeMenu = root;
+  root.style.left = `${Math.max(8, Math.min(options.x ?? rect.left, innerWidth - root.offsetWidth - 8))}px`; root.style.top = `${Math.max(8, Math.min(options.y ?? rect.bottom + 4, innerHeight - root.offsetHeight - 8))}px`; activeMenu = root;
+  root.addEventListener('keydown', event => {
+    const items = [...root.querySelectorAll('button:not(:disabled)')], index = items.indexOf(document.activeElement);
+    event.stopPropagation();
+    if (event.key === 'Escape') { event.preventDefault(); root.remove(); activeMenu = null; options.restoreFocus?.(); }
+    else if (['ArrowDown', 'ArrowUp'].includes(event.key)) { event.preventDefault(); items[(index + (event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length]?.focus(); }
+    else if (event.key === 'Home' || event.key === 'End') { event.preventDefault(); items[event.key === 'Home' ? 0 : items.length - 1]?.focus(); }
+    else if (event.key === 'Tab') { root.remove(); activeMenu = null; options.restoreFocus?.(); }
+  });
+  if (options.focus) root.querySelector('button:not(:disabled)')?.focus();
 }
 document.addEventListener('pointerdown', event => { if (activeMenu && !activeMenu.contains(event.target)) { activeMenu.remove(); activeMenu = null; } });
 function closeTab(key) {
@@ -86,59 +99,218 @@ function renderTabs() {
 }
 function startDrag(event, label, move, finish) {
   if (event.button !== 0 || dragging) return;
-  const source = event.currentTarget, sx = event.clientX, sy = event.clientY; let ghost = null, result = null;
+  const source = event.currentTarget, sx = event.clientX, sy = event.clientY, signature = navigationSignature(); let ghost = null, result = null;
   const pointerMove = next => {
+    if (!source.isConnected || signature !== navigationSignature()) { stop(true); return; }
     if (!ghost && Math.hypot(next.clientX - sx, next.clientY - sy) < 6) return;
     if (!ghost) { ghost = create('div', 'navigation-drag-label', label); document.body.append(ghost); source.setPointerCapture(event.pointerId); }
     ghost.style.left = `${next.clientX + 13}px`; ghost.style.top = `${next.clientY + 14}px`; result = move(next);
   };
   const stop = cancelled => {
+    cancelled ||= !source.isConnected || signature !== navigationSignature();
     document.removeEventListener('pointermove', pointerMove); document.removeEventListener('pointerup', pointerUp); document.removeEventListener('pointercancel', cancel);
     if (source.hasPointerCapture(event.pointerId)) source.releasePointerCapture(event.pointerId);
     if (ghost) { ghost.remove(); const suppress = click => { click.preventDefault(); click.stopImmediatePropagation(); }; document.addEventListener('click', suppress, { capture: true, once: true }); setTimeout(() => document.removeEventListener('click', suppress, true), 80); finish(cancelled ? null : result); }
     dragging = null;
   };
-  const pointerUp = () => stop(false), cancel = () => stop(true); dragging = { cancel };
+  const pointerUp = () => stop(false), cancel = () => stop(true); dragging = { cancel, signature };
   document.addEventListener('pointermove', pointerMove); document.addEventListener('pointerup', pointerUp); document.addEventListener('pointercancel', cancel);
 }
-function enhancePages() {
-  const pages = project()?.pages || [], ordered = treePages(pages);
-  [...$('#page-list').children].forEach((row, index) => {
-    const page = ordered[index]?.page; if (!page || row.dataset.navigationBound) return;
-    row.dataset.navigationBound = 'true'; row.dataset.pageId = page.id; row.setAttribute('role', 'treeitem'); row.setAttribute('aria-level', String(ordered[index].depth + 1));
-    row.title = `${page.name}\n拖到行中间成为子页面；拖到上下边缘排序。Alt + 方向键调整层级与顺序。`;
-    // Selection re-renders the page list. Restore focus to the replacement row so
-    // keyboard tree operations still work immediately after an ordinary click.
-    row.addEventListener('click', event => { if (!event.target.closest('button')) requestAnimationFrame(() => $(`#page-list [data-page-id="${CSS.escape(page.id)}"]`)?.focus()); });
+const treeItems = () => project() ? navigationTreeItems(project()) : [];
+const treeEntry = id => treeItems().find(entry => entry.id === id);
+const treeRow = id => $(`#page-list [data-tree-id="${CSS.escape(id || '')}"]`);
+let treeFocusEpoch = 0;
+const captureTreeFocus = () => ({ epoch: treeFocusEpoch, projectId: project()?.id, activeElement: document.activeElement });
+// Async commands may finish after the user has moved to another control.
+document.addEventListener('pointerdown', event => { if (event.isTrusted) treeFocusEpoch++; }, true);
+document.addEventListener('keydown', event => { if (event.isTrusted) treeFocusEpoch++; }, true);
+const focusTree = (id, request = captureTreeFocus()) => {
+  if (request.epoch !== treeFocusEpoch || request.projectId !== project()?.id || selectedTreeId !== id) return;
+  const activeElement = document.activeElement;
+  if (activeElement !== request.activeElement && activeElement !== document.body && !activeElement?.closest('#page-list')) return;
+  // Rows already exist after renderPages; a delayed animation-frame focus can steal later input.
+  treeRow(id)?.focus({ preventScroll: true });
+};
+const isCollapsed = entry => entry.kind === 'folder' ? Boolean(entry.item.collapsed) : collapsedTreeIds.has(entry.id);
+const defaultParent = () => { const entry = treeEntry(selectedTreeId); return entry?.kind === 'folder' ? entry.id : entry?.parentId || null; };
+
+function nameDialog(title, initialName, save) {
+  if (document.querySelector('dialog[open]')) return;
+  const dialog = create('dialog', 'page-tree-dialog'); dialog.id = 'page-tree-name-dialog'; dialog.setAttribute('aria-labelledby', 'page-tree-name-title');
+  const form = create('form'), heading = create('h2', '', title); heading.id = 'page-tree-name-title';
+  const label = create('label', '', '名称'), input = create('input'); input.id = 'page-tree-name'; input.value = initialName; input.required = true; input.maxLength = 200; input.autocomplete = 'off'; label.htmlFor = input.id; label.append(input);
+  const error = create('p', 'page-tree-dialog-error'); error.setAttribute('role', 'status');
+  const actions = create('div', 'page-tree-dialog-actions'), cancel = button('取消', () => dialog.close()), submit = button('确定', () => {}); submit.id = 'page-tree-name-save'; submit.type = 'submit'; actions.append(cancel, submit);
+  form.append(heading, label, error, actions); dialog.append(form); document.body.append(dialog);
+  form.addEventListener('submit', async event => {
+    event.preventDefault(); const value = input.value.trim(); if (!value) { error.textContent = '请填写名称。'; input.focus(); return; }
+    submit.disabled = true;
+    try { if (await save(value)) dialog.close(); else error.textContent = '项目已变化或操作未完成，请关闭此窗口后重试。'; }
+    catch (failure) { error.textContent = failure.message; }
+    finally { submit.disabled = false; }
+  });
+  dialog.addEventListener('close', () => { dialog.remove(); focusTree(selectedTreeId); }); dialog.showModal(); input.select();
+}
+function addFolder(parentId = defaultParent()) {
+  if (!project()) return;
+  const context = E.captureContext(), expectedRevision = state().revision, id = crypto.randomUUID();
+  nameDialog('新建页面文件夹', '新建文件夹', async name => {
+    const commands = [{ type: 'addPageFolder', folder: { id, name, parentId, collapsed: false } }], parent = treeEntry(parentId);
+    if (parent?.kind === 'folder' && parent.item.collapsed) commands.push({ type: 'updatePageFolder', folderId: parentId, patch: { collapsed: false } });
+    const ok = await E.command(commands, '新建页面文件夹', context, { expectedRevision });
+    if (ok) { if (parentId) collapsedTreeIds.delete(parentId); selectedTreeId = id; renderPages(); storeTabs(); }
+    return ok;
+  });
+}
+async function addPage(parentId = defaultParent()) {
+  if (!project()) return false;
+  const id = crypto.randomUUID(), context = E.captureContext(), expectedRevision = state().revision, focusRequest = captureTreeFocus();
+  const commands = [{ type: 'addPage', page: { id, name: `页面 ${project().pages.length + 1}`, parentId } }], parent = treeEntry(parentId);
+  if (parent?.kind === 'folder' && parent.item.collapsed) commands.push({ type: 'updatePageFolder', folderId: parentId, patch: { collapsed: false } });
+  const ok = await E.command(commands, '添加页面', context, { expectedRevision });
+  if (ok) { if (parentId) collapsedTreeIds.delete(parentId); selectedTreeId = id; await openTarget('page', id); renderPages(); focusTree(id, focusRequest); }
+  return ok;
+}
+function renameTreeItem(id) {
+  const entry = treeEntry(id); if (!entry) return;
+  const context = E.captureContext(), expectedRevision = state().revision;
+  nameDialog(entry.kind === 'folder' ? '重命名文件夹' : '重命名页面', entry.name, name => E.command([entry.kind === 'folder' ? { type: 'updatePageFolder', folderId: id, patch: { name } } : { type: 'updatePage', pageId: id, patch: { name } }], '重命名页面树项目', context, { expectedRevision }));
+}
+async function toggleTreeItem(id) {
+  const entry = treeEntry(id), focusRequest = captureTreeFocus(); if (!entry) return;
+  if (entry.kind === 'folder') {
+    if (!await E.command([{ type: 'updatePageFolder', folderId: id, patch: { collapsed: !entry.item.collapsed } }], '展开或收起文件夹')) return;
+  } else if (collapsedTreeIds.has(id)) collapsedTreeIds.delete(id); else collapsedTreeIds.add(id);
+  selectedTreeId = id; renderPages(); storeTabs(); focusTree(id, focusRequest);
+}
+function removeTreeItem(id) {
+  const entry = treeEntry(id); if (!entry || document.querySelector('dialog[open]')) return;
+  const descendants = pageTreeDescendants(project(), id), pageCount = entry.kind === 'folder' ? descendants.filter(item => item.kind === 'page').length : 1;
+  const folderCount = descendants.filter(item => item.kind === 'folder').length;
+  const blocked = pageCount >= project().pages.length, context = E.captureContext(), expectedRevision = state().revision;
+  const dialog = create('dialog', 'page-tree-dialog'); dialog.id = 'page-tree-delete-dialog'; dialog.setAttribute('aria-labelledby', 'page-tree-delete-title');
+  const heading = create('h2', '', entry.kind === 'folder' ? '删除整个文件夹？' : '删除页面？'); heading.id = 'page-tree-delete-title';
+  const description = entry.kind === 'folder' ? `将删除“${entry.name}”以及其中的全部 ${pageCount} 个页面、${folderCount} 个子文件夹和页面中的元件。\n删除后可以撤销。` : `将删除“${entry.name}”及其中的 ${entry.item.nodes.length} 个元件。\n${descendants.length ? '它的子页面和子文件夹会保留并提升一级。\n' : ''}删除后可以撤销。`;
+  const body = create('p', '', description), error = create('p', 'page-tree-dialog-error', blocked ? '项目必须保留至少一个真实页面。请先在此目录之外添加页面。' : ''); error.setAttribute('role', 'status');
+  const actions = create('div', 'page-tree-dialog-actions'), cancel = button('取消', () => dialog.close()), confirm = button(entry.kind === 'folder' ? '删除整个文件夹' : '删除页面', async () => {
+    confirm.disabled = true;
+    const command = entry.kind === 'folder' ? { type: 'removePageFolder', folderId: id } : { type: 'removePage', pageId: id };
+    if (await E.command([command], entry.kind === 'folder' ? '删除整个页面文件夹' : '删除页面', context, { expectedRevision })) { selectedTreeId = treeEntry(entry.parentId)?.id || target().id; dialog.close(); renderPages(); }
+    else error.textContent = '项目已变化或删除未完成，请关闭此窗口后重新检查目录内容。';
+  });
+  cancel.dataset.pageTreeDeleteCancel = ''; confirm.dataset.pageTreeDeleteConfirm = ''; confirm.disabled = blocked; actions.append(cancel, confirm); dialog.append(heading, body, error, actions); document.body.append(dialog);
+  dialog.addEventListener('close', () => { dialog.remove(); focusTree(selectedTreeId); }); dialog.showModal(); cancel.focus();
+}
+function selectTreeItem(id, open = false) {
+  const entry = treeEntry(id); if (!entry) return;
+  selectedTreeId = id;
+  if (open && entry.kind === 'page') void openTarget('page', id);
+  renderPages(); focusTree(id);
+}
+function treeMenu(entry, anchor, event) {
+  selectedTreeId = entry.id; renderPages();
+  const openedProjectId = project().id, openedRevision = state().revision;
+  const guarded = action => () => {
+    if (project()?.id !== openedProjectId || state().revision !== openedRevision) { E.toast('项目已变化，请重新打开页面树菜单。', 'warning'); return; }
+    action();
+  };
+  menu(treeRow(entry.id) || anchor, [
+    ['添加子页面', guarded(() => void addPage(entry.id)), 'add-page'],
+    ['添加子文件夹', guarded(() => addFolder(entry.id)), 'add-folder'],
+    ['重命名…', guarded(() => renameTreeItem(entry.id)), 'rename'],
+    [isCollapsed(entry) ? '展开' : '收起', guarded(() => void toggleTreeItem(entry.id)), 'toggle'],
+    [entry.kind === 'folder' ? '删除整个文件夹…' : '删除页面…', guarded(() => removeTreeItem(entry.id)), 'delete'],
+  ], { id: 'page-tree-menu', x: event?.clientX, y: event?.clientY, signature: navigationSignature(), focus: true, restoreFocus: () => focusTree(entry.id) });
+}
+async function moveTreeItem(id, destination, position, context = E.captureContext(), expectedRevision = state().revision, { restoreTreeFocus = true } = {}) {
+  const focusRequest = captureTreeFocus();
+  try {
+    const commands = pageTreeMoveCommands(project(), id, destination, position); if (!commands.length) return;
+    if (await E.command(commands, '调整页面树', context, { expectedRevision })) { if (position === 'inside') collapsedTreeIds.delete(destination); selectedTreeId = id; renderPages(); storeTabs(); if (restoreTreeFocus) focusTree(id, focusRequest); }
+  } catch (error) { E.toast(error.message, 'error'); }
+}
+async function reparentTreeItem(id, parentId, context = E.captureContext(), expectedRevision = state().revision, { restoreTreeFocus = true } = {}) {
+  if (parentId) return moveTreeItem(id, parentId, 'inside', context, expectedRevision, { restoreTreeFocus });
+  const entry = treeEntry(id), focusRequest = captureTreeFocus(); if (!entry) return;
+  const command = entry.kind === 'folder' ? { type: 'reparentPageFolder', folderId: id, parentId: null } : { type: 'reparentPage', pageId: id, parentId: null };
+  if (await E.command([command], '移到页面树顶层', context, { expectedRevision })) { selectedTreeId = id; renderPages(); if (restoreTreeFocus) focusTree(id, focusRequest); }
+}
+function treeKeydown(event, id) {
+  const entry = treeEntry(id); if (!entry) return;
+  const modifier = event.ctrlKey || event.metaKey, arrow = event.key.startsWith('Arrow');
+  if (event.target.closest('button') && ['Enter', ' '].includes(event.key)) { event.stopPropagation(); return; }
+  if ((modifier || event.altKey) && arrow) {
+    event.preventDefault(); event.stopImmediatePropagation();
+    const siblings = treeItems().filter(item => (item.parentId || null) === (entry.parentId || null)), index = siblings.findIndex(item => item.id === id);
+    if (event.key === 'ArrowUp' && index > 0) void moveTreeItem(id, siblings[index - 1].id, 'before');
+    else if (event.key === 'ArrowDown' && index < siblings.length - 1) void moveTreeItem(id, siblings[index + 1].id, 'after');
+    else if (event.key === 'ArrowRight' && index > 0) void moveTreeItem(id, siblings[index - 1].id, 'inside');
+    else if (event.key === 'ArrowLeft' && entry.parentId) void moveTreeItem(id, entry.parentId, 'after');
+    return;
+  }
+  if (modifier && ['s', 'o', 'n', 'z', 'y'].includes(event.key.toLowerCase())) return;
+  if (event.key === 'Tab') return;
+  event.stopImmediatePropagation();
+  if (modifier || arrow || ['Home', 'End', 'Enter', ' ', 'Delete', 'Backspace', 'F2', 'ContextMenu'].includes(event.key) || (event.shiftKey && event.key === 'F10')) event.preventDefault();
+  const visible = navigationTreeItems(project(), collapsedTreeIds, true), index = visible.findIndex(item => item.id === id), children = treeItems().filter(item => item.parentId === id);
+  if (event.key === 'ArrowUp' || event.key === 'ArrowDown') { const next = visible[Math.max(0, Math.min(visible.length - 1, index + (event.key === 'ArrowDown' ? 1 : -1)))]; if (next) selectTreeItem(next.id); }
+  else if (event.key === 'Home' || event.key === 'End') selectTreeItem(visible[event.key === 'Home' ? 0 : visible.length - 1]?.id);
+  else if (event.key === 'ArrowRight') { if (isCollapsed(entry)) void toggleTreeItem(id); else if (children.length) selectTreeItem(children[0].id); }
+  else if (event.key === 'ArrowLeft') { if (children.length && !isCollapsed(entry)) void toggleTreeItem(id); else if (entry.parentId) selectTreeItem(entry.parentId); }
+  else if (event.key === 'Enter' || event.key === ' ') { if (entry.kind === 'folder') void toggleTreeItem(id); else selectTreeItem(id, true); }
+  else if (event.key === 'F2') renameTreeItem(id);
+  else if (event.key === 'Delete' || event.key === 'Backspace') removeTreeItem(id);
+  else if (event.key === 'ContextMenu' || (event.shiftKey && event.key === 'F10')) treeMenu(entry, treeRow(id));
+}
+function renderPages() {
+  if (!project()) return;
+  if (dragging && dragging.signature !== navigationSignature()) dragging.cancel();
+  if (activeMenu?.id === 'page-tree-menu' && activeMenu.navigationSignature !== navigationSignature()) { activeMenu.remove(); activeMenu = null; }
+  const container = $('#page-list'), activeTreeId = document.activeElement?.closest('#page-list [data-tree-id]')?.dataset.treeId;
+  const items = treeItems(), current = target(), currentKey = targetKey(current.kind, current.id);
+  if (currentKey !== renderedTreeTarget) { renderedTreeTarget = currentKey; if (current.kind === 'page') selectedTreeId = current.id; }
+  if (!items.some(entry => entry.id === selectedTreeId)) selectedTreeId = current.kind === 'page' ? current.id : items[0]?.id;
+  const visible = navigationTreeItems(project(), collapsedTreeIds, true), tabStopId = visible.some(entry => entry.id === selectedTreeId) ? selectedTreeId : visible[0]?.id;
+  container.replaceChildren(); container.setAttribute('role', 'tree'); container.setAttribute('aria-label', '页面与文件夹');
+  for (const entry of visible) {
+    const { id, kind, name, depth } = entry, row = create('div', `page-row${selectedTreeId === id ? ' active tree-selected' : ''}`);
+    row.dataset.treeId = id; row.dataset.treeKind = kind; row.dataset[kind === 'folder' ? 'folderId' : 'pageId'] = id;
+    row.style.paddingLeft = `${5 + depth * 14}px`; row.tabIndex = id === tabStopId ? 0 : -1;
+    row.setAttribute('role', 'treeitem'); row.setAttribute('aria-level', String(depth + 1)); row.setAttribute('aria-selected', String(selectedTreeId === id));
+    const children = items.filter(item => item.parentId === id), siblings = items.filter(item => (item.parentId || null) === (entry.parentId || null));
+    row.setAttribute('aria-posinset', String(siblings.findIndex(item => item.id === id) + 1)); row.setAttribute('aria-setsize', String(siblings.length));
+    row.title = `${kind === 'folder' ? '文件夹' : '页面'}：${name}\n拖到行中间成为子项；拖到上下边缘排序。Ctrl / ⌘ / Alt + 方向键调整层级与顺序。`;
+    if (children.length || kind === 'folder') {
+      row.setAttribute('aria-expanded', String(!isCollapsed(entry)));
+      const toggle = button('', event => { event.stopPropagation(); void toggleTreeItem(id); }, `${isCollapsed(entry) ? '展开' : '收起'} ${name}`); toggle.className = 'page-tree-toggle'; toggle.dataset.pageTreeToggle = id; toggle.tabIndex = -1; toggle.setAttribute('aria-label', toggle.title); toggle.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg>'; row.append(toggle);
+    } else row.append(create('span', 'page-tree-toggle-spacer'));
+    const icon = create('span', 'page-symbol'); icon.innerHTML = `<svg class="icon" aria-hidden="true"><use href="#i-${kind === 'folder' ? 'folder' : 'page'}"/></svg>`; row.append(icon, create('span', 'page-name', name));
+    if (kind === 'folder') row.append(create('span', 'page-tree-count', String(children.length)));
+    const remove = button('×', event => { event.stopPropagation(); selectedTreeId = id; removeTreeItem(id); }, kind === 'folder' ? '删除整个文件夹' : '删除页面'); remove.className = 'small-icon'; remove.tabIndex = -1; remove.dataset.pageTreeRemove = id; row.append(remove);
+    row.addEventListener('click', event => { if (!event.target.closest('button')) selectTreeItem(id, kind === 'page'); });
+    row.addEventListener('dblclick', event => { if (event.target.closest('button')) return; if (kind === 'folder') void toggleTreeItem(id); else renameTreeItem(id); });
+    row.addEventListener('contextmenu', event => { event.preventDefault(); event.stopPropagation(); treeMenu(entry, row, event); });
+    row.addEventListener('keydown', event => treeKeydown(event, id), true);
     row.addEventListener('pointerdown', event => {
       if (event.target.closest('button')) return;
-      startDrag(event, page.name, next => {
-        for (const item of $('#page-list').children) item.classList.remove('page-drop-before', 'page-drop-after', 'page-drop-inside');
-        const hovered = document.elementFromPoint(next.clientX, next.clientY)?.closest('.page-row');
-        if (!hovered || hovered === row) return null;
-        const rect = hovered.getBoundingClientRect(), fraction = (next.clientY - rect.top) / rect.height;
-        const position = fraction < .25 ? 'before' : fraction > .75 ? 'after' : 'inside'; hovered.classList.add(`page-drop-${position}`);
-        return { id: hovered.dataset.pageId, position };
-      }, result => {
-        for (const item of $('#page-list').children) item.classList.remove('page-drop-before', 'page-drop-after', 'page-drop-inside');
-        if (!result) return;
-        try { void E.command(pageMoveCommands(project().pages, page.id, result.id, result.position), '调整页面树'); } catch (error) { E.toast(error.message, 'error'); }
-      });
+      const context = E.captureContext(), expectedRevision = state().revision;
+      startDrag(event, `${kind === 'folder' ? '文件夹 · ' : ''}${name}`, next => {
+        for (const item of container.children) item.classList.remove('page-drop-before', 'page-drop-after', 'page-drop-inside');
+        const hovered = document.elementFromPoint(next.clientX, next.clientY)?.closest('#page-list [data-tree-id]');
+        if (!hovered || hovered.dataset.treeId === id) return null;
+        const rect = hovered.getBoundingClientRect(), fraction = (next.clientY - rect.top) / rect.height, position = fraction < .25 ? 'before' : fraction > .75 ? 'after' : 'inside';
+        try { pageTreeMoveCommands(project(), id, hovered.dataset.treeId, position); } catch { return null; }
+        hovered.classList.add(`page-drop-${position}`); return { id: hovered.dataset.treeId, position };
+      }, result => { for (const item of container.children) item.classList.remove('page-drop-before', 'page-drop-after', 'page-drop-inside'); if (result) void moveTreeItem(id, result.id, result.position, context, expectedRevision); });
     });
-    row.addEventListener('keydown', event => {
-      if (!event.altKey || !['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
-      event.preventDefault(); event.stopImmediatePropagation();
-      const current = project().pages.find(item => item.id === page.id), siblings = project().pages.filter(item => (item.parentId || null) === (current.parentId || null)), at = siblings.findIndex(item => item.id === current.id);
-      let commands = [];
-      if (event.key === 'ArrowUp' && at > 0) commands = pageMoveCommands(project().pages, page.id, siblings[at - 1].id, 'before');
-      if (event.key === 'ArrowDown' && at < siblings.length - 1) commands = pageMoveCommands(project().pages, page.id, siblings[at + 1].id, 'after');
-      if (event.key === 'ArrowRight' && at > 0) commands = pageMoveCommands(project().pages, page.id, siblings[at - 1].id, 'inside');
-      if (event.key === 'ArrowLeft' && current.parentId) commands = pageMoveCommands(project().pages, page.id, current.parentId, 'after');
-      if (commands.length) void E.command(commands, '键盘调整页面树').then(() => requestAnimationFrame(() => $(`#page-list [data-page-id="${CSS.escape(page.id)}"]`)?.focus()));
-    }, true);
-  });
-  $('#page-list').setAttribute('role', 'tree'); $('#page-list').setAttribute('aria-label', '页面树');
+    container.append(row);
+  }
+  if (activeTreeId && treeRow(activeTreeId)) treeRow(activeTreeId).focus({ preventScroll: true });
+  const notice = JSON.stringify([project().id, state().revision, selectedTreeId, currentKey]);
+  if (notice !== lastTreeNotice) { lastTreeNotice = notice; document.dispatchEvent(new CustomEvent('yuanda:pagetreechange')); }
 }
+$('#add-page').addEventListener('click', event => { event.preventDefault(); event.stopImmediatePropagation(); void addPage(); }, true);
+$('#add-page-folder').addEventListener('click', () => addFolder());
 
 const gallery = create('section', 'navigation-gallery'); gallery.id = 'navigation-gallery'; gallery.hidden = true; gallery.setAttribute('aria-label', '项目画廊');
 const galleryControls = create('div', 'gallery-controls'), gallerySearch = create('input'), galleryFilter = create('select'), gallerySize = create('input'), galleryGrid = create('div', 'gallery-grid');
@@ -168,7 +340,7 @@ function renderGallery() {
   if (!galleryOpen || !project()) return;
   galleryGrid.replaceChildren(); galleryGrid.style.setProperty('--gallery-size', `${preferences.gallerySize}px`);
   const query = gallerySearch.value.trim().toLocaleLowerCase();
-  const items = [...treePages(project().pages).map(({ page }) => ({ kind: 'page', item: page })), ...(project().components || []).map(item => ({ kind: 'component', item }))];
+  const items = [...treeItems().filter(entry => entry.kind === 'page').map(entry => ({ kind: 'page', item: entry.item })), ...(project().components || []).map(item => ({ kind: 'component', item }))];
   for (const { kind, item } of items.filter(({ kind, item }) => (galleryFilter.value === 'all' || galleryFilter.value === kind) && item.name.toLocaleLowerCase().includes(query))) {
     const tile = button('', () => void openTarget(kind, item.id), `打开${kind === 'page' ? '页面' : '母版'} ${item.name}`); tile.className = 'gallery-item'; tile.dataset.galleryId = item.id; tile.dataset.galleryKind = kind;
     const label = create('div', 'gallery-item-title'); label.append(create('strong', '', item.name), create('span', '', kind === 'page' ? '页面' : '母版'));
@@ -252,6 +424,7 @@ function renderMeasure(event = lastPointer) {
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape') { dragging?.cancel(); activeMenu?.remove(); clearMeasure(); if (galleryOpen) hideGallery(); }
   if (editing(event.target)) return;
+  if (event.target.closest('#page-list,[role="menu"]')) return;
   if (event.code === 'Space') { event.preventDefault(); event.stopImmediatePropagation(); spaceHeld = true; viewport.classList.add('space-pan'); }
   if (event.key === 'Alt') { altHeld = true; renderMeasure(); }
 }, true);
@@ -276,15 +449,19 @@ viewport.addEventListener('scroll', () => { if (altHeld) renderMeasure(); }, { p
 
 function refresh() {
   if (!project()) return;
+  if (dragging && dragging.signature !== navigationSignature()) dragging.cancel();
+  if (activeMenu?.id === 'page-tree-menu' && activeMenu.navigationSignature !== navigationSignature()) { activeMenu.remove(); activeMenu = null; }
   if (projectId !== project().id) {
-    projectId = project().id; tabs = (preferences.projects[projectId]?.tabs || []).filter(key => typeof key === 'string' && itemForKey(key).item); previousTarget = ''; suppressOpen = false; galleryOpen = false; gallery.hidden = true;
+    projectId = project().id; const saved = preferences.projects[projectId] || {};
+    tabs = (saved.tabs || []).filter(key => typeof key === 'string' && itemForKey(key).item); collapsedTreeIds = new Set(Array.isArray(saved.collapsedTreeIds) ? saved.collapsedTreeIds : []);
+    selectedTreeId = null; renderedTreeTarget = ''; previousTarget = ''; suppressOpen = false; galleryOpen = false; gallery.hidden = true;
   }
   tabs = tabs.filter(key => itemForKey(key).item);
   const current = target(), key = targetKey(current.kind, current.id);
   if (itemForKey(key).item && key !== previousTarget) { if (!tabs.includes(key)) tabs.push(key); previousTarget = key; suppressOpen = false; if (galleryOpen) { galleryOpen = false; gallery.hidden = true; } }
   if (!tabs.length && !suppressOpen && itemForKey(key).item) tabs.push(key);
-  renderTabs(); enhancePages(); renderGallery(); storeTabs(); clearMeasure();
+  renderTabs(); renderPages(); renderGallery(); storeTabs(); clearMeasure();
 }
 document.addEventListener('yuanda:editorchange', refresh);
-window.YuandaNavigation = { openTarget, showGallery, hideGallery, closeAll, closeTab, settings, getTabs: () => [...tabs], getPreferences: () => structuredClone(preferences), refresh };
+window.YuandaNavigation = { openTarget, showGallery, hideGallery, closeAll, closeTab, settings, renderPages, addPage, addFolder, moveTreeItem, reparentTreeItem, getTreeItems: treeItems, getTreeDescendants: id => pageTreeDescendants(project(), id), getTreeSelection: () => { const entry = treeEntry(selectedTreeId); return entry ? { id: entry.id, kind: entry.kind } : null; }, getTabs: () => [...tabs], getPreferences: () => structuredClone(preferences), refresh };
 refresh();

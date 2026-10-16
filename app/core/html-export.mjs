@@ -1,4 +1,5 @@
-import { validateProject } from './document.mjs';
+import { validateProject, normalizeProject } from './document.mjs';
+import { getOrderedPages } from './page-tree-model.mjs';
 import { evaluateExpression, chooseInteractionCases, getEventSettings, selectRepeaterRows, selectRepeaterPage, resolveAdaptivePage, getNodeDescendants } from './interaction-model.mjs';
 import { getVectorGeometry, connectorPoints, connectorAnchor, pathData, richRunStyle } from './vector-model.mjs';
 import { htmlRuntime } from './html-runtime.mjs';
@@ -15,7 +16,11 @@ const safeJson = value => JSON.stringify(value).replace(/</g, '\\u003c').replace
 
 /** 独立的离线 HTML，数据与经审核的运行器分开序列化，不包含任何外部资源。 */
 export function exportHtml(project) {
+  project = normalizeProject(project);
   validateProject(project);
+  // Runtime only sees drawable pages, in visible tree order. Collapsing a folder
+  // is an editor preference and never hides its children from the prototype.
+  project.pages = getOrderedPages(project);
   const functions = [evaluateExpression, chooseInteractionCases, getEventSettings, selectRepeaterRows, selectRepeaterPage, newStyleDefaults, getBuiltinStyle, resolveNamedStylePatch, resolveNodeBaseStyle, resolveNodeStateStyles, resolveNodeBaseAppearance, resolveComponentCanvas, resolveViewChain, getCanvasViewOverrides, getCanvasViews, selectAdaptiveView, resolveCanvasView, resolveAdaptivePage, getNodeDescendants, getNodeOrigin, rotateNodePoint, getNodeBounds, connectorAnchor, connectorPoints, pathData, getVectorGeometry, richRunStyle, inspectImageBytes, inspectImageDataUrl, styleColor, resolveNodeVisual, styleGradientGeometry, styleRoundedPath, loadStyleImage, applyStylePaint, applyStyleShadows, applyVectorVisual, applyNodeVisual, computeImageLayout, loadImageSource, computeImageTextLayout, paintImageContent];
   const runtime = `const fmt=value=>String(Math.round(value*10000)/10000);\n${functions.map(fn => fn.toString()).join('\n')}\n(${htmlRuntime.toString()})(evaluateExpression,chooseInteractionCases,selectRepeaterRows,resolveAdaptivePage,getNodeDescendants,getVectorGeometry,connectorPoints,selectRepeaterPage,getCanvasViews,selectAdaptiveView,paintImageContent,applyNodeVisual,applyVectorVisual,resolveNodeVisual,getNodeBounds,rotateNodePoint,richRunStyle,getEventSettings);`;
   return `<!doctype html>

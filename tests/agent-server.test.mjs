@@ -84,7 +84,7 @@ test('缺失、错误长度、相同长度错误令牌均不能读写项目', as
 
 test('真实Agent发现完整样式合同，复合样式原子写入/保存/撤销且坏图拒绝',async t=>{
   const f=await fixture(t),discovery=await f.request({route:'/v1/schema'});
-  assert.equal(discovery.body.schemaRevision,11);for(const field of ['fillPaint','borderSides','radiusCorners','shadows','transition','transformOrigin'])assert(discovery.body.styleFields.includes(field));assert(discovery.body.structures.styleText.includes('px'));
+  assert.equal(discovery.body.schemaRevision,12);for(const field of ['fillPaint','borderSides','radiusCorners','shadows','transition','transformOrigin'])assert(discovery.body.styleFields.includes(field));assert(discovery.body.structures.styleText.includes('px'));
   const style={fontFamily:'Microsoft YaHei',italic:true,strike:true,lineHeight:24,padding:{top:2,right:3,bottom:4,left:5},fillPaint:{type:'linear',angle:90,stops:[{offset:0,color:'#000000',opacity:1},{offset:1,color:'#FFFFFF',opacity:.5}]},transition:{duration:150,delay:0,easing:'ease-in'},transformOrigin:{x:0,y:1}};
   const before=f.engine.getSnapshot(),result=await f.request({method:'POST',route:'/v1/commands',body:{expectedRevision:0,commands:[{type:'addNode',pageId:'page-one',node:{id:'styled',type:'button',style}},{type:'updateNode',pageId:'page-one',nodeId:'styled',patch:{stateStyles:{hover:{fillPaint:null,strike:false}}}}]}});
   assert.equal(result.status,200);const saved=f.engine.getSnapshot();for(const [key,value]of Object.entries(style))assert.deepEqual(saved.pages[0].nodes[0].style[key],value);assert.deepEqual(new DocumentEngine(JSON.parse(JSON.stringify(saved))).getSnapshot(),saved);
@@ -95,7 +95,7 @@ test('真实Agent发现完整样式合同，复合样式原子写入/保存/撤�
 
 test('真实Agent使用默认与命名继承、局部覆盖和格式快照，冲突与失败不泄漏',async t=>{
   const f=await fixture(t),discovery=await f.request({route:'/v1/schema'});
-  assert.equal(discovery.body.schemaRevision,11);
+  assert.equal(discovery.body.schemaRevision,12);
   for(const command of ['addDefaultStyleSet','setProjectDefaultStyleSet','setStyleParent','clearStyleOverrides','applyStyleSnapshot','updateStyleFromNode'])assert(discovery.body.commands.some(value=>value.startsWith(command+' ')));
   for(const field of ['styleInheritanceVersion','defaultStyleSets','defaultStyleSetId'])assert(discovery.body.projectFields.includes(field));
   for(const field of ['styleOverrideKeys','defaultStyleSetId'])assert(discovery.body.nodeFields.includes(field));
@@ -126,7 +126,7 @@ test('真实Agent使用默认与命名继承、局部覆盖和格式快照，冲
 
 test('真实Agent发现并编辑图片，裁剪/调色/切片可保存与整体撤销，旧版本拒绝',async t=>{
   const f=await fixture(t),schema=await f.request({route:'/v1/schema'});
-  assert.equal(schema.body.schemaRevision,11);assert(schema.body.nodeFields.includes('image'));assert(schema.body.commands.some(c=>c.startsWith('sliceImage ')));
+  assert.equal(schema.body.schemaRevision,12);assert(schema.body.nodeFields.includes('image'));assert(schema.body.commands.some(c=>c.startsWith('sliceImage ')));
   const setup=await f.request({method:'POST',route:'/v1/commands',body:{expectedRevision:0,commands:[{type:'addNode',pageId:'page-one',node:{id:'agent-image',type:'image',src:'data:image/gif;base64,R0lGODlhAgABAIAAAP8AAAAA/yH5BAAKAAAALAAAAAACAAEAAAICBAoAIfkEAAoAAAAsAAAAAAIAAQAAAgJMCgA7',width:200,height:100,style:{strokeWidth:0,radius:0}}}]}});assert.equal(setup.status,200);const before=f.state();
   const commands=[{type:'cropImage',pageId:'page-one',nodeId:'agent-image',crop:{x:.1,y:0,width:.8,height:1}},{type:'setImageOptions',pageId:'page-one',nodeId:'agent-image',patch:{flipX:true,filters:{enabled:true,saturation:0}}},{type:'sliceImage',pageId:'page-one',nodeId:'agent-image',axis:'vertical',ids:['agent-slice']}];
   const result=await f.request({method:'POST',route:'/v1/commands',body:{expectedRevision:before.revision,commands}});assert.equal(result.status,200);const saved=f.engine.getSnapshot();assert.equal(saved.pages[0].nodes.length,2);assert.equal(saved.pages[0].nodes[1].image.filters.saturation,0);assert.deepEqual(new DocumentEngine(JSON.parse(JSON.stringify(saved))).getSnapshot(),saved);

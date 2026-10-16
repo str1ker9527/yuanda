@@ -7,6 +7,7 @@ import { INTERACTION_NODE_KEYS, INTERACTION_PAGE_KEYS, INTERACTION_PROJECT_KEYS,
 import { VECTOR_TYPES, VECTOR_NODE_KEYS, nodeVectorDefaults, validateVectorProject, reconcileVectorProject, expandVectorRemoval } from './vector-model.mjs';
 import { IMAGE_NODE_KEYS, IMAGE_COMMANDS, nodeImageDefaults, validateImageOptions, imageDataBytes, prepareImageNodePatch, applyImageCommand } from './image-model.mjs';
 import { STYLE_KEYS, newStyleDefaults, getBuiltinStyle, validateStyleInheritance, validateStyle as validateWidgetStyle, collectStyleImageSources } from './style-model.mjs';
+import { applyPageTreeCommand, appendPageTreeEntry, removePageTreeEntries } from './page-tree-model.mjs';
 export { normalizeDesignProject as normalizeProject } from './design-model.mjs';
 const TYPES = new Set(['rectangle', 'text', 'button', 'input', 'image', ...DESIGN_TYPES, ...INTERACTION_TYPES, ...VECTOR_TYPES]);
 const PROJECT_KEYS = ['format', 'version', 'id', 'name', 'pages', ...DESIGN_PROJECT_KEYS, ...INTERACTION_PROJECT_KEYS];
@@ -292,7 +293,7 @@ function applyCommandUnchecked(project, command, componentId = null) {
     if (requested !== componentId) fail('母版命令不能操作其他画布', 'COMMAND_ERROR');
     const component = current.components.find(item => item.id === componentId); if (!component) fail('母版不存在', 'COMMAND_ERROR'); return component;
   };
-  const designHelpers = { fail, object, keys, string, number, bool, array, id, uuid, validateStyle, STYLE_KEYS, NODE_KEYS, makeNode, pageFor, nodeFor, cleanReferences };
+  const designHelpers = { fail, object, keys, string, number, bool, array, id, uuid, validateStyle, STYLE_KEYS, NODE_KEYS, makeNode, pageFor, nodeFor, cleanReferences, getNodeInternalIds };
   designHelpers.assertEditable = (page, node, patch) => assertNodeEditable(page, node, patch, designHelpers);
   designHelpers.translateNodes = (page, ids, dx, dy) => translateNodes(page, ids, dx, dy, designHelpers);
   if (applyViewCommands(project, command, {
@@ -302,6 +303,7 @@ function applyCommandUnchecked(project, command, componentId = null) {
   })) return;
   if (applyLibraryCommand(project, command, { uuid, createBlankProject, validateProject })) return;
   if (applyImageCommand(project, command, designHelpers)) return;
+  if (applyPageTreeCommand(project, command, designHelpers)) return;
   if (applyInteractionCommand(project, command, designHelpers)) return;
   if (applyDesignCommand(project, command, designHelpers)) return;
   switch (command.type) {
@@ -339,7 +341,7 @@ function applyCommandUnchecked(project, command, componentId = null) {
       keys(command, ['type', 'page'], '添加页面命令'); keys(command.page, PAGE_KEYS, '页面设置', false);
       const page = { id: uuid(), name: `页面 ${project.pages.length + 1}`, width: 1200, height: 800, background: '#FFFFFF', nodes: [], parentId: null, guides: { horizontal: [], vertical: [] }, groups: [], annotation: '', views: [], interactions: [], ...clone(command.page) };
       if (Array.isArray(page.nodes)) page.nodes = page.nodes.map(node => makeNode(node.type, node));
-      project.pages.push(page); break;
+      project.pages.push(page); appendPageTreeEntry(project, page.id); break;
     }
     case 'updatePage': {
       if (componentId !== null) {
@@ -361,8 +363,9 @@ function applyCommandUnchecked(project, command, componentId = null) {
     case 'removePage': {
       keys(command, ['type', 'pageId'], '删除页面命令'); const removedPage = pageFor(project, command.pageId);
       if (project.pages.length === 1) fail('不能删除最后一个页面', 'COMMAND_ERROR');
-      for (const page of project.pages) if (page.parentId === command.pageId) page.parentId = removedPage.parentId;
-      project.pages = project.pages.filter(page => page.id !== command.pageId); cleanReferences(project, new Set(), new Set([command.pageId])); break;
+      for (const item of [...project.pages, ...project.pageFolders]) if (item.parentId === command.pageId) item.parentId = removedPage.parentId;
+      project.pages = project.pages.filter(page => page.id !== command.pageId); removePageTreeEntries(project, new Set([command.pageId]));
+      cleanReferences(project, new Set([...removedPage.nodes.map(node => node.id), ...getNodeInternalIds(removedPage.nodes)]), new Set([command.pageId])); break;
     }
     case 'reorderNode': {
       keys(command, ['type', 'pageId', 'nodeId', 'index'], '调整图层命令'); const page = pageFor(project, command.pageId), node = nodeFor(page, command.nodeId);

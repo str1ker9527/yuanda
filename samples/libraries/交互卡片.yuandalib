@@ -610,6 +610,8 @@
             "eventSettings": {}
           }
         ],
+        "pageFolders": [],
+        "pageTreeOrder": null,
         "styles": [],
         "components": [],
         "variables": [
@@ -1403,6 +1405,8 @@
             "eventSettings": {}
           }
         ],
+        "pageFolders": [],
+        "pageTreeOrder": null,
         "styles": [],
         "components": [],
         "variables": [],

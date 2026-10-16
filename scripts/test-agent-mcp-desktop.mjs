@@ -205,6 +205,48 @@ export async function runAgentMcpSmoke({ window, runtime, getState }) {
     } finally { if (collisionCreated) await rmdir(activeFile); await rename(backupFile, activeFile); }
     await mcp.call('yuanda_undo', { expectedRevision: getState().revision });
     assert.deepEqual(getState().project, edited); assert.equal(getState().dirty, false);
+    assert.ok(schema.projectFields.includes('pageFolders'));
+    assert.ok(schema.commands.some(value => value.startsWith('removePageFolder ')));
+    await mcp.call('yuanda_apply_commands', { expectedRevision: getState().revision, commands: [
+      { type: 'addPageFolder', folder: { id: 'mcp-folder', name: 'Agent 页面目录' } },
+      { type: 'addPageFolder', folder: { id: 'mcp-subfolder', name: '子目录', parentId: 'mcp-folder' } },
+      { type: 'reparentPage', pageId: targetPageId, parentId: 'mcp-subfolder' },
+      { type: 'reorderPageTreeItem', itemId: 'mcp-folder', index: 0 }
+    ] });
+    const folderProject = structuredClone(getState().project);
+    await waitUntil(() => inspect("Boolean(document.querySelector('#page-list [data-tree-id=\"mcp-folder\"]'))"), 'MCP folder appears in page tree');
+    const beforeFolderSelection = structuredClone(getState().selection);
+    await mcp.call('yuanda_select', { expectedRevision: getState().revision, pageId: 'mcp-folder', nodeIds: [] }, true);
+    assert.deepEqual(getState().selection, beforeFolderSelection, 'folders must not replace the active canvas');
+    check('mcp-folders-create-organize-and-reject-folder-canvas-selection');
+    const folderSaved = await mcp.call('yuanda_save', { expectedRevision: getState().revision, name: 'Agent目录工程' });
+    assert.deepEqual(JSON.parse((await recordFile('folder-project', folderSaved.path)).toString('utf8')), folderProject);
+    const folderHtml = await mcp.call('yuanda_export', { expectedRevision: getState().revision, format: 'html', name: 'Agent目录首页' });
+    await recordFile('folder-html', folderHtml.path);
+    preview = new BrowserWindow({ show: false, webPreferences: { sandbox: true, contextIsolation: true, nodeIntegration: false, offscreen: true, backgroundThrottling: false } });
+    await preview.loadFile(folderHtml.path);
+    await waitUntil(() => preview.webContents.executeJavaScript("Boolean(document.querySelector('[data-node-id=\"mcp-target-text\"]'))"), 'folder first real page is HTML landing page');
+    assert.equal(await preview.webContents.executeJavaScript("Boolean(document.querySelector('[data-page-id=\"mcp-folder\"]'))"), false);
+    preview.destroy(); preview = null;
+    const beforeFolderRp = await readdir(path.dirname(rp.path));
+    await mcp.call('yuanda_export', { expectedRevision: getState().revision, format: 'rp', name: '不得丢弃目录' }, true);
+    assert.deepEqual(await readdir(path.dirname(rp.path)), beforeFolderRp);
+    check('mcp-folder-save-html-landing-and-rp-no-silent-flattening');
+    await mcp.call('yuanda_select', { expectedRevision: getState().revision, pageId: targetPageId, nodeIds: ['mcp-target-text'] });
+    await mcp.call('yuanda_apply_commands', { expectedRevision: getState().revision, commands: [{ type: 'removePageFolder', folderId: 'mcp-folder' }] });
+    assert.equal(getState().project.pages.length, 1); assert.equal(getState().project.pageFolders.length, 0);
+    assert.deepEqual(getState().selection, { pageId, nodeIds: [] });
+    assert(!JSON.stringify(getState().project.pages[0].nodes.find(node => node.id === 'mcp-button').interactions).includes(targetPageId));
+    await waitUntil(() => inspect("window.YuandaEditor.getSelection().pageId === " + JSON.stringify(pageId)), 'deleted folder canvas falls back to real page');
+    await mcp.call('yuanda_undo', { expectedRevision: getState().revision });
+    assert.deepEqual(getState().project, folderProject);
+    assert.deepEqual(getState().selection, { pageId, nodeIds: [] });
+    await mcp.call('yuanda_redo', { expectedRevision: getState().revision });
+    assert.equal(getState().project.pages.length, 1);
+    await mcp.call('yuanda_undo', { expectedRevision: getState().revision });
+    await mcp.call('yuanda_undo', { expectedRevision: getState().revision });
+    assert.deepEqual(getState().project, edited);
+    check('mcp-folder-recursive-delete-references-selection-and-undo-redo');
     await waitUntil(() => inspect("Boolean(document.querySelector('.design-node[data-node-id=\"mcp-title\"]'))"), 'editor final state');
     await writeFile(path.join(runtime, 'mcp-editor.png'), (await window.webContents.capturePage()).toPNG());
     assert.deepEqual(rendererErrors, []);
